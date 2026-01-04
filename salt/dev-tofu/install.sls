@@ -7,23 +7,22 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 {% if grains['nodename'] != 'dom0' -%}
 
 include:
-  - {{ slsdotpath }}.install-repo
   - utils.tools.common.update
+  - dev.install-common
+  - docker.install
+  - opentofu.install
   - sys-ssh-agent.install-client
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
     - require:
-      - sls: {{ slsdotpath }}.install-repo
       - sls: utils.tools.common.update
     - install_recommends: False
     - skip_suggestions: True
     - setopt: "install_weak_deps=False"
     - pkgs:
-      - qubes-core-agent-networking
-      - ca-certificates
-      - tofu
-      - vim
-      - man-db
+      # TODO: define properly, unfinished
+      - pre-commit
+
 
 {% endif -%}

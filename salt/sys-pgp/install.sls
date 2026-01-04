@@ -25,7 +25,7 @@ include:
 {# TODO: sequoia-wot can't be installed on fedora-41 #}
 {% set pkg = {
   'Debian': {
-    'pkg': ['sq', 'sq-keyring-linter', 'sq-wot', 'sqop', 'sqv'],
+    'pkg': ['sq', 'sq-wot', 'sqop', 'sqv'],
   },
   'RedHat': {
     'pkg': ['sequoia-sq', 'sequoia-keyring-linter', 'sequoia-sop',

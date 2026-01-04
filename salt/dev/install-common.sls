@@ -11,7 +11,6 @@ include:
   - {{ slsdotpath }}.home-cleanup
   - dotfiles.copy-all
   - utils.tools.zsh
-  - sys-pgp.install-client
   - sys-git.install-client
   - sys-ssh-agent.install-client
 
