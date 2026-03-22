@@ -1,0 +1,41 @@
+{#
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+Example pillar for sys-aws split AWS credential broker.
+
+For this file to be active:
+
+1. Copy the file to the pillar_roots directory without the '.example' suffix;
+2. Reference this state by a pillar highstate.
+
+See the README for detailed instructions.
+#}
+
+qusal:
+  sys-aws:
+    sso_start_url: "https://myorg.awsapps.com/start"
+    sso_region: "us-east-1"
+    default_region: "us-east-1"
+    profiles:
+      admin:
+        account_id: "111111111111"
+        role_name: "AdministratorAccess"
+        region: "us-east-1"
+      sandbox:
+        account_id: "222222222222"
+        role_name: "PowerDeveloperAccess"
+        region: "us-east-1"
+      dev:
+        account_id: "333333333333"
+        role_name: "DeveloperAccess"
+        region: "us-east-1"
+    ## Per-qube profile access control.
+    ## Only listed profiles will be available in each client qube.
+    clients:
+      cloud:
+        - sandbox
+        - dev
+      dev-tofu:
+        - dev

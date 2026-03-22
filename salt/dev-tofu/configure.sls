@@ -10,5 +10,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 include:
   - dev.home-cleanup
   - dotfiles.copy-all
+  - sys-aws.configure-client
 
 {% endif -%}

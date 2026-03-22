@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Qrexec service: serve short-lived AWS credentials for a given profile.
+## The profile name is passed via QREXEC_SERVICE_ARGUMENT (+admin, +sandbox, etc).
+## Returns JSON in AWS credential_process format.
+
+set -eu
+
+die(){
+  printf '%s\n' "error: ${1}" >&2
+  exit 1
+}
+
+# shellcheck disable=SC2154
+untrusted_profile="${QREXEC_SERVICE_ARGUMENT}"
+
+if test -z "${untrusted_profile}"; then
+  die "Profile name is empty"
+fi
+
+if ! (printf '%s\n' "${untrusted_profile}" | \
+  grep -q -e "^[A-Za-z0-9][A-Za-z0-9_.-]*$")
+then
+  msg="Forbidden characters in profile name."
+  msg="${msg} Allowed chars: letters, numbers, hyphen, underscore and dot."
+  msg="${msg} Name cannot begin with hyphen, underscore or dot."
+  die "${msg}"
+fi
+
+if test "${#untrusted_profile}" -gt 64; then
+  die "Profile name is too long: ${#untrusted_profile}"
+fi
+
+profile="${untrusted_profile}"
+
+## Verify the profile exists in the local AWS config.
+if ! aws configure list --profile "${profile}" >/dev/null 2>&1; then
+  die "Profile not found: ${profile}"
+fi
+
+## Export short-lived credentials in credential_process JSON format.
+## This requires an active SSO session (run: aws sso login --profile <name>).
+exec aws configure export-credentials --profile "${profile}" --format process

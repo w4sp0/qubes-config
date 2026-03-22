@@ -12,6 +12,7 @@ include:
   - docker.install
   - opentofu.install
   - sys-ssh-agent.install-client
+  - sys-aws.install-client
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
