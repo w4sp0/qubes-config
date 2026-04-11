@@ -4,4 +4,4 @@
 
 [submodule "salt/dotfiles"]
 	path = salt/dotfiles
-	url = git@github.com:rad-jan/dotfiles.git
+	url = git@github.com:w4sp0/dotfiles.git
