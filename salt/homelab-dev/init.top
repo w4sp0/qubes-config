@@ -1,0 +1,20 @@
+{#
+SPDX-FileCopyrightText: 2023 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik  <cyberwassp@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+#}
+
+base:
+  'dom0':
+    - match: nodegroup
+    - homelab-dev.create
+  'tpl-homelab-dev':
+    - homelab-dev.install
+  'dvm-homelab-dev':
+    - homelab-dev.configure-dvm
+  'homelab-dev':
+    - homelab-dev.configure
+  '(I@qubes:type:template or I@qubes:type:standalone) and (G@kernel:Linux or G@kernel:*BSD)':
+    - match: compound
+    - sys-net.install-proxy
