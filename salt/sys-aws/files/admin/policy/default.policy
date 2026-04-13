@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Do not modify this file, create a new policy with with a lower number in the
+## file name instead. For example `30-user.policy`.
+##
+## Default: ask for all credential requests. Override per-profile with a
+## lower-numbered policy file. Example for auto-allow:
+##   qusal.AwsCred +dev     @tag:aws-dev     @default allow target={{ sls_path }}
+##   qusal.AwsCred +sandbox @tag:aws-sandbox @default allow target={{ sls_path }}
+qusal.AwsCred * @anyvm  @default ask target={{ sls_path }} default_target={{ sls_path }}
+qusal.AwsCred * @anyvm  @anyvm   deny
+
+## Allow sys-aws to open URLs in a disposable browser for SSO login.
+qubes.OpenURL * {{ sls_path }} @default ask target=dvm-browser default_target=dvm-browser
+## vim:ft=qrexecpolicy

@@ -14,6 +14,7 @@ include:
   - dotfiles.copy-all
   - sys-ssh-agent.install-client
   - sys-git.install-client
+  - sys-aws.install-client
 
 "{{ slsdotpath }}-installed":
   pkg.installed:

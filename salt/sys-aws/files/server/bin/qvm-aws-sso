@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Helper to run SSO login for one or all AWS profiles.
+## Usage:
+##   qvm-aws-sso login <profile>   # login to a specific profile
+##   qvm-aws-sso login             # login to the default SSO session
+##   qvm-aws-sso status <profile>  # check if credentials are valid
+##   qvm-aws-sso status            # check all profiles
+
+set -eu
+
+usage(){
+  printf '%s\n' "Usage: ${0##*/} <login|status> [PROFILE]
+  login:  start SSO login (opens browser via xdg-open)
+  status: check credential validity
+Example:
+  ${0##*/} login admin
+  ${0##*/} status sandbox
+  ${0##*/} status"
+  exit 1
+}
+
+sso_login(){
+  if test -n "${profile}"; then
+    aws sso login --profile "${profile}"
+  else
+    aws sso login
+  fi
+}
+
+sso_status(){
+  if test -n "${profile}"; then
+    if aws configure export-credentials --profile "${profile}" \
+        --format process >/dev/null 2>&1; then
+      printf '%s\n' "${profile}: active"
+    else
+      printf '%s\n' "${profile}: expired or not authenticated"
+      return 1
+    fi
+  else
+    ## Check all profiles in config.
+    profiles="$(aws configure list-profiles 2>/dev/null)" || true
+    if test -z "${profiles}"; then
+      printf '%s\n' "No profiles found in AWS config."
+      return 1
+    fi
+    ret=0
+    for p in ${profiles}; do
+      if aws configure export-credentials --profile "${p}" \
+          --format process >/dev/null 2>&1; then
+        printf '%s\n' "${p}: active"
+      else
+        printf '%s\n' "${p}: expired or not authenticated"
+        ret=1
+      fi
+    done
+    return "${ret}"
+  fi
+}
+
+test -z "${1-}" && usage
+action="${1-}"
+profile="${2-}"
+
+case "${action}" in
+  login) sso_login;;
+  status) sso_status;;
+  *) usage;;
+esac
