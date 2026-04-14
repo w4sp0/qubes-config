@@ -9,8 +9,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 include:
   - utils.tools.common.update
   - dev.install-common
-  - sys-ssh-agent.install-client
-  - sys-pgp.install-client
+  - sys-git.install-client
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
