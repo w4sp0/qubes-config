@@ -7,9 +7,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 {% if grains['nodename'] != 'dom0' -%}
 
 include:
-  - utils.tools.common.update
   - dev.install-common
   - sys-git.install-client
+  - dev.install-python-tools
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
@@ -22,9 +22,9 @@ include:
       - pre-commit
       - trivy
       - yamllint
-      - jqp
+      - salt-lint
       - jq
       - yq
-      - shellcheck
+      - ShellCheck
 
 {% endif -%}

@@ -27,7 +27,7 @@ include:
     'pkg': ['sq', 'sqop', 'sqv'],
   },
   'RedHat': {
-    'pkg': ['sequoia-sq', 'sequoia-keyring-linter', 'sequoia-sop',
+    'pkg': ['sequoia-sq', 'sequoia-sop',
             'sequoia-sqv', 'sequoia-policy-config',
             'sequoia-chameleon-gnupg'],
   },
