@@ -20,8 +20,12 @@ include:
     - skip_suggestions: True
     - setopt: "install_weak_deps=False"
     - pkgs:
-      # TODO: define properly, unfinished
       - pre-commit
-
+      - trivy
+      - yamllint
+      - jqp
+      - jq
+      - yq
+      - shellcheck
 
 {% endif -%}
