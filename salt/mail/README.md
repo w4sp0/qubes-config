@@ -8,6 +8,7 @@ Mail operations in Qubes OS.
 *   [Security](#security)
 *   [Installation](#installation)
 *   [Usage](#usage)
+    *   [Firewall](#firewall)
     *   [Fetcher](#fetcher)
         *   [fdm Configuration](#fdm-configuration)
         *   [mpop Configuration](#mpop-configuration)
@@ -90,6 +91,7 @@ sudo qubesctl state.apply mail.appmenus
 
 ```sh
 sudo qubesctl state.apply mail.create
+sudo qubesctl state.apply mail.firewall
 sudo qubesctl --skip-dom0 --targets=tpl-reader state.apply reader.install
 sudo qubesctl --skip-dom0 --targets=tpl-mail-fetcher state.apply mail.install-fetcher
 sudo qubesctl --skip-dom0 --targets=tpl-mail-reader state.apply mail.install-reader
@@ -108,8 +110,8 @@ You will use local files to override the ones provided by this package. Few
 options must be set. Do not change the directories in the configuration
 files, they need to stay the same.
 
-You should firewall the `(disp-)mail-fetcher` and `(disp-)mail-sender` to the
-`POP3` server or/and `IMAP` server and `SMTP` server, respectively.
+The `mail.firewall` state restricts the egress of `(disp-)mail-fetcher` and
+`(disp-)mail-sender`, see [Firewall](#firewall).
 
 Steps overview:
 
@@ -118,6 +120,50 @@ Steps overview:
 2.  Read and compose mail from `mail-reader` and transfer to
     `(disp-)mail-sender`.
 3.  Send queued mails from `(disp-)mail-sender` to remote mail server.
+
+### Firewall
+
+The `mail.firewall` state denies all egress from `(disp-)mail-fetcher` and
+`(disp-)mail-sender` except DNS and the ports their mail client needs. The
+rules are enforced by `qubes-firewall` in the NetVM, so they survive a full
+compromise of the mail qube itself.
+
+Defaults are `993/tcp` (IMAPS) for the fetcher and `465/tcp` (implicit TLS
+SMTP) for the sender, matching the shipped `offlineimap` and `msmtp`
+examples. Override them per role in the pillar:
+
+```yaml
+qusal:
+  mail:
+    fetcher:
+      dstports:
+        - 993
+    sender:
+      dstports:
+        - 465
+```
+
+Restricting the destination host as well is possible but rarely works with
+large providers:
+
+```yaml
+qusal:
+  mail:
+    fetcher:
+      dsthost:
+        - imap.gmail.com
+```
+
+`qubes-firewall` resolves `dsthost` with `getaddrinfo()` only while applying
+the rule set, that is, on qube start or on rule change, and never re-resolves
+it afterwards. Gmail round-robins over large netblocks with short TTLs, so
+the client will eventually dial an address that was never pinned and the
+connection is dropped. Restrict the ports and leave `dsthost` unset unless
+your provider publishes stable addresses.
+
+Applying the state resets the rule set before installing the final `drop`, so
+there is a brief moment where the qube is unrestricted. Do not apply it while
+a mail qube is suspected of being compromised; shut the qube down first.
 
 ### Fetcher
 

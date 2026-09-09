@@ -7,6 +7,11 @@ Files: README.md */README.md docs/* .github/*_TEMPLATE/* .github/*.md
 Copyright: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
 License: CC-BY-SA-4.0
 
+Files: salt/mail/README.md
+Copyright: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+           2026 Radek Janik <cyberwassp@gmail.com>
+License: CC-BY-SA-4.0
+
 Files: version salt/*/version dependencies/* .editorconfig-checker.json
 Copyright: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
 License: CC0-1.0
