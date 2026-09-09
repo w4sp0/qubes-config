@@ -16,9 +16,13 @@ base:
     - mail.install-reader
   'tpl-mail-sender':
     - mail.install-sender
+  'tpl-mail-token':
+    - mail.install-token
   'dvm-mail-fetcher':
     - mail.configure-fetcher
   'mail-reader':
     - mail.configure-reader
   'dvm-mail-sender':
     - mail.configure-sender
+  'mail-token':
+    - mail.configure-token

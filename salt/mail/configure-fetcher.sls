@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -32,6 +33,24 @@ include:
   file.managed:
     - name: /home/user/.offlineimaprc.example
     - source: salt://{{ slsdotpath }}/files/fetcher/offlineimaprc.example
+    - mode: "0600"
+    - user: user
+    - group: user
+    - makedirs: True
+
+"{{ slsdotpath }}-fetcher-offlineimaprc-oauth2.example":
+  file.managed:
+    - name: /home/user/.offlineimaprc-oauth2.example
+    - source: salt://{{ slsdotpath }}/files/fetcher/offlineimaprc-oauth2.example
+    - mode: "0600"
+    - user: user
+    - group: user
+    - makedirs: True
+
+"{{ slsdotpath }}-fetcher-offlineimap.py.example":
+  file.managed:
+    - name: /home/user/.offlineimap.py.example
+    - source: salt://{{ slsdotpath }}/files/fetcher/offlineimap.py.example
     - mode: "0600"
     - user: user
     - group: user

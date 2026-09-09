@@ -1,0 +1,22 @@
+# ~/.config/qusal/mail-token.conf
+
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Credentials of the OAuth2 client authorized for the mail account.
+## Obtain them once from a qube that can reach the provider consent page,
+## then copy this file to 'mail-token.conf' and fill in the values.
+##
+## This file is the only long lived secret of the split setup, treat it as
+## you would treat the account password. Anyone holding the refresh token
+## can mint access tokens for the account until it is revoked.
+
+##### EDIT THIS BLOCK #####
+client_id = 000000000000-example.apps.googleusercontent.com
+client_secret = GOCSPX-example
+refresh_token = 1//example
+
+##### DO NOT EDIT THIS BLOCK #####
+## Defaults to Google. Override it for another provider.
+#token_url = https://oauth2.googleapis.com/token
