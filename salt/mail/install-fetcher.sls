@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -55,6 +56,15 @@ include:
     - source: salt://{{ slsdotpath }}/files/fetcher/systemd/
     - dir_mode: "0755"
     - file_mode: "0644"
+    - user: root
+    - group: root
+    - makedirs: True
+
+"{{ slsdotpath }}-fetcher-token-client-bin":
+  file.managed:
+    - name: /usr/bin/qusal-mail-token
+    - source: salt://{{ slsdotpath }}/files/client/bin/qusal-mail-token
+    - mode: "0755"
     - user: root
     - group: root
     - makedirs: True

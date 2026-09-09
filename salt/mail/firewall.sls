@@ -30,6 +30,9 @@ qusal:
     sender:
       dstports: [465]
       dsthost: []
+    token:
+      dstports: [443]
+      dsthost: []
 #}
 
 {% if grains['nodename'] == 'dom0' %}
@@ -52,6 +55,11 @@ sender:
     - {{ slsdotpath }}-sender
     - dvm-{{ slsdotpath }}-sender
     - disp-{{ slsdotpath }}-sender
+token:
+  dstports:
+    - 443
+  qubes:
+    - {{ slsdotpath }}-token
 {%- endload %}
 
 {% for role, conf in roles.items() %}

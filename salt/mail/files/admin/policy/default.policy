@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -11,4 +12,8 @@ qusal.MailFetch   * @anyvm @anyvm deny
 qusal.MailEnqueue * @tag:mail-reader @tag:mail-sender ask
 qusal.MailEnqueue * @tag:mail-reader @default ask
 qusal.MailEnqueue * @anyvm @anyvm deny
+
+qusal.MailToken   * @tag:mail-fetcher @default allow target=mail-token
+qusal.MailToken   * @tag:mail-sender  @default allow target=mail-token
+qusal.MailToken   * @anyvm @anyvm deny
 ## vim:ft=qrexecpolicy

@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -35,6 +36,16 @@ features:
 
 {% load_yaml as defaults -%}
 name: tpl-{{ slsdotpath }}-sender
+force: True
+require:
+- sls: {{ slsdotpath }}.clone
+prefs:
+- audiovm: ""
+{%- endload %}
+{{ load(defaults) }}
+
+{% load_yaml as defaults -%}
+name: tpl-{{ slsdotpath }}-token
 force: True
 require:
 - sls: {{ slsdotpath }}.clone
@@ -133,6 +144,38 @@ features:
 tags:
 - add:
   - "mail-sender"
+{%- endload %}
+{{ load(defaults) }}
+
+
+{% load_yaml as defaults -%}
+name: {{ slsdotpath }}-token
+force: True
+require:
+- qvm: tpl-{{ slsdotpath }}-token
+present:
+- template: tpl-{{ slsdotpath }}-token
+- label: red
+prefs:
+- template: tpl-{{ slsdotpath }}-token
+- label: red
+- audiovm: ""
+- vcpus: 1
+- memory: 200
+- maxmem: 350
+- include_in_backups: True
+features:
+- enable:
+  - servicevm
+- disable:
+  - service.cups
+  - service.cups-browsed
+  - service.tinyproxy
+- set:
+  - menu-items: "qubes-run-terminal.desktop qubes-start.desktop"
+tags:
+- add:
+  - "mail-token"
 {%- endload %}
 {{ load(defaults) }}
 

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Print an OAuth2 access token obtained from the token qube. Meant to be
+## used as 'passwordeval' by msmtp and as a 'pythonfile' helper by
+## offlineimap. Standard input is closed as callers may have the message
+## being sent attached to it.
+
+set -eu
+
+exec qrexec-client-vm @default qusal.MailToken </dev/null

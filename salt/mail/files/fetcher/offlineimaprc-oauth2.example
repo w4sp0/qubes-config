@@ -1,0 +1,37 @@
+# ~/.offlineimaprc
+
+## SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+## OAuth2 variant. The refresh token stays in the 'mail-token' qube, this
+## qube only ever sees short lived access tokens.
+
+##### DO NOT EDIT THIS BLOCK #####
+[general]
+accounts = main
+pythonfile = ~/.offlineimap.py
+[Account main]
+localrepository = main-local
+remoterepository = main-remote
+[Repository main-local]
+localfolders = ~/mail
+##### EDIT THIS BLOCK #####
+sync_deletes = no
+type = Maildir
+##### DO NOT EDIT THIS BLOCK #####
+[Repository main-remote]
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+auth_mechanisms = XOAUTH2
+oauth2_access_token_eval = get_access_token()
+##### EDIT THIS BLOCK #####
+synclabels = yes
+readonly = yes
+sync_deletes = no
+type = IMAP
+remotehost = imap.gmail.com
+remoteuser = john-doe@gmail.com
+oauth2_request_url = https://oauth2.googleapis.com/token
+
+# vim: ft=toml

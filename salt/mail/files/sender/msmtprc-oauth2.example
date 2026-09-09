@@ -1,0 +1,30 @@
+# ~/.msmtprc
+
+## SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+## OAuth2 variant. The refresh token stays in the 'mail-token' qube, this
+## qube only ever sees short lived access tokens.
+
+##### DO NOT EDIT THIS BLOCK #####
+defaults
+  auth on
+  tls on
+  tls_starttls off
+  tls_trust_file system
+  logfile ~/log/msmtp.log
+
+account main
+  auth xoauth2
+  passwordeval qusal-mail-token
+
+##### EDIT THIS BLOCK #####
+  host smtp.gmail.com
+  port 465
+  user john-doe@gmail.com
+  from john-doe@gmail.com
+
+##### DO NOT EDIT THIS BLOCK #####
+account default : main

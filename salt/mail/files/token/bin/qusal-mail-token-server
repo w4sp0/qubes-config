@@ -1,0 +1,215 @@
+#!/usr/bin/python3
+
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+"""Mint short lived OAuth2 access tokens for the mail qubes.
+
+Without arguments, which is how the qusal.MailToken service calls it,
+reads the client credentials and the refresh token from a configuration
+file, exchanges the refresh token for an access token at the provider
+token endpoint and prints the access token on standard output. The
+access token is cached on tmpfs until shortly before it expires, so that
+repeated fetch and send runs do not query the provider every time.
+
+With '--authorize' it instead walks through the one time authorization
+code flow that yields the refresh token in the first place. It prints a
+consent URL to open in a browser qube and exchanges the authorization
+code it hands back. The redirect lands on an address nothing listens
+on, so the browser shows a connection error. That is expected: the
+authorization code is in the address bar of the failed page.
+"""
+
+import base64
+import hashlib
+import json
+import os
+import secrets
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from typing import NoReturn
+
+CONFIG = "/home/user/.config/qusal/mail-token.conf"
+CACHE_DIR = "/run/qusal-mail-token"
+CACHE = os.path.join(CACHE_DIR, "access_token")
+AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
+DEFAULT_TOKEN_URL = "https://oauth2.googleapis.com/token"
+## Gmail grants IMAP and SMTP access only under this single scope.
+SCOPE = "https://mail.google.com/"
+REDIRECT_URI = "http://127.0.0.1"
+## Hand out a token only while it is valid for at least this long.
+EXPIRY_MARGIN = 300
+TIMEOUT = 30
+
+
+def die(message: str) -> NoReturn:
+    """Report a fatal error on standard error and exit."""
+    print(f"qusal-mail-token: {message}", file=sys.stderr)
+    sys.exit(1)
+
+
+def read_config(need_refresh_token: bool = True) -> dict:
+    """Parse the 'key = value' configuration file."""
+    conf = {}
+    try:
+        with open(CONFIG, encoding="utf-8") as handle:
+            for number, line in enumerate(handle, start=1):
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" not in line:
+                    die(f"{CONFIG}:{number}: expected 'key = value'")
+                key, value = line.split("=", 1)
+                conf[key.strip()] = value.strip()
+    except OSError as err:
+        die(f"cannot read {CONFIG}: {err}")
+    required = ["client_id", "client_secret"]
+    if need_refresh_token:
+        required.append("refresh_token")
+    for key in required:
+        if not conf.get(key):
+            die(f"{CONFIG}: missing value: {key}")
+    conf.setdefault("token_url", DEFAULT_TOKEN_URL)
+    if not conf["token_url"].startswith("https://"):
+        die(f"{CONFIG}: token_url must be an https URL")
+    return conf
+
+
+def post(url: str, params: dict) -> dict:
+    """Post form encoded parameters and return the decoded reply."""
+    request = urllib.request.Request(
+        url, data=urllib.parse.urlencode(params).encode("utf-8"),
+        method="POST",
+        headers={"Content-Type": "application/x-www-form-urlencoded"})
+    try:
+        with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+            return json.load(response)
+    except urllib.error.HTTPError as err:
+        die(f"{url}: HTTP {err.code}: {err.reason}: {err.read().decode()}")
+    except (urllib.error.URLError, OSError) as err:
+        die(f"{url}: {err}")
+    except json.JSONDecodeError as err:
+        die(f"{url}: malformed response: {err}")
+
+
+def read_cache():
+    """Return the cached access token while it is still valid."""
+    try:
+        with open(CACHE, encoding="utf-8") as handle:
+            expiry, token = handle.read().split("\n", 1)
+        if float(expiry) > time.time():
+            return token
+    except (OSError, ValueError):
+        return None
+    return None
+
+
+def write_cache(token: str, expires_in) -> None:
+    """Store the access token on tmpfs until shortly before expiry."""
+    try:
+        lifetime = max(int(expires_in) - EXPIRY_MARGIN, 0)
+        os.makedirs(CACHE_DIR, mode=0o700, exist_ok=True)
+        os.chmod(CACHE_DIR, 0o700)
+        descriptor = os.open(
+            CACHE, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            handle.write(f"{time.time() + lifetime}\n{token}")
+    except (OSError, TypeError, ValueError) as err:
+        ## A cache failure is not fatal, the token remains usable.
+        print(f"qusal-mail-token: cannot cache: {err}", file=sys.stderr)
+
+
+def serve() -> None:
+    """Print an access token for the configured account."""
+    token = read_cache()
+    if token is None:
+        conf = read_config()
+        url = conf["token_url"]
+        data = post(url, {
+            "client_id": conf["client_id"],
+            "client_secret": conf["client_secret"],
+            "refresh_token": conf["refresh_token"],
+            "grant_type": "refresh_token",
+        })
+        token = data.get("access_token")
+        if not token:
+            die(f"{url}: response without an access token")
+        write_cache(token, data.get("expires_in", 0))
+    print(token)
+
+
+def make_verifier():
+    """Return a PKCE verifier and its S256 challenge."""
+    verifier = secrets.token_urlsafe(64)
+    digest = hashlib.sha256(verifier.encode("ascii")).digest()
+    challenge = base64.urlsafe_b64encode(digest).rstrip(b"=")
+    return verifier, challenge.decode("ascii")
+
+
+def prompt_code() -> str:
+    """Ask for the authorization code or the whole redirect URL."""
+    try:
+        answer = input("Authorization code or redirect URL: ").strip()
+    except (EOFError, KeyboardInterrupt):
+        die("aborted")
+    if not answer:
+        die("no authorization code given")
+    if "://" in answer or answer.startswith("?"):
+        query = urllib.parse.urlparse(answer).query
+        codes = urllib.parse.parse_qs(query).get("code")
+        if not codes:
+            die("no 'code' parameter in the given URL")
+        return codes[0]
+    return answer
+
+
+def authorize() -> None:
+    """Walk the user through the authorization code flow."""
+    conf = read_config(need_refresh_token=False)
+    verifier, challenge = make_verifier()
+    query = urllib.parse.urlencode({
+        "client_id": conf["client_id"],
+        "redirect_uri": REDIRECT_URI,
+        "response_type": "code",
+        "scope": SCOPE,
+        "access_type": "offline",
+        "prompt": "consent",
+        "code_challenge": challenge,
+        "code_challenge_method": "S256",
+    })
+    print("Open this URL in a browser qube and approve the request:")
+    print(f"\n{AUTH_URL}?{query}\n")
+    print("The browser will fail to load 127.0.0.1, that is expected.")
+    print("Copy the address it tried to open, or just the 'code' value.\n")
+    data = post(conf["token_url"], {
+        "client_id": conf["client_id"],
+        "client_secret": conf["client_secret"],
+        "code": prompt_code(),
+        "code_verifier": verifier,
+        "grant_type": "authorization_code",
+        "redirect_uri": REDIRECT_URI,
+    })
+    token = data.get("refresh_token")
+    if not token:
+        die("response without a refresh token, revoke the previous "
+            "grant and try again")
+    print(f"\nAdd this line to {CONFIG}:\n")
+    print(f"refresh_token = {token}")
+
+
+def main() -> None:
+    """Serve an access token, or authorize when asked to."""
+    if len(sys.argv) == 1:
+        serve()
+    elif sys.argv[1:] == ["--authorize"]:
+        authorize()
+    else:
+        die("usage: qusal-mail-token-server [--authorize]")
+
+
+if __name__ == "__main__":
+    main()

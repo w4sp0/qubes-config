@@ -1,0 +1,19 @@
+# ~/.offlineimap.py
+
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+##
+## SPDX-License-Identifier: AGPL-3.0-or-later
+
+"""Helpers referenced from ~/.offlineimaprc."""
+
+import subprocess
+
+
+def get_access_token():
+    """Return an OAuth2 access token minted by the token qube."""
+    return subprocess.run(
+        ["qusal-mail-token"],
+        check=True,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+    ).stdout.decode("utf-8").strip()

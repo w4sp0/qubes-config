@@ -9,16 +9,19 @@ Mail operations in Qubes OS.
 *   [Installation](#installation)
 *   [Usage](#usage)
     *   [Firewall](#firewall)
+    *   [Token](#token)
     *   [Fetcher](#fetcher)
         *   [fdm Configuration](#fdm-configuration)
         *   [mpop Configuration](#mpop-configuration)
         *   [OfflineIMAP Configuration](#offlineimap-configuration)
+        *   [OfflineIMAP with OAuth2](#offlineimap-with-oauth2)
         *   [Send Inbox to Reader Qube](#send-inbox-to-reader-qube)
     *   [Reader](#reader)
         *   [Mutt Configuration](#mutt-configuration)
         *   [Send Queue to Sender Qube](#send-queue-to-sender-qube)
     *   [Sender](#sender)
         *   [msmtp Configuration](#msmtp-configuration)
+        *   [msmtp with OAuth2](#msmtp-with-oauth2)
         *   [Send emails to SMTP server](#send-emails-to-smtp-server)
 *   [Credits](#credits)
 
@@ -50,12 +53,21 @@ Mail is insecure per nature and users depend on archaic Unix tools that
 [receive little to no maintenance](https://xkcd.com/2347/).
 
 The qubes connected to the internet `(disp-)mail-fetcher` and
-`(disp-)mail-sender` hold the account password to connect to the remote
-servers. If any of those are compromised, your mail account can also be.
-Network firewall can help, to some extent, if you consider the attacker
-doesn't have an account on the same mail server you have, or sends a message
-from you mail account to an attacker controlled mail and then delete from your
-sent messages.
+`(disp-)mail-sender` need a credential to connect to the remote servers. If
+any of those are compromised, your mail account can also be. Network firewall
+can help, to some extent, if you consider the attacker doesn't have an account
+on the same mail server you have, or sends a message from you mail account to
+an attacker controlled mail and then delete from your sent messages.
+
+With password authentication that credential is the account password. With
+OAuth2 it is worse: a refresh token mints access tokens for as long as the
+grant lives, and Gmail only offers the full `https://mail.google.com/` scope
+for IMAP and SMTP, so it cannot be narrowed down. For that reason the refresh
+token is not kept in the network facing qubes at all. It lives in the
+`mail-token` qube, which parses nothing but a JSON response from the provider
+and hands out access tokens over qrexec, see [Token](#token). A compromise of
+`(disp-)mail-fetcher` then yields an access token valid for about an hour
+instead of permanent access to the account.
 
 The reader qube `mail-reader` also has a high attack surface. Although
 offline, it can access PGP keys via split-gpg2 and also read all your mails,
@@ -80,7 +92,7 @@ the sender qube. This method doesn't prevent all kinds of exploitation, as
 
 ```sh
 sudo qubesctl top.enable mail reader
-sudo qubesctl --targets=tpl-mail-fetcher,tpl-mail-reader,tpl-mail-sender,dvm-mail-fetcher,mail-reader,dvm-mail-sender,tpl-reader state.apply
+sudo qubesctl --targets=tpl-mail-fetcher,tpl-mail-reader,tpl-mail-sender,tpl-mail-token,dvm-mail-fetcher,mail-reader,dvm-mail-sender,mail-token,tpl-reader state.apply
 sudo qubesctl top.disable mail reader
 sudo qubesctl state.apply mail.appmenus
 ```
@@ -96,9 +108,11 @@ sudo qubesctl --skip-dom0 --targets=tpl-reader state.apply reader.install
 sudo qubesctl --skip-dom0 --targets=tpl-mail-fetcher state.apply mail.install-fetcher
 sudo qubesctl --skip-dom0 --targets=tpl-mail-reader state.apply mail.install-reader
 sudo qubesctl --skip-dom0 --targets=tpl-mail-sender state.apply mail.install-sender
+sudo qubesctl --skip-dom0 --targets=tpl-mail-token state.apply mail.install-token
 sudo qubesctl --skip-dom0 --targets=dvm-mail-fetcher state.apply mail.configure-fetcher
 sudo qubesctl --skip-dom0 --targets=mail-reader state.apply mail.configure-reader
 sudo qubesctl --skip-dom0 --targets=dvm-mail-sender state.apply mail.configure-sender
+sudo qubesctl --skip-dom0 --targets=mail-token state.apply mail.configure-token
 sudo qubesctl state.apply mail.appmenus
 ```
 
@@ -128,9 +142,11 @@ The `mail.firewall` state denies all egress from `(disp-)mail-fetcher` and
 rules are enforced by `qubes-firewall` in the NetVM, so they survive a full
 compromise of the mail qube itself.
 
-Defaults are `993/tcp` (IMAPS) for the fetcher and `465/tcp` (implicit TLS
-SMTP) for the sender, matching the shipped `offlineimap` and `msmtp`
-examples. Override them per role in the pillar:
+Defaults are `993/tcp` (IMAPS) for the fetcher, `465/tcp` (implicit TLS SMTP)
+for the sender and `443/tcp` for `mail-token`, matching the shipped
+`offlineimap` and `msmtp` examples. Note that only `mail-token` is allowed to
+reach `443/tcp`: the fetcher and the sender never talk to the OAuth2 endpoint
+themselves. Override the ports per role in the pillar:
 
 ```yaml
 qusal:
@@ -141,6 +157,9 @@ qusal:
     sender:
       dstports:
         - 465
+    token:
+      dstports:
+        - 443
 ```
 
 Restricting the destination host as well is possible but rarely works with
@@ -164,6 +183,53 @@ your provider publishes stable addresses.
 Applying the state resets the rule set before installing the final `drop`, so
 there is a brief moment where the qube is unrestricted. Do not apply it while
 a mail qube is suspected of being compromised; shut the qube down first.
+
+### Token
+
+Only needed for OAuth2 accounts, such as Gmail. Skip this section if your
+provider still accepts a password or an application specific password.
+
+The `mail-token` qube is the only one holding the OAuth2 client secret and
+refresh token. It exchanges them for short lived access tokens and serves
+those to `(disp-)mail-fetcher` and `(disp-)mail-sender` over the
+`qusal.MailToken` qrexec service. Tokens are cached on tmpfs until shortly
+before they expire, so a fetch timer does not query the provider every run.
+
+Register an OAuth2 client of type *Desktop app* with your provider. For
+Google that is done in the Google Cloud Console, under *APIs & Services*,
+with the Gmail API enabled.
+
+Copy the example configuration in `mail-token` and fill in the client
+credentials:
+
+```sh
+cp -- ~/.config/qusal/mail-token.conf.example ~/.config/qusal/mail-token.conf
+editor ~/.config/qusal/mail-token.conf
+```
+
+Obtain the refresh token. The helper prints a consent URL, which you open in
+a browser qube. After approving, the browser fails to load `127.0.0.1`, which
+is expected: copy the address it tried to open and paste it back:
+
+```sh
+qusal-mail-token-authorize
+```
+
+Add the resulting `refresh_token` line to the configuration file, then check
+that a token can be minted:
+
+```sh
+qusal-mail-token-server
+```
+
+From the fetcher or the sender qube, check that the service is reachable:
+
+```sh
+qusal-mail-token
+```
+
+Revoking the grant at the provider invalidates the refresh token and locks
+out every mail qube at once, which is the intended kill switch.
 
 ### Fetcher
 
@@ -282,6 +348,37 @@ systemctl --user enable offlineimap-oneshot.timer
 systemctl --user start  offlineimap-oneshot.timer
 ```
 
+#### OfflineIMAP with OAuth2
+
+Use this instead of the configuration above when the account authenticates
+with OAuth2. It requires the [Token](#token) qube to be set up first. Note
+that `fdm` and `mpop` have no XOAUTH2 support, so OAuth2 accounts must be
+fetched with `offlineimap`.
+
+Copy the example configuration files:
+
+```sh
+cp -- ~/.offlineimaprc-oauth2.example ~/.offlineimaprc
+cp -- ~/.offlineimap.py.example ~/.offlineimap.py
+```
+
+Edit the configuration according to your needs, the account name and the
+remote host in particular:
+
+```sh
+editor ~/.offlineimaprc
+```
+
+The credentials stay in the `mail-token` qube, there is nothing secret in
+either file. `~/.offlineimap.py` only calls `qusal-mail-token`, which
+`~/.offlineimaprc` references through `oauth2_access_token_eval`.
+
+Check if the connection is working:
+
+```sh
+offlineimap --info
+```
+
 #### Send Inbox to Reader Qube
 
 Send the inbox to the reader:
@@ -341,6 +438,25 @@ Edit the configuration according to your needs:
 ```sh
 editor ~/.msmtprc
 ```
+
+Test the connection to the SMTP server:
+
+```sh
+msmtp --serverinfo
+```
+
+#### msmtp with OAuth2
+
+Use this instead of the configuration above when the account authenticates
+with OAuth2. It requires the [Token](#token) qube to be set up first.
+
+```sh
+cp -- ~/.msmtprc-oauth2.example ~/.msmtprc
+editor ~/.msmtprc
+```
+
+The password is not stored: `passwordeval` calls `qusal-mail-token`, which
+requests an access token from the `mail-token` qube on every run.
 
 Test the connection to the SMTP server:
 
