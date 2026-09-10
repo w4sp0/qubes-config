@@ -199,6 +199,10 @@ Register an OAuth2 client of type *Desktop app* with your provider. For
 Google that is done in the Google Cloud Console, under *APIs & Services*,
 with the Gmail API enabled.
 
+The client type matters. Google only accepts the loopback redirect this
+helper uses for *Desktop app* clients; a *Web application* client answers the
+consent URL with *Access blocked: this app's request is invalid*.
+
 Copy the example configuration in `mail-token` and fill in the client
 credentials:
 
@@ -208,8 +212,9 @@ editor ~/.config/qusal/mail-token.conf
 ```
 
 Obtain the refresh token. The helper prints a consent URL, which you open in
-a browser qube. After approving, the browser fails to load `127.0.0.1`, which
-is expected: copy the address it tried to open and paste it back:
+a browser qube. After approving, the browser fails to load
+`127.0.0.1:39271`, which is expected, nothing listens there: copy the address
+it tried to open and paste it back:
 
 ```sh
 qusal-mail-token-authorize

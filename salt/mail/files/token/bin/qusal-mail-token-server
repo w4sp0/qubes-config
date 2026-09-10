@@ -40,7 +40,9 @@ AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 DEFAULT_TOKEN_URL = "https://oauth2.googleapis.com/token"
 ## Gmail grants IMAP and SMTP access only under this single scope.
 SCOPE = "https://mail.google.com/"
-REDIRECT_URI = "http://127.0.0.1"
+## Google rejects a loopback redirect without a port. Nothing listens
+## on it, the browser fails and the code is left in the address bar.
+REDIRECT_URI = "http://127.0.0.1:39271"
 ## Hand out a token only while it is valid for at least this long.
 EXPIRY_MARGIN = 300
 TIMEOUT = 30
