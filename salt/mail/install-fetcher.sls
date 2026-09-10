@@ -25,7 +25,7 @@ include:
       - ca-certificates
       - man-db
       - offlineimap3
-      - fdm
+      # - fdm
       - mpop
       - mb2md
       - libio-socket-ssl-perl
