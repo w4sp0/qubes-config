@@ -16,9 +16,9 @@ repeated fetch and send runs do not query the provider every time.
 With '--authorize' it instead walks through the one time authorization
 code flow that yields the refresh token in the first place. It prints a
 consent URL to open in a browser qube and exchanges the authorization
-code it hands back. The redirect lands on an address nothing listens
-on, so the browser shows a connection error. That is expected: the
-authorization code is in the address bar of the failed page.
+code it hands back. Nothing needs to listen on the redirect, so the
+browser may well show an error there. That is expected: the
+authorization code is in the address bar either way.
 """
 
 import base64
@@ -34,15 +34,13 @@ import urllib.request
 from typing import NoReturn
 
 CONFIG = "/home/user/.config/qusal/mail-token.conf"
-CACHE_DIR = "/run/qusal-mail-token"
-CACHE = os.path.join(CACHE_DIR, "access_token")
 AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 DEFAULT_TOKEN_URL = "https://oauth2.googleapis.com/token"
 ## Gmail grants IMAP and SMTP access only under this single scope.
 SCOPE = "https://mail.google.com/"
-## Google rejects a loopback redirect without a port. Nothing listens
-## on it, the browser fails and the code is left in the address bar.
-REDIRECT_URI = "http://127.0.0.1:39271"
+## Overridden by 'redirect_uri' in the configuration file, which is
+## required for a client that only accepts registered redirects.
+DEFAULT_REDIRECT_URI = "http://127.0.0.1:39271"
 ## Hand out a token only while it is valid for at least this long.
 EXPIRY_MARGIN = 300
 TIMEOUT = 30
@@ -76,6 +74,7 @@ def read_config(need_refresh_token: bool = True) -> dict:
         if not conf.get(key):
             die(f"{CONFIG}: missing value: {key}")
     conf.setdefault("token_url", DEFAULT_TOKEN_URL)
+    conf.setdefault("redirect_uri", DEFAULT_REDIRECT_URI)
     if not conf["token_url"].startswith("https://"):
         die(f"{CONFIG}: token_url must be an https URL")
     return conf
@@ -98,10 +97,23 @@ def post(url: str, params: dict) -> dict:
         die(f"{url}: malformed response: {err}")
 
 
+def cache_dir() -> str:
+    """Return a tmpfs directory the calling user may write to.
+
+    '/run' itself is root owned, so the cache lives in the per user
+    runtime directory instead, which is tmpfs and mode 0700 already.
+    """
+    if os.getuid() == 0:
+        return "/run/qusal-mail-token"
+    runtime = os.environ.get("XDG_RUNTIME_DIR") or f"/run/user/{os.getuid()}"
+    return os.path.join(runtime, "qusal-mail-token")
+
+
 def read_cache():
     """Return the cached access token while it is still valid."""
     try:
-        with open(CACHE, encoding="utf-8") as handle:
+        with open(os.path.join(cache_dir(), "access_token"),
+                  encoding="utf-8") as handle:
             expiry, token = handle.read().split("\n", 1)
         if float(expiry) > time.time():
             return token
@@ -114,10 +126,12 @@ def write_cache(token: str, expires_in) -> None:
     """Store the access token on tmpfs until shortly before expiry."""
     try:
         lifetime = max(int(expires_in) - EXPIRY_MARGIN, 0)
-        os.makedirs(CACHE_DIR, mode=0o700, exist_ok=True)
-        os.chmod(CACHE_DIR, 0o700)
+        directory = cache_dir()
+        os.makedirs(directory, mode=0o700, exist_ok=True)
+        os.chmod(directory, 0o700)
         descriptor = os.open(
-            CACHE, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+            os.path.join(directory, "access_token"),
+            os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
         with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
             handle.write(f"{time.time() + lifetime}\n{token}")
     except (OSError, TypeError, ValueError) as err:
@@ -172,10 +186,11 @@ def prompt_code() -> str:
 def authorize() -> None:
     """Walk the user through the authorization code flow."""
     conf = read_config(need_refresh_token=False)
+    redirect_uri = conf["redirect_uri"]
     verifier, challenge = make_verifier()
     query = urllib.parse.urlencode({
         "client_id": conf["client_id"],
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": redirect_uri,
         "response_type": "code",
         "scope": SCOPE,
         "access_type": "offline",
@@ -185,15 +200,17 @@ def authorize() -> None:
     })
     print("Open this URL in a browser qube and approve the request:")
     print(f"\n{AUTH_URL}?{query}\n")
-    print("The browser will fail to load 127.0.0.1, that is expected.")
-    print("Copy the address it tried to open, or just the 'code' value.\n")
+    print(f"The browser is then sent to {redirect_uri}, which may well")
+    print("fail to load. That is expected, the authorization code is in")
+    print("the address bar either way.")
+    print("Copy the address it was sent to, or just the 'code' value.\n")
     data = post(conf["token_url"], {
         "client_id": conf["client_id"],
         "client_secret": conf["client_secret"],
         "code": prompt_code(),
         "code_verifier": verifier,
         "grant_type": "authorization_code",
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": redirect_uri,
     })
     token = data.get("refresh_token")
     if not token:

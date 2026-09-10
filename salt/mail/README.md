@@ -195,13 +195,17 @@ those to `(disp-)mail-fetcher` and `(disp-)mail-sender` over the
 `qusal.MailToken` qrexec service. Tokens are cached on tmpfs until shortly
 before they expire, so a fetch timer does not query the provider every run.
 
-Register an OAuth2 client of type *Desktop app* with your provider. For
-Google that is done in the Google Cloud Console, under *APIs & Services*,
-with the Gmail API enabled.
+Register an OAuth2 client of type *Desktop app* with your provider, or
+reuse a client you already have. For Google that is done in the Google Cloud
+Console, under *APIs & Services*, with the Gmail API enabled.
 
-The client type matters. Google only accepts the loopback redirect this
-helper uses for *Desktop app* clients; a *Web application* client answers the
-consent URL with *Access blocked: this app's request is invalid*.
+A *Desktop app* client accepts any `http://127.0.0.1:<port>` redirect
+without registering it, so the default needs no attention. A *Web
+application* client instead matches its registered redirects verbatim and
+answers anything else with *Access blocked: this app's request is invalid*,
+reported as `redirect_uri_mismatch` under *Error details*. Reuse an existing
+client of that kind by setting `redirect_uri` in the configuration file to
+one of the URIs already listed under *Authorized redirect URIs*.
 
 Copy the example configuration in `mail-token` and fill in the client
 credentials:
@@ -212,9 +216,9 @@ editor ~/.config/qusal/mail-token.conf
 ```
 
 Obtain the refresh token. The helper prints a consent URL, which you open in
-a browser qube. After approving, the browser fails to load
-`127.0.0.1:39271`, which is expected, nothing listens there: copy the address
-it tried to open and paste it back:
+a browser qube. After approving, the browser is sent to the redirect URI,
+which may fail to load, nothing needs to listen there: copy the address it
+was sent to and paste it back, code and all:
 
 ```sh
 qusal-mail-token-authorize

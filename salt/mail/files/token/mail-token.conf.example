@@ -17,6 +17,12 @@ client_id = 000000000000-example.apps.googleusercontent.com
 client_secret = GOCSPX-example
 refresh_token = 1//example
 
+## Only needed for a client that accepts a fixed set of redirects, such as
+## a Google "Web application" client. Set it to a URI already registered
+## with the client, verbatim. A "Desktop app" client needs no value here,
+## it accepts the loopback default below.
+#redirect_uri = http://127.0.0.1:39271
+
 ##### DO NOT EDIT THIS BLOCK #####
 ## Defaults to Google. Override it for another provider.
 #token_url = https://oauth2.googleapis.com/token
