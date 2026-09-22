@@ -25,7 +25,6 @@ include:
       - ca-certificates
       - man-db
       - msmtp
-      - libgnutls30
       - libio-socket-ssl-perl
       - libnet-smtp-ssl-perl
       - libnet-ssleay-perl
