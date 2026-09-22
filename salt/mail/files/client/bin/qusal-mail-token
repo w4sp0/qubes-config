@@ -8,7 +8,20 @@
 ## used as 'passwordeval' by msmtp and as a 'pythonfile' helper by
 ## offlineimap. Standard input is closed as callers may have the message
 ## being sent attached to it.
+##
+## Errors of the service are logged in the token qube only, so fail loudly
+## here instead of handing an empty token to the caller.
 
 set -eu
 
-exec qrexec-client-vm @default qusal.MailToken </dev/null
+hint="see 'journalctl -u qubes-qrexec-agent' in the token qube"
+
+if ! token="$(qrexec-client-vm @default qusal.MailToken </dev/null)"; then
+  printf '%s\n' "qusal-mail-token: service call failed, ${hint}" >&2
+  exit 1
+fi
+if test -z "${token}"; then
+  printf '%s\n' "qusal-mail-token: empty token received, ${hint}" >&2
+  exit 1
+fi
+printf '%s\n' "${token}"

@@ -26,12 +26,10 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 auth_mechanisms = XOAUTH2
 oauth2_access_token_eval = get_access_token()
 ##### EDIT THIS BLOCK #####
-synclabels = yes
 readonly = yes
 sync_deletes = no
 type = IMAP
 remotehost = imap.gmail.com
 remoteuser = john-doe@gmail.com
-oauth2_request_url = https://oauth2.googleapis.com/token
 
 # vim: ft=toml

@@ -15,5 +15,8 @@ qusal.MailEnqueue * @anyvm @anyvm deny
 
 qusal.MailToken   * @tag:mail-fetcher @default allow target=mail-token
 qusal.MailToken   * @tag:mail-sender  @default allow target=mail-token
+## Disposable templates carry no tag, allow them to test the configuration.
+qusal.MailToken   * dvm-mail-fetcher  @default allow target=mail-token
+qusal.MailToken   * dvm-mail-sender   @default allow target=mail-token
 qusal.MailToken   * @anyvm @anyvm deny
 ## vim:ft=qrexecpolicy

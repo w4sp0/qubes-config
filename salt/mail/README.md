@@ -28,17 +28,21 @@ Mail operations in Qubes OS.
 ## Description
 
 Create a mail fetcher qube named "(disp-)mail-fetcher", a mail reader qube
-names "mail-reader" and a mail sender qube named "(disp-)mail-sender".
+named "mail-reader", a mail sender qube named "(disp-)mail-sender" and an
+OAuth2 token qube named "mail-token".
 
-The online "(disp-)mail-fetcher" qube will fetch messages with POP3. After
-being fetched, you can copy them to the offline "mail-reader" qube, where you
-will be reading emails. After composing a message, the "mail-reader" qube will
-save the messages to a queue, which can be forwarded to the online
-"(disp-)mail-sender" qube. You can review messages to be sent from the
-"(disp-)mail-sender" qube and them send them via SMTP.
+The online "(disp-)mail-fetcher" qube will fetch messages with POP3 or IMAP.
+After being fetched, you can copy them to the offline "mail-reader" qube,
+where you will be reading emails. After composing a message, the
+"mail-reader" qube will save the messages to a queue, which can be forwarded
+to the online "(disp-)mail-sender" qube. You can review messages to be sent
+from the "(disp-)mail-sender" qube and then send them via SMTP.
 
-By default, the protocols used required SSL, POP3 on port 995, IMAP on port
-995 and SMTP on port 587. You can always override any configuration via
+For OAuth2 accounts, such as Gmail, the "mail-token" qube keeps the refresh
+token and hands out short lived access tokens to the fetcher and the sender.
+
+By default, the protocols used require SSL, POP3 on port 995, IMAP on port
+993 and SMTP on port 465. You can always override any configuration via
 included files.
 
 This formula is based on Unman's SplitMutt guide, using POP3 and/or IMAP to
