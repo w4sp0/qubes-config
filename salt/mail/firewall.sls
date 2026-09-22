@@ -86,11 +86,14 @@ token:
     - name: |
         set -eu
         qvm-firewall {{ qube }} reset
-        qvm-firewall {{ qube }} add drop
-        qvm-firewall {{ qube }} add --before 0 accept specialtarget=dns
+        qvm-firewall {{ qube }} add accept specialtarget=dns
 {%- for rule in rules %}
-        qvm-firewall {{ qube }} add --before 0 {{ rule }}
+        qvm-firewall {{ qube }} add {{ rule }}
 {%- endfor %}
+        qvm-firewall {{ qube }} add drop
+        ## 'reset' leaves a single 'accept' rule, drop it last so the
+        ## final 'drop' is already in place.
+        qvm-firewall {{ qube }} del --rule-no 0
 {% endfor %}
 {%- endfor %}
 
