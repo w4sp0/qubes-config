@@ -31,5 +31,8 @@ sync_deletes = no
 type = IMAP
 remotehost = imap.gmail.com
 remoteuser = john-doe@gmail.com
+## Gmail exposes every label as a folder, plus "[Gmail]/All Mail" holding
+## everything. Fetch only the inbox, archived mail then stays on the server.
+#folderfilter = lambda folder: folder == 'INBOX'
 
 # vim: ft=toml
