@@ -219,10 +219,14 @@ cp -- ~/.config/qusal/mail-token.conf.example ~/.config/qusal/mail-token.conf
 editor ~/.config/qusal/mail-token.conf
 ```
 
-Obtain the refresh token. The helper prints a consent URL, which you open in
-a browser qube. After approving, the browser is sent to the redirect URI,
-which may fail to load, nothing needs to listen there: copy the address it
-was sent to and paste it back, code and all:
+Obtain the refresh token. The mail qubes have no browser and should not get
+one. The helper prints a consent URL, which you copy with the Qubes clipboard
+(`Ctrl+Shift+C`, `Ctrl+Shift+V`) into a disposable browser qube, so that no
+provider session is left behind. After approving, the browser is sent to the
+redirect URI, which may fail to load, nothing needs to listen there: copy the
+address it was sent to back the same way and paste it at the prompt, code and
+all. The code is useless to the browser qube, as the client secret and the
+PKCE verifier never leave `mail-token`:
 
 ```sh
 qusal-mail-token-authorize
@@ -253,7 +257,10 @@ protocol, only the INBOX will be fetched while when using IMAP, you can choose
 which folders to fetch, defaults to fetch all folders.
 
 The configuration must be done in `dvm-mail-fetcher`, while the fetching of
-mails will be done in `(disp-)mail-fetcher`.
+mails will be done in `(disp-)mail-fetcher`. A disposable starts from the
+state `dvm-mail-fetcher` had when it was last shut down, so shut it down
+after every configuration change, otherwise `disp-mail-fetcher` keeps using
+the old files.
 
 #### fdm Configuration
 
@@ -436,7 +443,8 @@ qusal-send-mail
 The sender sends e-mails with `msmtp` via the SMTP protocol.
 
 The configuration must be done in `dvm-mail-sender`, while the sending of
-mails are done in `(disp-)mail-sender`.
+mails are done in `(disp-)mail-sender`. As with the fetcher, shut down
+`dvm-mail-sender` after every configuration change.
 
 #### msmtp Configuration
 
