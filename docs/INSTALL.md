@@ -160,8 +160,14 @@ with the sys-git formula.
     ```sh
     mkdir -p ~/src
     sudo qubesctl state.apply sys-git.install-client
-    git clone --recurse-submodules qrexec://@default/qusal.git ~/src/qusal
+    git clone qrexec://@default/qusal.git ~/src/qusal
+    git -C ~/src/qusal config submodule.salt/dotfiles.url \
+      qrexec://@default/dotfiles
+    git -C ~/src/qusal submodule update --init
     ```
+
+    The submodule URL in `.gitmodules` points to GitHub, which Dom0 cannot
+    reach. The local configuration overrides it.
 
 3.  Next updates will be pulling instead of cloning:
 

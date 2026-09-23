@@ -64,6 +64,18 @@ For building RPMs:
 
 *   [dependencies/rpm.txt](../dependencies/rpm.txt)
 
+The `salt/dotfiles` submodule URL in `.gitmodules` points to GitHub, so that
+the CI runners can clone it. To fetch it over Qrexec from `sys-git` instead,
+override the URL in the local git configuration before the submodule is
+initialized:
+
+```sh
+git config submodule.salt/dotfiles.url qrexec://@default/dotfiles
+git submodule update --init
+```
+
+The local value has precedence over `.gitmodules` and is not committed.
+
 ## Issues
 
 See open issues and search for the word `TODO` in the repository files.
