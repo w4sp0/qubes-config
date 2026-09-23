@@ -13,7 +13,7 @@ Development environment in Qubes OS.
 
 Setup a development qube named "dev". Defines the user interactive shell,
 installing goodies, applying dotfiles, being client of sys-pgp, sys-git and
-sys-ssh-agent. The qube has netvm but can reach remote servers if the policy
+sys-ssh-agent. The qube has no netvm but can reach remote servers if the policy
 allows.
 
 ## Installation
