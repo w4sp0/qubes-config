@@ -1,0 +1,172 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Download or build a pinned binary in a builder disposable. With 'hash',
+# print its SHA-256. With 'install', check it against the pin and send it to
+# the target template with 'qusal.InstallBinary', which checks the pin again.
+
+set -eu
+
+usage(){
+  printf '%s\n' "Usage: ${0##*/} ACTION METHOD NAME ARGS... [TARGET SHA256]
+
+Actions:
+  hash      build or download, print the SHA-256 of the binary
+  install   build or download, then send it to TARGET if it matches SHA256
+
+Methods:
+  release NAME URL URL_SHA256 MEMBER
+      Download URL, check URL_SHA256. MEMBER is the path of the binary
+      in the .tar.gz, .tgz or .zip archive, or '-' if URL is the binary.
+  go NAME REPO COMMIT PACKAGE TOOLCHAIN
+      Fetch COMMIT of the git REPO, then 'go build PACKAGE' with
+      GOTOOLCHAIN=TOOLCHAIN (for example go1.27.0), CGO_ENABLED=0, -trimpath
+      and -buildvcs=false, so that the build is reproducible.
+
+Examples:
+  ${0##*/} hash go discordo https://github.com/ayn2op/discordo.git \\
+    de2f2c94f0fc128730a90d88f3c3a7fb3b67dc92 . go1.27.0
+  ${0##*/} install release slack-tui URL URL_SHA256 slack-tui \\
+    tpl-slack SHA256" >&2
+  exit 1
+}
+
+die(){
+  printf '%s\n' "${0##*/}: ${*}" >&2
+  exit 1
+}
+
+check_arg(){
+  case "${2}" in
+    ""|*[!A-Za-z0-9._:/@+=%~-]*) die "invalid ${1}: '${2}'";;
+    *) ;;
+  esac
+}
+
+## Usage: check_hex LABEL VALUE LENGTH
+check_hex(){
+  case "${2}" in
+    ""|*[!0-9a-f]*) die "invalid ${1}: '${2}'";;
+    *) ;;
+  esac
+  test "${#2}" = "${3}" || die "invalid ${1}, need ${3} hex digits: '${2}'"
+}
+
+sha256_of(){
+  sha256sum < "${1}" | cut -d " " -f 1
+}
+
+fetch_release(){
+  url="${1}"
+  url_sha256="${2}"
+  member="${3}"
+  curl --location \
+    --connect-timeout 20 \
+    --tlsv1.2 --proto =https --proto-redir =https \
+    --fail --no-progress-meter --show-error \
+    --output "${work}/download" \
+    -- "${url}"
+  download_sha256="$(sha256_of "${work}/download")"
+  if test "${download_sha256}" != "${url_sha256}"; then
+    die "SHA-256 mismatch for ${url}: got ${download_sha256}"
+  fi
+  if test "${member}" = "-"; then
+    out="${work}/download"
+    return
+  fi
+  case "/${member}/" in
+    */../*) die "invalid member: '${member}'";;
+    *) ;;
+  esac
+  mkdir -- "${work}/extract"
+  case "${url}" in
+    *.tar.gz|*.tgz)
+      tar -xzf "${work}/download" -C "${work}/extract" \
+        --no-same-owner --no-same-permissions -- "${member}";;
+    *.zip)
+      unzip -q -d "${work}/extract" -- "${work}/download" "${member}";;
+    *) die "unknown archive type: ${url}";;
+  esac
+  out="${work}/extract/${member}"
+  test -f "${out}" || die "member '${member}' not found in archive"
+}
+
+build_go(){
+  repo="${1}"
+  commit="${2}"
+  package="${3}"
+  toolchain="${4}"
+  git init --quiet -- "${work}/src"
+  git -C "${work}/src" fetch --quiet --depth 1 -- "${repo}" "${commit}"
+  git -C "${work}/src" checkout --quiet --detach FETCH_HEAD
+  head="$(git -C "${work}/src" rev-parse HEAD)"
+  test "${head}" = "${commit}" || die "fetched ${head}, expected ${commit}"
+  (
+    cd -- "${work}/src"
+    GOTOOLCHAIN="${toolchain}" \
+      GOPATH="${work}/gopath" \
+      GOCACHE="${work}/gocache" \
+      GOENV=off \
+      CGO_ENABLED=0 \
+      GOFLAGS="-mod=readonly -modcacherw -trimpath -buildvcs=false" \
+      go build -ldflags="-s -w -buildid=" -o "${work}/out" -- "${package}"
+  )
+  out="${work}/out"
+}
+
+test "${#}" -ge 3 || usage
+action="${1}"
+method="${2}"
+name="${3}"
+shift 3
+case "${action}" in
+  hash|install) ;;
+  *) usage;;
+esac
+check_arg name "${name}"
+
+case "${method}" in
+  release) nargs=3;;
+  go) nargs=4;;
+  *) usage;;
+esac
+case "${action}" in
+  hash) test "${#}" = "${nargs}" || usage;;
+  *) test "${#}" = "$((nargs + 2))" || usage;;
+esac
+for arg in "${@}"; do
+  check_arg argument "${arg}"
+done
+
+## Home is on the private volume, /tmp may be a small tmpfs.
+work="$(mktemp -d -- "${HOME}/qusal-install-binary.XXXXXX")"
+trap 'rm -rf -- "${work}"' EXIT INT TERM
+
+case "${method}" in
+  release)
+    check_hex URL_SHA256 "${2}" 64
+    fetch_release "${1}" "${2}" "${3}"
+    shift 3;;
+  go)
+    check_hex COMMIT "${2}" 40
+    build_go "${1}" "${2}" "${3}" "${4}"
+    shift 4;;
+  *) usage;;
+esac
+
+actual="$(sha256_of "${out}")"
+if test "${action}" = "hash"; then
+  printf '%s  %s\n' "${actual}" "${name}"
+  exit 0
+fi
+
+target="${1}"
+expected="${2}"
+check_hex SHA256 "${expected}" 64
+if test "${actual}" != "${expected}"; then
+  die "SHA-256 mismatch for '${name}': expected ${expected}, got ${actual}"
+fi
+qrexec-client-vm -- "${target}" "qusal.InstallBinary+${name}" < "${out}"

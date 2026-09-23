@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Install one binary received on stdin as /usr/bin/NAME, where NAME is the
+# service argument. The binary is installed only if its SHA-256 matches the
+# pin in /etc/qusal-install-binary/NAME.sha256, which the template state
+# writes. The sender is not trusted.
+
+set -eu
+
+name="${1-}"
+pin_dir="/etc/qusal-install-binary"
+bin_dir="/usr/bin"
+## Refuse input larger than 512 MiB.
+max_size="536870912"
+
+die(){
+  printf '%s\n' "qusal.InstallBinary: ${*}" >&2
+  exit 1
+}
+
+case "${name}" in
+  ""|.*|*[!a-z0-9._-]*) die "invalid binary name";;
+  *) ;;
+esac
+
+pin_file="${pin_dir}/${name}.sha256"
+if ! test -f "${pin_file}"; then
+  die "no pin for '${name}' in ${pin_dir}"
+fi
+expected="$(head -n 1 -- "${pin_file}")"
+case "${expected}" in
+  *[!0-9a-f]*) die "invalid pin for '${name}'";;
+  *) ;;
+esac
+if test "${#expected}" != "64"; then
+  die "invalid pin for '${name}'"
+fi
+
+## Temporary file on the same file system, so the final move is atomic.
+tmp="$(mktemp -- "${bin_dir}/.qusal-install-binary.XXXXXX")"
+trap 'rm -f -- "${tmp}"' EXIT INT TERM
+head -c "$((max_size + 1))" > "${tmp}"
+size="$(wc -c < "${tmp}")"
+if test "${size}" -gt "${max_size}"; then
+  die "input for '${name}' is larger than ${max_size} bytes"
+fi
+
+actual="$(sha256sum < "${tmp}" | cut -d " " -f 1)"
+if test "${actual}" != "${expected}"; then
+  die "SHA-256 mismatch for '${name}': expected ${expected}, got ${actual}"
+fi
+
+chmod 0755 -- "${tmp}"
+mv -f -- "${tmp}" "${bin_dir}/${name}"
+trap - EXIT INT TERM
+printf '%s\n' "qusal.InstallBinary: installed ${bin_dir}/${name}" >&2
