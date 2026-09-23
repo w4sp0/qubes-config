@@ -10,13 +10,13 @@ include:
   - dev.home-cleanup
   - dotfiles.copy-all
 
-"{{ slsdotpath }}-browser-urlopener":
+"{{ slsdotpath }}-browser":
   file.managed:
     - require:
       - sls: dotfiles.copy-all
     - name: /home/user/.config/sh/profile.d/browser.sh
     - contents: |
-        BROWSER="urlopener"
+        BROWSER="qvm-open-in-dvm"
         export BROWSER
     - mode: "0644"
     - user: user
