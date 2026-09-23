@@ -143,7 +143,12 @@ done
 
 ## Home is on the private volume, /tmp may be a small tmpfs.
 work="$(mktemp -d -- "${HOME}/qusal-install-binary.XXXXXX")"
-trap 'rm -rf -- "${work}"' EXIT INT TERM
+## Go makes its module cache and downloaded toolchains read-only.
+cleanup(){
+  chmod -R u+w -- "${work}" 2>/dev/null || true
+  rm -rf -- "${work}"
+}
+trap cleanup EXIT INT TERM
 
 case "${method}" in
   release)
