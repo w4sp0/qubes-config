@@ -51,7 +51,9 @@ sudo qubesctl state.apply discord.appmenus
 <!-- pkg:end:post-install -->
 
 The state `discord.install-binary` runs in Dom0 after `discord.install`,
-because the template needs the pin and the Qrexec service first.
+because the template needs the pin and the Qrexec service first. Restart the
+qube `discord` afterwards, as it gets the new binary from the template only
+at start.
 
 ## Access Control
 
@@ -76,4 +78,4 @@ Open a terminal in the qube `discord` and run `discordo`.
     `go discordo https://github.com/ayn2op/discordo.git COMMIT . go1.27.0`.
     Change the toolchain if the `go` line of `go.mod` changed.
 3.  Set `sha256` to the value and apply `discord.install` and
-    `discord.install-binary` again.
+    `discord.install-binary` again, then restart the qube `discord`.

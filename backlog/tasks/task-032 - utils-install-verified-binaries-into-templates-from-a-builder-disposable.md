@@ -4,7 +4,7 @@ title: 'utils: install verified binaries into templates from a builder disposabl
 status: In Progress
 assignee: []
 created_date: '2026-09-23 21:47'
-updated_date: '2026-09-23 22:44'
+updated_date: '2026-09-23 22:58'
 labels:
   - utils
   - qrexec
@@ -50,7 +50,7 @@ Generalize the `sys-bitcoin` builder pattern (`disp-bitcoin-builder` and `qusal.
 <!-- AC:BEGIN -->
 - [x] #1 A backlog decision records the builder template, the qrexec service, the policy format and the pin format
 - [ ] #2 The macro installs a release binary with a pinned SHA-256 into a template
-- [ ] #3 The macro builds a pinned git commit in the disposable and installs the result into a template
+- [x] #3 The macro builds a pinned git commit in the disposable and installs the result into a template
 - [ ] #4 The template refuses a file whose SHA-256 does not match the pin, and installs nothing
 - [ ] #5 A second apply with an unchanged pin reports 0 changes and starts no disposable
 - [ ] #6 No template gets golang-go or new sys-cacher passthrough hosts because of this mechanism
@@ -70,4 +70,6 @@ Generated rpm_spec/qusal-builder.spec at a3e8d1c; spec-gen.sh test passes. spec-
 2026-09-24: the go method works in dvm-builder. Two builds of discordo de2f2c94 with go1.27.0 in separate disposables gave the same SHA-256 (93e5d93a42890778c566bf826946e6b7d5ff1016ee760e8d18be5fae5c865c35), so the Go build is reproducible with the script flags. Fixed: cleanup failed on read-only Go toolchain files (chmod -R u+w before rm).
 
 2026-09-24 dom0 test: the build passed and the builder-side pin check passed, but qrexec refused qusal.InstallBinary+discordo (policy 45-discord line 8, the deny). '@dispvm:dvm-builder' does not match a running disposable as a source. Fix: tag dvm-builder with qusal-builder (disposables copy template tags) and use @tag:qusal-builder as the policy source.
+
+2026-09-24 dom0 test: with @tag:qusal-builder, discord.install-binary built discordo in a dvm-builder disposable and tpl-discord installed it; after a restart, /usr/bin/discordo in qube discord has the pinned SHA-256. From the dev qube (no tag), qrexec-client-vm tpl-discord qusal.InstallBinary+discordo returns 'Request refused' (exit 126). Open: AC #2 (release method on a real system), AC #4 (mismatch refusal on a real system), AC #5 (second apply), AC #6.
 <!-- SECTION:NOTES:END -->

@@ -4,7 +4,7 @@ title: 'discord: build discordo from a pinned commit in the builder disposable'
 status: In Progress
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-23 22:35'
+updated_date: '2026-09-23 22:58'
 labels:
   - discord
   - security
@@ -60,6 +60,8 @@ Candidate pin (upstream main on 2026-09-23): `de2f2c94f0fc128730a90d88f3c3a7fb3b
 Zip removed. salt/discord/binaries.jinja pins commit de2f2c94f0fc128730a90d88f3c3a7fb3b67dc92 with toolchain go1.27.0; sha256 is empty until the build output is hashed in two dvm-builder disposables (see salt/builder/README.md). Until then discord.install and discord.install-binary fail with 'No SHA-256 pin for discordo'. Added discord.install-binary (dom0) and the policy file.
 
 Pin set in salt/discord/binaries.jinja: sha256 93e5d93a42890778c566bf826946e6b7d5ff1016ee760e8d18be5fae5c865c35, equal in two dvm-builder builds.
+
+2026-09-24: installed on the machine. /usr/bin/discordo in qube discord has the pinned SHA-256 after a restart of discord (the app qube gets template files only at start; README updated).
 <!-- SECTION:NOTES:END -->
 
 ## Comments
