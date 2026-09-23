@@ -9,7 +9,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 include:
   - utils.tools.common.update
   - utils.tools.zsh
-  - cloud.install-repo
   - dev.home-cleanup
   - dotfiles.copy-all
   - sys-ssh-agent.install-client
@@ -19,7 +18,6 @@ include:
   pkg.installed:
     - require:
       - sls: utils.tools.common.update
-      - sls: {{ slsdotpath }}.install-repo
     - install_recommends: False
     - skip_suggestions: True
     - setopt: "install_weak_deps=False"
@@ -34,7 +32,6 @@ include:
       - firefox-esr
       - git
       - man-db
-      - mise # polyglot tool/runtime version manager (repo added in install-repo)
       ## Searching files
       - file
       - tree
