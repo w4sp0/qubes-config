@@ -4,14 +4,15 @@ title: 'homelab: install talosctl in the operations template'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:02'
+updated_date: '2026-09-23 21:47'
 labels:
   - homelab
   - talos
-  - mise
   - supply-chain
+  - builder
 milestone: m-5
 dependencies:
-  - TASK-001.05
+  - TASK-032
 references:
   - 'https://www.talos.dev/latest/talos-guides/install/talosctl/'
   - salt/cloud/install.sls
@@ -30,7 +31,7 @@ ordinal: 1200
 
 ### Proposed solution
 
-Pin `talosctl` with the `mise` configuration and lockfile from TASK-001.05, in the template that TASK-025 selects. Match the version to the Talos version of the cluster.
+Install a pinned `talosctl` release with the TASK-032 macro, in the template that TASK-025 selects. Match the version to the Talos version of the cluster.
 
 ### The value to a user, and who that user might be
 

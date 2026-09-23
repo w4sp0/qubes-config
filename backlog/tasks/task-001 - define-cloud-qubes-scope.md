@@ -5,7 +5,7 @@ status: In Progress
 assignee:
   - '@wassp'
 created_date: '2025-12-20 19:57'
-updated_date: '2026-09-23 20:41'
+updated_date: '2026-09-23 21:47'
 labels:
   - cloud
   - gitops
@@ -57,3 +57,12 @@ Tools enumeration for `cloud` qube:
 
 NOTE: most of these tools can be handled by `mise` tool,
 <!-- SECTION:NOTES:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-23 21:47
+---
+2026-09-23: the project does not use mise. The note above about mise is superseded; non-Debian tools come from the builder disposable (TASK-032).
+---
+<!-- COMMENTS:END -->

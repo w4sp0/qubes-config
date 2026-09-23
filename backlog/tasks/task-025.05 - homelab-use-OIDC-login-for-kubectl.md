@@ -4,6 +4,7 @@ title: 'homelab: use OIDC login for kubectl'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:25'
+updated_date: '2026-09-23 21:48'
 labels:
   - homelab
   - kubernetes
@@ -13,6 +14,7 @@ milestone: m-5
 dependencies:
   - TASK-025.04
   - TASK-025.03
+  - TASK-032
 references:
   - 'https://github.com/int128/kubelogin'
   - 'https://www.talos.dev/latest/kubernetes-guides/configuration/'
@@ -45,3 +47,12 @@ Configure the Kubernetes API server of the Talos cluster to accept OIDC tokens f
 - [ ] #3 The admin kubeconfig is in vault and not in the operations qube
 - [ ] #4 kubelogin version and checksum are pinned in the repository
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-23 21:48
+---
+Install kubelogin with the TASK-032 builder macro.
+---
+<!-- COMMENTS:END -->

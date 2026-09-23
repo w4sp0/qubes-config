@@ -1,9 +1,10 @@
 ---
 id: TASK-005
 title: 'dev-tofu: install.top targets non-existent otee-dev'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-23 21:36'
 labels:
   - dev-tofu
   - top
@@ -43,6 +44,12 @@ No state is applied to `tpl-dev-tofu`.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 salt/dev-tofu/install.top applies dev-tofu.install to tpl-dev-tofu
-- [ ] #2 No file under salt/dev-tofu/ contains the string otee-dev
+- [x] #1 salt/dev-tofu/install.top applies dev-tofu.install to tpl-dev-tofu
+- [x] #2 No file under salt/dev-tofu/ contains the string otee-dev
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Fixed in salt/dev-tofu/install.top. grep -rn otee-dev salt/dev-tofu has no match. Set Done after an apply on tpl-dev-tofu.
+<!-- SECTION:NOTES:END -->

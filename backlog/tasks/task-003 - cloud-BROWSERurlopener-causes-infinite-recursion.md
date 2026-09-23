@@ -1,9 +1,10 @@
 ---
 id: TASK-003
 title: 'cloud: BROWSER=urlopener causes infinite recursion'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-23 21:36'
 labels:
   - cloud
   - dotfiles
@@ -47,7 +48,15 @@ State `cloud-browser-urlopener` writes `BROWSER="urlopener"` to `~/.config/sh/pr
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 BROWSER in qube cloud does not resolve to urlopener
-- [ ] #2 urlopener exits after one call when qvm-open-in-dvm is not in PATH
+- [x] #1 BROWSER in qube cloud does not resolve to urlopener
+- [x] #2 urlopener exits after one call when qvm-open-in-dvm is not in PATH
 - [ ] #3 firefox-esr is used as BROWSER or is removed from salt/cloud/install.sls
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+cloud.configure now sets BROWSER=qvm-open-in-dvm (state renamed to cloud-browser). urlopener in the dotfiles submodule skips BROWSER when it names itself. Test with PATH limited to a scratch dir: old script timed out (recursion), new script calls xdg-open once; another BROWSER value is still used.
+
+AC #3 is open: firefox-esr in tpl-cloud is used only if disposables of dvm-cloud open the URLs (default_dispvm of cloud is not set). Decide: set default_dispvm: dvm-cloud, or remove firefox-esr.
+<!-- SECTION:NOTES:END -->

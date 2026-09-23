@@ -1,9 +1,10 @@
 ---
 id: TASK-004
 title: 'cloud: install-repo.top applies docker.install-repo'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-23 21:47'
 labels:
   - cloud
   - top
@@ -44,6 +45,15 @@ The Docker repository is added to `tpl-cloud`. The mise repository is not added.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 salt/cloud/install-repo.top applies cloud.install-repo to tpl-cloud
-- [ ] #2 Highstate with the top enabled adds /etc/apt/sources.list.d/mise.sources and no docker.sources
+- [x] #1 salt/cloud has no install-repo.sls, no install-repo.top and no files/repo/mise.* files
+- [x] #2 cloud.install does not include or require an install-repo state and does not install mise
+- [x] #3 grep -rn cloud.install-repo salt docs returns no match
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Fixed in salt/cloud/install-repo.top. AC #2 needs a highstate on tpl-cloud.
+
+Resolution changed: the project does not use mise, and cloud.install-repo only added the mise repository. The state, its top file and the mise repository files are removed instead of fixed, and mise is removed from cloud.install. Set Done after an apply of cloud.install on tpl-cloud.
+<!-- SECTION:NOTES:END -->

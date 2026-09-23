@@ -4,6 +4,7 @@ title: 'cloud: mise.yum.repo ignores the local GPG key'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-23 21:47'
 labels:
   - cloud
   - repo
@@ -44,3 +45,12 @@ dnf downloads and trusts the key from the network.
 - [ ] #1 mise.yum.repo sets gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mise
 - [ ] #2 dnf makecache on a Fedora tpl-cloud does not download a GPG key
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-23 21:47
+---
+Obsolete: the project does not use mise (decision 2026-09-23). salt/cloud/files/repo/mise.* and the cloud.install-repo state are removed. Archived.
+---
+<!-- COMMENTS:END -->

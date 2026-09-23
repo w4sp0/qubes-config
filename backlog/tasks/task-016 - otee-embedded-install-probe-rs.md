@@ -4,12 +4,14 @@ title: 'otee-embedded: install probe-rs'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-23 21:48'
 labels:
   - otee-embedded
   - rust
   - supply-chain
 milestone: m-2
-dependencies: []
+dependencies:
+  - TASK-032
 references:
   - 'https://probe.rs/docs/getting-started/installation/'
   - salt/otee-embedded/install.sls
@@ -41,3 +43,12 @@ Install a pinned `probe-rs-tools` release in the template, with checksum verific
 - [ ] #3 The install fails when the checksum does not match
 - [ ] #4 A second apply reports no changes
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-23 21:48
+---
+Use the TASK-032 builder macro for the pinned probe-rs-tools release.
+---
+<!-- COMMENTS:END -->

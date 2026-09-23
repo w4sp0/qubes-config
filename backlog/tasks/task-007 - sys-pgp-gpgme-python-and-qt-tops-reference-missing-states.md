@@ -1,9 +1,10 @@
 ---
 id: TASK-007
 title: 'sys-pgp: gpgme python and qt tops reference missing states'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-23 21:36'
 labels:
   - sys-pgp
   - top
@@ -45,6 +46,12 @@ Salt reports that SLS `sys-pgp.install-client-python` is not found. The qt top h
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 install-client-gpgme-python.top references sys-pgp.install-client-gpgme-python
-- [ ] #2 install-client-gpgme-qt.top references sys-pgp.install-client-gpgme-qt
+- [x] #1 install-client-gpgme-python.top references sys-pgp.install-client-gpgme-python
+- [x] #2 install-client-gpgme-qt.top references sys-pgp.install-client-gpgme-qt
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Both top files fixed. A script check over all salt/*/*.top (excluding qvm.* and update.*, which dom0 provides) finds no missing SLS.
+<!-- SECTION:NOTES:END -->
