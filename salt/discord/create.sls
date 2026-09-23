@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -18,8 +19,8 @@ prefs:
 - audiovm: ""
 features:
 - set:
-  - menu-items: "qubes-open-file-manager.desktop qubes-run-terminal.desktop qubes-start.desktop"
-  - default-menu-items: "qubes-open-file-manager.desktop qubes-run-terminal.desktop qubes-start.desktop"
+  - menu-items: "qubes-run-terminal.desktop qubes-start.desktop"
+  - default-menu-items: "qubes-run-terminal.desktop qubes-start.desktop"
 {%- endload %}
 {{ load(defaults) }}
 
@@ -35,7 +36,7 @@ present:
 prefs:
 - template: tpl-{{ slsdotpath }}
 - label: yellow
-- audiovm: "*default*"
+- audiovm: ""
 - vcpus: 1
 - memory: 400
 - maxmem: 600
@@ -48,6 +49,9 @@ features:
   - service.tracker
   - service.evolution-data-server
 - set:
-  - menu-items: "qubes-open-file-manager.desktop qubes-run-terminal.desktop qubes-start.desktop"
+  - menu-items: "qubes-run-terminal.desktop qubes-start.desktop"
 {%- endload %}
 {{ load(defaults) }}
+
+{% from 'utils/macros/policy.sls' import policy_set with context -%}
+{{ policy_set(sls_path, '45') }}

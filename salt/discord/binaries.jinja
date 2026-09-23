@@ -1,0 +1,20 @@
+{#
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+Pins for utils/macros/install-binary.sls. discordo has no releases, so it
+is built from a commit. To update: change 'commit', run the 'hash' command
+from the README in two builder disposables, and set 'sha256' to the output
+if both are equal.
+#}
+
+{% set discordo = {
+    'name': 'discordo',
+    'method': 'go',
+    'repo': 'https://github.com/ayn2op/discordo.git',
+    'commit': 'de2f2c94f0fc128730a90d88f3c3a7fb3b67dc92',
+    'package': '.',
+    'toolchain': 'go1.27.0',
+    'sha256': '',
+} -%}

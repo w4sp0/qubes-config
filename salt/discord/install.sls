@@ -1,22 +1,23 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
 
 {% if grains['nodename'] != 'dom0' -%}
 
+{%- import slsdotpath ~ "/binaries.jinja" as binaries -%}
+{%- from 'utils/macros/install-binary.sls' import install_binary_pin %}
+
 include:
-  - {{ slsdotpath }}.install-repo
   - utils.tools.common.update
-  - utils.tools.xfce
   - dotfiles.copy-x11
-  - sys-audio.install-client
+  - builder.install-target
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
     - require:
-      - sls: {{ slsdotpath }}.install-repo
       - sls: utils.tools.common.update
     - install_recommends: False
     - skip_suggestions: True
@@ -24,10 +25,8 @@ include:
     - pkgs:
       - qubes-core-agent-networking
       - ca-certificates
-      - qubes-core-agent-thunar
-      - thunar
-      - signal-desktop
-      - dunst
-      - libayatana-appindicator3-1
+
+## The binary itself is sent by the dom0 state 'discord.install-binary'.
+{{ install_binary_pin(binaries.discordo) }}
 
 {% endif -%}
