@@ -55,7 +55,7 @@ Dom0 state, applied after the template state:
 
 Policy, in 'salt/FORMULA/files/admin/policy/default.policy':
 
-  qusal.InstallBinary +example @dispvm:dvm-builder tpl-FORMULA allow user=root
+  qusal.InstallBinary +example @tag:qusal-builder  tpl-FORMULA allow user=root
   qusal.InstallBinary +example @anyvm              @anyvm      deny
 
 The dom0 state does nothing when the template already has a binary with the

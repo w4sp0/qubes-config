@@ -55,10 +55,11 @@ their template.
 _Default policy_: `denies` `all` qubes from calling `qusal.InstallBinary`
 
 Each formula allows disposables of `dvm-builder` to send one named binary to
-its own template, for example:
+its own template. `dvm-builder` has the tag `qusal-builder`, which its
+disposables copy, so the policy uses the tag as the source, for example:
 
 ```qrexecpolicy
-qusal.InstallBinary +discordo @dispvm:dvm-builder tpl-discord allow user=root
+qusal.InstallBinary +discordo @tag:qusal-builder  tpl-discord allow user=root
 qusal.InstallBinary +discordo @anyvm              @anyvm      deny
 ```
 

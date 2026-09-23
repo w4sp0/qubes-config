@@ -48,6 +48,11 @@ features:
   - appmenus-dispvm
   - service.cups
   - service.cups-browsed
+## Disposables copy the tags of their template. Policies use the tag as the
+## source, because '@dispvm:dvm-builder' matches only as a target.
+tags:
+- add:
+  - "qusal-builder"
 {%- endload %}
 {{ load(defaults) }}
 

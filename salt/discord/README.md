@@ -60,7 +60,7 @@ _Default policy_: `denies` `all` qubes from calling `qusal.InstallBinary`
 Allow disposables of `dvm-builder` to install `discordo` in `tpl-discord`:
 
 ```qrexecpolicy
-qusal.InstallBinary +discordo @dispvm:dvm-builder tpl-discord allow user=root
+qusal.InstallBinary +discordo @tag:qusal-builder  tpl-discord allow user=root
 qusal.InstallBinary +discordo @anyvm              @anyvm      deny
 ```
 

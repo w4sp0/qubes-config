@@ -4,6 +4,6 @@
 
 ## Do not modify this file, create a new policy with a lower number in the
 ## file name instead. For example `30-user.policy`.
-qusal.InstallBinary +discordo @dispvm:dvm-builder tpl-{{ sls_path }} allow user=root
+qusal.InstallBinary +discordo @tag:qusal-builder  tpl-{{ sls_path }} allow user=root
 qusal.InstallBinary +discordo @anyvm              @anyvm              deny
 ## vim:ft=qrexecpolicy

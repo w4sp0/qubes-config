@@ -36,8 +36,11 @@ check what it receives.
   with `qvm-run --dispvm=dvm-builder` only when the template binary does not
   have the pinned SHA-256.
 - Policy per binary, in the formula policy file:
-  `qusal.InstallBinary +NAME @dispvm:dvm-builder tpl-FORMULA allow user=root`
-  followed by a deny for all other sources.
+  `qusal.InstallBinary +NAME @tag:qusal-builder tpl-FORMULA allow user=root`
+  followed by a deny for all other sources. `dvm-builder` has the tag
+  `qusal-builder`, and its disposables copy it. The first version used
+  `@dispvm:dvm-builder` as the source; qrexec refused the call, because that
+  token matches only as a target (2026-09-24, dom0 test).
 
 ## Consequences
 
