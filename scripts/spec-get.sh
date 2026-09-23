@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ## SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 ##
 ## SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -77,13 +78,12 @@ if test "${key}" = "branch"; then
   branch="$(git branch --show-current)"
 fi
 
-toplevel="$(git rev-parse --show-toplevel)"
-group="${toplevel##*/}"
+group="${SPEC_GROUP:-qusal}"
 block_max_chars group "${group}" 70
 file_roots="/srv/salt/${group}"
 vendor="${SPEC_VENDOR:-"$(git config --get user.name)"}"
 packager="${SPEC_PACKAGER:-"${vendor} <$(git config --get user.email)>"}"
-url="${SPEC_URL:-"https://github.com/ben-grande/qusal"}"
+url="${SPEC_URL:-"https://github.com/w4sp0/qubes-config"}"
 bug_url="${SPEC_BUGURL:-"${url}/issues"}"
 
 if test -z "${group}" || test -z "${vendor}" || test -z "${packager}" \
@@ -160,7 +160,7 @@ if test "${key}" = "saltfiles" || test "${key}" = "requires"; then
   fi
   requires_valid=""
   for r in $(printf '%s' "${requires}" | tr " " "\n"); do
-    if ! test -d "salt/${r}"; then
+    if ! test -d "salt/${r}" || test "${r}" = "${name}"; then
       continue
     fi
     requires_valid="${requires_valid} ${r}"
