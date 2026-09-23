@@ -5,12 +5,13 @@ status: In Progress
 assignee:
   - '@wassp'
 created_date: '2025-12-20 19:57'
-updated_date: '2025-12-20 20:10'
+updated_date: '2026-09-23 20:41'
 labels:
   - cloud
   - gitops
   - devops
   - feature
+milestone: m-1
 dependencies: []
 ---
 

@@ -45,5 +45,6 @@ include:
       - xclip
       - bash-completion
       - tig
+      - urlview
 
 {% endif -%}

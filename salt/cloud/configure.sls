@@ -10,4 +10,17 @@ include:
   - dev.home-cleanup
   - dotfiles.copy-all
 
+"{{ slsdotpath }}-browser-urlopener":
+  file.managed:
+    - require:
+      - sls: dotfiles.copy-all
+    - name: /home/user/.config/sh/profile.d/browser.sh
+    - contents: |
+        BROWSER="urlopener"
+        export BROWSER
+    - mode: "0644"
+    - user: user
+    - group: user
+    - makedirs: True
+
 {% endif -%}
