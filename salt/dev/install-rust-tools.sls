@@ -17,7 +17,8 @@ own '/usr/local' on the private volume. 'CARGO_HOME' keeps pointing to the
 home directory, so the registry cache and 'cargo install' stay per user.
 
 The download goes through the Qubes update proxy, which is only reachable
-from templates, so apply the state to a template.
+from templates, so apply the state to a template. With 'sys-cacher' as the
+update proxy, 'static.rust-lang.org' must be in its 'PassThroughPattern'.
 
 Apply the state again to update the toolchain.
 #}
