@@ -11,4 +11,4 @@ base:
   'tpl-usb':
     - usb.install
   'dvm-usb':
-    - usb.configur-dvm
+    - usb.configure-dvm
