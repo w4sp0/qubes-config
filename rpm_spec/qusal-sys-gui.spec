@@ -20,17 +20,18 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Hybrid GUI domain in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later AND GPL-2.0-only
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dotfiles
+Requires:       qusal-mgmt
 Requires:       qusal-utils
 
 
@@ -76,6 +77,8 @@ if test "$1" = "1"; then
   ## Install
   qubesctl top.enable qvm.sys-gui pillar=True
   qubesctl state.apply sys-gui.create
+  qubesctl --skip-dom0 --targets=tpl-mgmt state.apply mgmt.install
+  qubesctl state.apply sys-gui.prefs-mgmt
   qubesctl --skip-dom0 --targets=tpl-sys-gui state.apply sys-gui.install
   qubesctl --skip-dom0 --targets=sys-gui state.apply sys-gui.configure
   qubesctl state.apply sys-gui.prefs
@@ -111,7 +114,22 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Fri Sep 12 2025 Ben Grande <ben.grande.b@gmail.com> - 708e15e
+- fix: remove GUI packages unavailable on Debian 13
+
+* Sat Jun 28 2025 3np <3np@example.com> - dd0dc19
+- fix(sys-gui): install qubes-gui-daemon-selinux
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0a528b1
+- Merge branch 'fedora-41'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - f933523
+- feat: bump Fedora version
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296

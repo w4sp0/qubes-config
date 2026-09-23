@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Dotfiles
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later AND BSD-2-Clause AND CC-BY-SA-3.0 AND CC-BY-SA-4.0 AND GFDL-1.3-or-later AND GPL-2.0-only AND GPL-3.0-only AND GPL-3.0-or-later AND MIT AND OFL-1.1 AND Vim
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -119,6 +119,135 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Wed Sep 09 2026 Radek Janik <cyberwassp@gmail.com> - 9b45fe3
+- chore: update dotfiles submodule
+
+* Wed Sep 09 2026 Radek Janik <cyberwassp@gmail.com> - b0d71ae
+- chore: update dotfiles submodule
+
+* Wed Sep 09 2026 Radek Janik <cyberwassp@gmail.com> - b45f540
+- feat(dotfiles): add Source Code Pro font
+
+* Wed Apr 29 2026 Radek Janik <cyberwassp@gmail.com> - 0885321
+- chore: update submodule
+
+* Sun Jan 04 2026 rad-jan <cyberwassp@gmail.com> - 094e8bf
+- chore(dotfiles): update submodule
+
+* Sat Nov 01 2025 wassp <cyberwassp@gmail.com> - 7b90651
+- feat: submodule: update
+
+* Sat Nov 01 2025 wassp <cyberwassp@gmail.com> - 099c1e9
+- feat: submodules: Update submodules
+
+* Wed Oct 29 2025 wassp <cyberwassp@gmail.com> - b2cbd3f
+- feat: Update submodule
+
+* Thu Sep 11 2025 wassp <cyberwassp@gmail.com> - 649c979
+- feat: Update submodule
+
+* Thu Sep 11 2025 wassp <cyberwassp@gmail.com> - e5688cf
+- feat: Update submodule
+
+* Thu Sep 11 2025 wassp <cyberwassp@gmail.com> - e87584b
+- feat: Update submodule
+
+* Tue Jul 22 2025 wassp <cyberwassp@gmail.com> - 8c8cf04
+- feat: Update submodule
+
+* Sun Jul 13 2025 wassp <cyberwassp@gmail.com> - 74aef51
+- feat: Update submodule
+
+* Sun Jul 13 2025 wassp <cyberwassp@gmail.com> - 2c5979e
+- feat: Update submodules
+
+* Sun Jul 13 2025 wassp <cyberwassp@gmail.com> - f9f8ad2
+- feat: Update submodule
+
+* Sun Jul 13 2025 wassp <cyberwassp@gmail.com> - b2c6d1b
+- feat: Update submodule
+
+* Sun Jun 22 2025 wassp <cyberwassp@gmail.com> - b1d542d
+- feat: Update submodule
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - 857f43e
+- feat: Update dotiles submodule
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - 47f22e5
+- feat: Update dotfiles submodule
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - a689554
+- feat: Update submodule
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - 7f44927
+- feat: Update dotfiles submodule
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - 568b7ee
+- chore: Update submodule reference
+
+* Sat Jun 14 2025 wassp <cyberwassp@gmail.com> - 2303d25
+- feat: Update submodule
+
+* Fri Jun 13 2025 wassp <cyberwassp@gmail.com> - 5deab89
+- feat: Update submodules
+
+* Fri Jun 13 2025 wassp <cyberwassp@gmail.com> - 691d388
+- feat: Update submodules
+
+* Thu Jun 12 2025 wassp <cyberwassp@gmail.com> - 222b333
+- feat: Update submodule
+
+* Thu Jun 12 2025 wassp <cyberwassp@gmail.com> - b33a4ae
+- feat: Update submodules
+
+* Thu Jun 12 2025 wassp <cyberwassp@gmail.com> - 9e17c71
+- feat: Add dotfiles back
+
+* Thu Jun 12 2025 wassp <cyberwassp@gmail.com> - 50fd2fc
+- fix: Force remove broken salt/dotfiles submodule
+
+* Thu Jun 12 2025 wassp <cyberwassp@gmail.com> - 32892f8
+- feat: Update submodules
+
+* Sun Jun 08 2025 wassp <cyberwassp@gmail.com> - 5bee086
+- feat: Update submodules
+
+* Sat May 03 2025 wassp <cyberwassp@gmail.com> - 012a761
+- feat: Add discord to comms qubes
+
+* Fri Apr 25 2025 wassp <cyberwassp@gmail.com> - 882ba6f
+- feat: Updated submodule
+
+* Tue Apr 22 2025 wassp <cyberwassp@gmail.com> - 95e01e6
+- feat: Update submodule
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - a405d99
+- feat: Add C configuration to `dev` qube
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - 03a62f7
+- feat: Update dotfiles submodule
+
+* Mon Apr 14 2025 wassp <cyberwassp@gmail.com> - 2d4481e
+- feat: Update submodule
+
+* Mon Apr 14 2025 wassp <cyberwassp@gmail.com> - 5a85972
+- feat: Update submodule
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Mon Mar 03 2025 Ben Grande <ben.grande.b@gmail.com> - 2fe7d39
+- feat: add pillar directory
+
+* Thu Feb 27 2025 Ben Grande <ben.grande.b@gmail.com> - 90466e0
+- feat: update dotfiles module
+
+* Mon Jan 27 2025 Ben Grande <ben.grande.b@gmail.com> - 8609815
+- feat: update dotfiles module
+
+* Thu Jan 16 2025 Ben Grande <ben.grande.b@gmail.com> - 2d5d3af
+- feat: update dotfiles module
+
 * Tue Dec 03 2024 Ben Grande <ben.grande.b@gmail.com> - c713bd3
 - fix: update dotfiles module
 
@@ -139,111 +268,3 @@ fi
 
 * Mon Jul 15 2024 Ben Grande <ben.grande.b@gmail.com> - a36de84
 - fix: update dotfiles module
-
-* Wed Jul 10 2024 Ben Grande <ben.grande.b@gmail.com> - 224312e
-- feat: enable all optional shellcheck validations
-
-* Tue Jul 09 2024 Ben Grande <ben.grande.b@gmail.com> - 011a71a
-- style: limit line length per file extension
-
-* Mon Jul 08 2024 Ben Grande <ben.grande.b@gmail.com> - 28c298d
-- fix: add Python indentation to editorconfig
-
-* Mon Jul 08 2024 Ben Grande <ben.grande.b@gmail.com> - 10c0ea0
-- chore: editorconfig check
-
-* Mon Jul 08 2024 Ben Grande <ben.grande.b@gmail.com> - f60077f
-- doc: spell check
-
-* Thu Jul 04 2024 Ben Grande <ben.grande.b@gmail.com> - 383c840
-- doc: lint markdown files
-
-* Thu Jul 04 2024 Ben Grande <ben.grande.b@gmail.com> - 88d9ba5
-- fix: update dotfiles module
-
-* Mon Jun 24 2024 Ben Grande <ben.grande.b@gmail.com> - e279113
-- fix: build RPM contained in spec definitions
-
-* Thu Jun 20 2024 Ben Grande <ben.grande.b@gmail.com> - 0e2bb5b
-- fix: update dotfiles module
-
-* Mon Jun 17 2024 Ben Grande <ben.grande.b@gmail.com> - b5ae221
-- fix: update dotfiles module
-
-* Mon Jun 17 2024 Ben Grande <ben.grande.b@gmail.com> - 1a72665
-- feat: add split-gpg2 configuration
-
-* Fri Jun 14 2024 Ben Grande <ben.grande.b@gmail.com> - fcad8cb
-- feat: update dotfiles module
-
-* Tue Jun 04 2024 Ben Grande <ben.grande.b@gmail.com> - a4848e1
-- fix: update dotfiles module
-
-* Tue May 14 2024 Ben Grande <ben.grande.b@gmail.com> - d148599
-- doc: nested list indentation
-
-* Tue Apr 30 2024 Ben Grande <ben.grande.b@gmail.com> - 5722a25
-- fix: discover non-root username at runtime
-
-* Tue Apr 23 2024 Ben Grande <ben.grande.b@gmail.com> - 69745df
-- fix: update dotfiles module
-
-* Tue Mar 19 2024 Ben Grande <ben.grande.b@gmail.com> - 4097af2
-- fix: update dotfiles module
-
-* Thu Mar 14 2024 Ben Grande <ben.grande.b@gmail.com> - 8a0c004
-- fix: update dotfiles module
-
-* Mon Mar 11 2024 Ben Grande <ben.grande.b@gmail.com> - 49fb733
-- fix: update dotfiles module
-
-* Fri Feb 23 2024 Ben Grande <ben.grande.b@gmail.com> - 5605ec7
-- doc: prefix qubesctl with sudo
-
-* Fri Feb 23 2024 Ben Grande <ben.grande.b@gmail.com> - f513f64
-- feat: better dom0 terminal usability
-
-* Sun Feb 18 2024 Ben Grande <ben.grande.b@gmail.com> - f735474
-- fix: update dotfiles module
-
-* Sun Feb 18 2024 Ben Grande <ben.grande.b@gmail.com> - a91f488
-- fix: update dotfiles module
-
-* Sun Feb 04 2024 Ben Grande <ben.grande.b@gmail.com> - f27db69
-- fix: update dotfiles module
-
-* Wed Jan 31 2024 Ben Grande <ben.grande.b@gmail.com> - b5d7371
-- fix: thunar requires xfce helpers to find terminal
-
-* Mon Jan 29 2024 Ben Grande <ben.grande.b@gmail.com> - 6efcc1d
-- chore: copyright update
-
-* Fri Jan 26 2024 Ben Grande <ben.grande.b@gmail.com> - a04960c
-- feat: initial split-mail setup
-
-* Sun Jan 21 2024 Ben Grande <ben.grande.b@gmail.com> - d75a59f
-- fix: update dotfiles module
-
-* Thu Jan 18 2024 Ben Grande <ben.grande.b@gmail.com> - 0dd627b
-- fix: update dotfiles module
-
-* Fri Jan 12 2024 Ben Grande <ben.grande.b@gmail.com> - 6828e83
-- fix: update dotfiles module
-
-* Thu Dec 28 2023 Ben Grande <ben.grande.b@gmail.com> - bd54499
-- fix: update dotfiles module
-
-* Wed Dec 27 2023 Ben Grande <ben.grande.b@gmail.com> - 652b4f0
-- fix: update dotfiles module
-
-* Thu Dec 21 2023 Ben Grande <ben.grande.b@gmail.com> - a27493c
-- fix: update dotfiles module
-
-* Tue Nov 21 2023 Ben Grande <ben.grande.b@gmail.com> - 20115a2
-- fix: udpate dotfiles module
-
-* Mon Nov 20 2023 Ben Grande <ben.grande.b@gmail.com> - 83c17c4
-- fix: update dotfiles module
-
-* Mon Nov 13 2023 Ben Grande <ben.grande.b@gmail.com> - 5eebd78
-- refactor: initial commit

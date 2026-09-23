@@ -20,16 +20,17 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Terraform installation in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
+Requires:       qusal-sys-git
 Requires:       qusal-sys-ssh-agent
 Requires:       qusal-utils
 
@@ -106,6 +107,15 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Mon Apr 21 2025 wassp <cyberwassp@gmail.com> - db1ee91
+- feat: Add sys-git client to terraform qube
+
+* Sat Apr 19 2025 wassp <cyberwassp@gmail.com> - 55c3f49
+- feat: Add the oauth helper files for mail fetcher and sender
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296
 - fix: skip YUM weak dependencies installation
 

@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Bitcoin Core in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -138,7 +138,25 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - bc1072d
+- feat: shorten long commands
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - 085661e
+- fix: logic to verify M of N signatures
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - de5937f
+- fix: remove workaround around split-gpg2 hang
+
+* Wed Jan 15 2025 Ben Grande <ben.grande.b@gmail.com> - 6998174
+- fix: enable qubes memory management to sys-bitcoin
+
+* Wed Jan 15 2025 Ben Grande <ben.grande.b@gmail.com> - f3a89c4
+- fix: bump Bitcoin version
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Wed Oct 23 2024 seven beep <ebn@entreparentheses.xyz> - dbcef3d

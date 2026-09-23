@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-%define project         docker
+%define project         otee-embedded
 %define license_csv     AGPL-3.0-or-later
 ## Reproducibility.
 %define source_date_epoch_from_changelog 1
@@ -15,10 +15,10 @@
 ## Python bytecode interferes when updates occur and restart is not done.
 %undefine __brp_python_bytecompile
 
-Name:           qusal-docker
+Name:           qusal-otee-embedded
 Version:        0.0.1
 Release:        1%{?dist}
-Summary:        Docker installation in Qubes OS
+Summary:        Development environment in Qubes OS
 Group:          qusal
 Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
 Vendor:         Radek Janik
@@ -30,11 +30,16 @@ BuildArch:      noarch
 
 Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
+Requires:       qusal-dev
+Requires:       qusal-sys-net
 Requires:       qusal-utils
 
 
 %description
-Setup docker in Qubes OS with the Docker repository.
+Setup a development qube named "otee-embedded". Defines the user interactive
+shell, installing goodies, applying dotfiles, being client of sys-pgp, sys-git
+and sys-ssh-agent. The qube has no netvm but can reach remote servers if the policy
+allows.
 
 %prep
 %setup -q
@@ -71,7 +76,14 @@ cp -rv -- salt/%{project} %{buildroot}/srv/salt/qusal/%{name}
 %post
 if test "$1" = "1"; then
   ## Install
-  qubesctl --skip-dom0 --targets=tpl-qubes-builder state.apply docker.install
+  qubesctl state.apply otee-embedded.create
+  qubesctl --skip-dom0 --targets=tpl-otee-embedded state.apply otee-embedded.install
+  qubesctl --skip-dom0 --targets=dvm-otee-embedded state.apply otee-embedded.configure-dvm
+  qubesctl --skip-dom0 --targets=otee-embedded state.apply otee-embedded.configure
+  proxy_target="$(qusal-report-updatevm-origin)"
+  if test -n "${proxy_target}"; then
+    qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
+  fi
 elif test "$1" = "2"; then
   ## Upgrade
   true
@@ -104,38 +116,5 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296
-- fix: skip YUM weak dependencies installation
-
-* Thu Jul 04 2024 Ben Grande <ben.grande.b@gmail.com> - 383c840
-- doc: lint markdown files
-
-* Tue Jun 25 2024 Ben Grande <ben.grande.b@gmail.com> - 9c28068
-- refactor: prefer systemd sockets over socat
-
-* Fri Jun 21 2024 Ben Grande <ben.grande.b@gmail.com> - c84dfea
-- fix: generate RPM Specs for Qubes Builder V2
-
-* Wed May 29 2024 Ben Grande <ben.grande.b@gmail.com> - 8accc47
-- fix: remove old deb repository list format
-
-* Thu May 16 2024 Ben Grande <ben.grande.b@gmail.com> - b2c9479
-- fix: enforce https on repository installation
-
-* Mon Mar 18 2024 Ben Grande <ben.grande.b@gmail.com> - f9ead06
-- fix: remove extraneous package repository updates
-
-* Fri Feb 23 2024 Ben Grande <ben.grande.b@gmail.com> - 5605ec7
-- doc: prefix qubesctl with sudo
-
-* Mon Jan 29 2024 Ben Grande <ben.grande.b@gmail.com> - 6efcc1d
-- chore: copyright update
-
-* Fri Jan 05 2024 Ben Grande <ben.grande.b@gmail.com> - c109404
-- fix: add user to mock group
-
-* Tue Dec 19 2023 Ben Grande <ben.grande.b@gmail.com> - b4d142b
-- refactor: move appended states to drop-in rc.local
-
-* Mon Nov 13 2023 Ben Grande <ben.grande.b@gmail.com> - 5eebd78
-- refactor: initial commit
+* Wed Sep 23 2026 Radek Janik <cyberwassp@gmail.com> - 182ecfd
+- feat(otee-embedded): add embedded dev formula

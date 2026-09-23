@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        PGP operations through Qrexec in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -32,7 +32,7 @@ Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dev
 Requires:       qusal-dotfiles
-Requires:       qusal-fedora-minimal
+Requires:       qusal-mgmt
 Requires:       qusal-utils
 
 
@@ -77,9 +77,10 @@ cp -rv -- salt/%{project} %{buildroot}/srv/salt/qusal/%{name}
 if test "$1" = "1"; then
   ## Install
   qubesctl state.apply sys-pgp.create
+  qubesctl --skip-dom0 --targets=tpl-mgmt state.apply mgmt.install
+  qubesctl state.apply sys-pgp.prefs-mgmt
   qubesctl --skip-dom0 --targets=tpl-sys-pgp state.apply sys-pgp.install
   qubesctl --skip-dom0 --targets=sys-pgp state.apply sys-pgp.configure
-  qubesctl state.apply sys-pgp.prefs
 elif test "$1" = "2"; then
   ## Upgrade
   true
@@ -112,6 +113,39 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Wed Sep 09 2026 Radek Janik <cyberwassp@gmail.com> - b45f540
+- feat(dotfiles): add Source Code Pro font
+
+* Sun May 10 2026 Radek Janik <cyberwassp@gmail.com> - 8313707
+- chore: update tooling for cloud  qube
+
+* Sun Jan 04 2026 rad-jan <cyberwassp@gmail.com> - eb7070c
+- chore(dotfiles): update submodule
+
+* Sun Jan 04 2026 rad-jan <cyberwassp@gmail.com> - 18dd400
+- feat(dev-tofu): add dev-tofu qube definition
+
+* Wed May 14 2025 Ben Grande <ben.grande.b@gmail.com> - bcea67d
+- doc: minor improvements
+
+* Sat May 10 2025 Ben Grande <ben.grande.b@gmail.com> - 52fb6f9
+- doc: recommend Sequoia PGP
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0a528b1
+- Merge branch 'fedora-41'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - f933523
+- feat: bump Fedora version
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Thu Jan 09 2025 Ben Grande <ben.grande.b@gmail.com> - f50d044
+- feat: configure split-gpg2 server
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - b03ceb5
+- feat: add pinentry and gpgme to sys-pgp formula
+
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296
 - fix: skip YUM weak dependencies installation
 

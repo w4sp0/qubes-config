@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Printer environment in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -32,7 +32,6 @@ Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dev
 Requires:       qusal-dotfiles
-Requires:       qusal-sys-print
 Requires:       qusal-sys-usb
 Requires:       qusal-utils
 
@@ -112,7 +111,25 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Sat Jul 12 2025 Ben Grande <ben.grande.b@gmail.com> - e6f796c
+- Merge remote-tracking branch '3nprob/sys-print-offline'
+
+* Sun Jun 29 2025 3np <3np@example.com> - 61bddc1
+- feat: sys-print.install: install fonts
+
+* Sun Jun 29 2025 3np <3np@example.com> - fc9ef7e
+- feat: sys-print: arch and fedora support
+
+* Sun Jun 29 2025 3np <3np@example.com> - 55554f0
+- feat(sys-print): no netvm by default
+
+* Sat Jun 28 2025 3np <3np@example.com> - 73423ac
+- feat: sys-print: enable avahi service
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296

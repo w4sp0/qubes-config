@@ -18,13 +18,13 @@
 Name:           qusal-cloud
 Version:        0.0.1
 Release:        1%{?dist}
-Summary:        Development environment for Qubes OS
+Summary:        Development environment in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Wassp
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/wassp-ds/qubes-config
-BugURL:         https://github.com/wassp-ds/qubes-config/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -32,15 +32,14 @@ Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dev
 Requires:       qusal-dotfiles
+Requires:       qusal-sys-git
 Requires:       qusal-sys-net
+Requires:       qusal-sys-ssh-agent
 Requires:       qusal-utils
 
 
 %description
-Setup a devops qube named "cloud", dedicated to contributing to Cloud and
-kubernetes operations. As there is a very broad set of repositories, only
-common packages will be installed. The qube has no netvm but can reach remote
-servers if the policy allows.
+Setup a devops qube named "cloud", dedicated to AWS and kubernetes operations. As there is a very broad set of repositories, only common packages will be installed.
 
 %prep
 %setup -q
@@ -81,8 +80,10 @@ if test "$1" = "1"; then
   qubesctl --skip-dom0 --targets=tpl-cloud state.apply cloud.install
   qubesctl --skip-dom0 --targets=dvm-cloud state.apply cloud.configure-dvm
   qubesctl --skip-dom0 --targets=cloud state.apply cloud.configure
+  proxy_target="$(qusal-report-updatevm-origin)"
   if test -n "${proxy_target}"; then
-    sudo qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
+    qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
+  fi
 elif test "$1" = "2"; then
   ## Upgrade
   true
@@ -115,3 +116,26 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Mon May 18 2026 Radek Janik <cyberwassp@gmail.com> - 7241c93
+- fix: switch cloud formulas to debian
+
+* Sun May 10 2026 Radek Janik <cyberwassp@gmail.com> - 8313707
+- chore: update tooling for cloud  qube
+
+* Sun Dec 21 2025 wassp <cyberwassp@gmail.com> - 1203114
+- feat(cloud-qube): Add copr mise resources
+
+* Sat Dec 20 2025 wassp <cyberwassp@gmail.com> - 20039d7
+- feat(cloud): add fedora native tools
+
+* Mon Dec 15 2025 wassp <cyberwassp@gmail.com> - 18e009e
+- feat: bump fedora and debian versions
+
+* Tue Dec 09 2025 wassp <cyberwassp@gmail.com> - eefda73
+- feat(cloud): add mise install script
+
+* Tue Dec 09 2025 wassp <cyberwassp@gmail.com> - 9f26681
+- feat(cloud): add mise to sortware list
+
+* Mon Dec 08 2025 wassp <cyberwassp@gmail.com> - 15e500a
+- feat(cloud): add cloud qube definitions

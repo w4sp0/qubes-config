@@ -20,18 +20,18 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Fedora Minimal Template in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dotfiles
-Requires:       qusal-fedora
+Requires:       qusal-fedora-xfce
 Requires:       qusal-utils
 
 
@@ -75,7 +75,7 @@ cp -rv -- salt/%{project} %{buildroot}/srv/salt/qusal/%{name}
 if test "$1" = "1"; then
   ## Install
   qubesctl state.apply fedora-minimal.create
-  qubesctl --skip-dom0 --targets=fedora-40-minimal state.apply fedora-minimal.install
+  qubesctl --skip-dom0 --targets=fedora-43-minimal state.apply fedora-minimal.install
   qubesctl state.apply fedora-minimal.prefs
 elif test "$1" = "2"; then
   ## Upgrade
@@ -109,7 +109,22 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Sun May 10 2026 Radek Janik <cyberwassp@gmail.com> - 8313707
+- chore: update tooling for cloud  qube
+
+* Mon Dec 15 2025 wassp <cyberwassp@gmail.com> - 18e009e
+- feat: bump fedora and debian versions
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0a528b1
+- Merge branch 'fedora-41'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - f933523
+- feat: bump Fedora version
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Tue Jul 09 2024 Ben Grande <ben.grande.b@gmail.com> - 011a71a

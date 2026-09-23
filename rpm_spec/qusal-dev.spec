@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Development environment in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -33,7 +33,6 @@ Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-dotfiles
 Requires:       qusal-sys-git
 Requires:       qusal-sys-net
-Requires:       qusal-sys-pgp
 Requires:       qusal-sys-ssh-agent
 Requires:       qusal-utils
 
@@ -41,7 +40,7 @@ Requires:       qusal-utils
 %description
 Setup a development qube named "dev". Defines the user interactive shell,
 installing goodies, applying dotfiles, being client of sys-pgp, sys-git and
-sys-ssh-agent. The qube has netvm but can reach remote servers if the policy
+sys-ssh-agent. The qube has no netvm but can reach remote servers if the policy
 allows.
 
 %prep
@@ -83,8 +82,10 @@ if test "$1" = "1"; then
   qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install
   qubesctl --skip-dom0 --targets=dvm-dev state.apply dev.configure-dvm
   qubesctl --skip-dom0 --targets=dev state.apply dev.configure
+  proxy_target="$(qusal-report-updatevm-origin)"
   if test -n "${proxy_target}"; then
-    sudo qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
+    qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
+  fi
 elif test "$1" = "2"; then
   ## Upgrade
   true
@@ -117,7 +118,79 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Wed Sep 23 2026 Radek Janik <cyberwassp@gmail.com> - df2c659
+- feat(dev): install rust toolchains with rustup
+
+* Wed Sep 23 2026 Radek Janik <cyberwassp@gmail.com> - e2a7d61
+- fix(dev): render install and dedupe c-tools
+
+* Thu Sep 10 2026 Radek Janik <cyberwassp@gmail.com> - d7ddf61
+- feat(mail): split OAuth2 token handling into a mail-token qube
+
+* Sun Jan 04 2026 rad-jan <cyberwassp@gmail.com> - 18dd400
+- feat(dev-tofu): add dev-tofu qube definition
+
+* Thu Oct 30 2025 wassp <cyberwassp@gmail.com> - 436369e
+- feat: Update otee-dev resources
+
+* Wed Oct 29 2025 wassp <cyberwassp@gmail.com> - c3263ec
+- feat: Add otee-dev qube to states
+
+* Fri Sep 12 2025 wassp <cyberwassp@gmail.com> - 33944d8
+- fixup! feat: Add rust tools to dev qube
+
+* Fri Sep 12 2025 wassp <cyberwassp@gmail.com> - c1ee2e8
+- fixup! feat: Add rust tools to dev qube
+
+* Fri Sep 12 2025 wassp <cyberwassp@gmail.com> - 75a4322
+- feat: Add rust tools to dev qube
+
+* Fri Sep 12 2025 wassp <cyberwassp@gmail.com> - 90f64ed
+- feat: Add rust tools to dev qube
+
+* Thu Sep 11 2025 wassp <cyberwassp@gmail.com> - 8cd669e
+- fixup! feat: Add the rust tools formula for code qube
+
+* Mon Jul 14 2025 wassp <cyberwassp@gmail.com> - 7313eaf
+- feat: Add tig to dev packages
+
+* Sun Jul 13 2025 wassp <cyberwassp@gmail.com> - 5ab5f52
+- feat: Add unversal ctags to dev formula
+
+* Sun Jun 22 2025 wassp <cyberwassp@gmail.com> - cebb9df
+- feat: Add cloc for code stats
+
+* Fri Jun 13 2025 wassp <cyberwassp@gmail.com> - 602479f
+- feat: Add rust toolchain to code qube
+
+* Mon Apr 21 2025 wassp <cyberwassp@gmail.com> - b6bb20e
+- fix: Fix package names after debian package reference
+
+* Mon Apr 21 2025 wassp <cyberwassp@gmail.com> - f62c734
+- feat: Create the package list for rust development
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - 6f98075
+- feat: Add rust tools to `dev` qube
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - a405d99
+- feat: Add C configuration to `dev` qube
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - 31a4579
+- fix: `manpages-posix-dev` doesn't seem to exist - remove it
+
+* Sun Apr 20 2025 wassp <cyberwassp@gmail.com> - 94ac9dc
+- feat: Add C manpages to `dev` qube
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Mar 19 2025 Ben Grande <ben.grande.b@gmail.com> - b82a63e
+- feat: install python linters
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - 3c9e222
+- fix: alternatives module is Debian only
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296

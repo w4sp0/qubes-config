@@ -8,10 +8,13 @@ host:
     build:
       - rpm_spec/qusal-ansible.spec
       - rpm_spec/qusal-browser.spec
+      - rpm_spec/qusal-cloud.spec
       - rpm_spec/qusal-debian.spec
       - rpm_spec/qusal-debian-minimal.spec
       - rpm_spec/qusal-debian-xfce.spec
       - rpm_spec/qusal-dev.spec
+      - rpm_spec/qusal-dev-tofu.spec
+      - rpm_spec/qusal-discord.spec
       - rpm_spec/qusal-docker.spec
       - rpm_spec/qusal-dom0.spec
       - rpm_spec/qusal-dotfiles.spec
@@ -27,6 +30,7 @@ host:
       - rpm_spec/qusal-mgmt.spec
       - rpm_spec/qusal-mirage-builder.spec
       - rpm_spec/qusal-opentofu.spec
+      - rpm_spec/qusal-otee-embedded.spec
       - rpm_spec/qusal-qubes-builder.spec
       - rpm_spec/qusal-reader.spec
       - rpm_spec/qusal-remmina.spec

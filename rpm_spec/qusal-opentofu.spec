@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        OpenTofu installation in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -107,6 +107,18 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Sun Jan 04 2026 rad-jan <cyberwassp@gmail.com> - 18dd400
+- feat(dev-tofu): add dev-tofu qube definition
+
+* Mon Dec 15 2025 wassp <cyberwassp@gmail.com> - 18e009e
+- feat: bump fedora and debian versions
+
+* Wed Dec 10 2025 wassp <cyberwassp@gmail.com> - 0942a09
+- feat(tofu): add passwordless root to config
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296
 - fix: skip YUM weak dependencies installation
 

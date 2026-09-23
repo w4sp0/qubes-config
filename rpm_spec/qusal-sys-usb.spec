@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        PCI handler of USB devices in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later AND GPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -107,7 +107,25 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Fri Sep 12 2025 Ben Grande <ben.grande.b@gmail.com> - 8827139
+- fix: prioritize USBVM start on USB keyboard pillar
+
+* Wed May 14 2025 Ben Grande <ben.grande.b@gmail.com> - bcea67d
+- doc: minor improvements
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 7ad5393
+- Merge branch 'minimal-service'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 59f224d
+- feat: enable minimal service qube feature
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Thu Jan 09 2025 Ben Grande <ben.grande.b@gmail.com> - ca5ef5c
+- feat: add fido2 tools to USBVM and clients
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296

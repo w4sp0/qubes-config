@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 %define project         dom0
-%define license_csv     AGPL-3.0-or-later,GPL-2.0-only,GPL-3.0-or-later,MIT
+%define license_csv     0BSD,AGPL-3.0-or-later,GPL-2.0-only,GPL-3.0-or-later,MIT
 ## Reproducibility.
 %define source_date_epoch_from_changelog 1
 %define use_source_date_epoch_as_buildtime 1
@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Dom0 environment in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
-License:        AGPL-3.0-or-later AND GPL-2.0-only AND GPL-3.0-or-later AND MIT
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
+License:        0BSD AND AGPL-3.0-or-later AND GPL-2.0-only AND GPL-3.0-or-later AND MIT
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -108,7 +108,49 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Sat Nov 01 2025 wassp <cyberwassp@gmail.com> - f30d1dd
+- feat: dom0: add j4-dmenu-desktop for i3
+
+* Fri May 09 2025 Ben Grande <ben.grande.b@gmail.com> - 0316e8d
+- fix: skip display check on qvm-shell
+
+* Wed May 07 2025 Ben Grande <ben.grande.b@gmail.com> - 90bc59a
+- feat: add interactive Qrexec shell
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Mar 19 2025 Ben Grande <ben.grande.b@gmail.com> - 9300c46
+- fix: separate host commands with end of options
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - 18a0244
+- fix: add necessary components to I3
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - 3a0bc80
+- chore: prettify qvm-terminal output
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - cd67cad
+- feat: improve screenshot dialog usability
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - 6424a7b
+- fix: screenshot tools differ in window and region
+
+* Mon Jan 27 2025 Ben Grande <ben.grande.b@gmail.com> - 07e2321
+- feat: add monitor resize helper
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - bc1072d
+- feat: shorten long commands
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - f63b513
+- ci: rename editorconfig checker configuration file
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - bfe192b
+- feat: install fwupd dom0 package by default
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - 3972de3
+- feat: allow exposing port directly from last netvm
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Mon Dec 23 2024 Ben Grande <ben.grande.b@gmail.com> - 972ca1f
@@ -215,39 +257,3 @@ fi
 
 * Fri Feb 23 2024 Ben Grande <ben.grande.b@gmail.com> - f513f64
 - feat: better dom0 terminal usability
-
-* Mon Jan 29 2024 Ben Grande <ben.grande.b@gmail.com> - 6efcc1d
-- chore: copyright update
-
-* Mon Jan 29 2024 Ben Grande <ben.grande.b@gmail.com> - b01f2d2
-- chore: move port forward to dom0 formula
-
-* Thu Jan 18 2024 Ben Grande <ben.grande.b@gmail.com> - 0887c24
-- fix: remove unicode from used files
-
-* Thu Jan 18 2024 Ben Grande <ben.grande.b@gmail.com> - 23bcceb
-- fix: dom0 as sys-git client
-
-* Tue Jan 02 2024 Ben Grande <ben.grande.b@gmail.com> - b86486a
-- feat: qubes-vm-update global settings
-
-* Sun Dec 31 2023 Ben Grande <ben.grande.b@gmail.com> - ec9142b
-- fix: pci regain with invalid syntax
-
-* Wed Dec 27 2023 Ben Grande <ben.grande.b@gmail.com> - 250c877
-- fix: regain pci script not managed
-
-* Wed Dec 20 2023 Ben Grande <ben.grande.b@gmail.com> - c2f2584
-- feat: provide development environment for dom0
-
-* Tue Dec 19 2023 Ben Grande <ben.grande.b@gmail.com> - b4b7f27
-- fix: qubes-update superseded by qubes-vm-update
-
-* Tue Dec 19 2023 Ben Grande <ben.grande.b@gmail.com> - bcc8165
-- fix: salt syntax with missing characters
-
-* Mon Nov 13 2023 Ben Grande <ben.grande.b@gmail.com> - 963e72c
-- chore: Fix unman copyright contact
-
-* Mon Nov 13 2023 Ben Grande <ben.grande.b@gmail.com> - 5eebd78
-- refactor: initial commit

@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Fedora Xfce Template in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -72,7 +72,8 @@ cp -rv -- salt/%{project} %{buildroot}/srv/salt/qusal/%{name}
 if test "$1" = "1"; then
   ## Install
   qubesctl state.apply fedora-xfce.create
-  qubesctl --skip-dom0 --targets=fedora-40-xfce state.apply fedora-xfce.install
+  qubesctl --skip-dom0 --targets=fedora-43-xfce state.apply fedora-xfce.install
+  qubesctl state.apply fedora-xfce.prefs
 elif test "$1" = "2"; then
   ## Upgrade
   true
@@ -105,6 +106,24 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Sun May 10 2026 Radek Janik <cyberwassp@gmail.com> - 8313707
+- chore: update tooling for cloud  qube
+
+* Mon Dec 15 2025 wassp <cyberwassp@gmail.com> - 18e009e
+- feat: bump fedora and debian versions
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0a528b1
+- Merge branch 'fedora-41'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - f933523
+- feat: bump Fedora version
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Thu Feb 27 2025 Ben Grande <ben.grande.b@gmail.com> - d639aa9
+- fix: unify method to query template version
+
 * Thu Jul 04 2024 Ben Grande <ben.grande.b@gmail.com> - 383c840
 - doc: lint markdown files
 

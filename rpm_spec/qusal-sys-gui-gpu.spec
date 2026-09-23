@@ -20,17 +20,18 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        GPU GUI domain in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later AND GPL-2.0-only
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       qubes-mgmt-salt
 Requires:       qubes-mgmt-salt-dom0
 Requires:       qusal-sys-gui
+Requires:       qusal-utils
 
 
 %description
@@ -75,7 +76,9 @@ if test "$1" = "1"; then
   ## Install
   qubesctl top.enable qvm.sys-gui-gpu pillar=True
   qubesctl state.apply sys-gui-gpu.create
-  qubesctl --skip-dom0 --targets=tpl-sys-gui state.apply sys-gui-gpu.install
+  qubesctl --skip-dom0 --targets=tpl-mgmt state.apply mgmt.install
+  qubesctl state.apply sys-gui.prefs-mgmt
+  qubesctl --skip-dom0 --targets=tpl-sys-gui-gpu state.apply sys-gui-gpu.install
   qubesctl --skip-dom0 --targets=sys-gui-gpu state.apply sys-gui-gpu.configure
   qubesctl state.apply sys-gui-gpu.prefs
 elif test "$1" = "2"; then
@@ -110,7 +113,28 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Sat Jul 12 2025 3np <3np@example.com> - e827bf6
+- feat: sys-gui-gpu: separate template for drivers
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0a528b1
+- Merge branch 'fedora-41'
+
+* Mon Apr 14 2025 Ben Grande <ben.grande.b@gmail.com> - f933523
+- feat: bump Fedora version
+
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - 37dcf20
+- fix: remove GPU domain kernelopts workaround
+
+* Mon Feb 17 2025 Ben Grande <ben.grande.b@gmail.com> - f769215
+- fix: GPU domain Qrexec policy
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - 31a606e
+- fix: wrong template name for sys-gui associates
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Wed Sep 25 2024 Ben Grande <ben.grande.b@gmail.com> - eb5cbe8

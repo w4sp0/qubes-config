@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Caching proxy server for software repositories in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later AND GPL-2.0-only
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -131,7 +131,16 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
-* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - c19997a
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Wed Mar 19 2025 Ben Grande <ben.grande.b@gmail.com> - 53addd3
+- fix: cache fasttrack of different server directory
+
+* Mon Feb 24 2025 Ben Grande <ben.grande.b@gmail.com> - c636bf6
+- fix: update apt-cacher-ng mirrors
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - aea8438
 - fix: stricter command-line parsing
 
 * Fri Aug 16 2024 Ben Grande <ben.grande.b@gmail.com> - 56a4296
@@ -271,12 +280,3 @@ fi
 
 * Thu Feb 22 2024 Ben Grande <ben.grande.b@gmail.com> - 908a077
 - fix: allow apt-cacher-ng cronjob to run
-
-* Thu Feb 22 2024 Ben Grande <ben.grande.b@gmail.com> - 23dbc72
-- fix: update apt-cacher-ng mirror list
-
-* Mon Feb 19 2024 Ben Grande <ben.grande.b@gmail.com> - 89bd760
-- feat: add OpenTofu
-
-* Wed Jan 31 2024 Ben Grande <ben.grande.b@gmail.com> - b5d7371
-- fix: thunar requires xfce helpers to find terminal

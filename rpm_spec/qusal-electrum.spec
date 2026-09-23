@@ -20,11 +20,11 @@ Version:        0.0.1
 Release:        1%{?dist}
 Summary:        Electrum Bitcoin Wallet in Qubes OS
 Group:          qusal
-Packager:       %{?_packager}%{!?_packager:Ben Grande <ben.grande.b@gmail.com>}
-Vendor:         Ben Grande
+Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
+Vendor:         Radek Janik
 License:        AGPL-3.0-or-later
-URL:            https://github.com/ben-grande/qusal
-BugURL:         https://github.com/ben-grande/qusal/issues
+URL:            https://github.com/w4sp0/qubes-config
+BugURL:         https://github.com/w4sp0/qubes-config/issues
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
@@ -128,6 +128,21 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Mon Apr 14 2025 3np <3np@example.com> - 7246018
+- fix: reference local sls imports by slsdotpath
+
+* Fri Feb 14 2025 Ben Grande <ben.grande.b@gmail.com> - 0e72ff8
+- feat: allow absent dotfiles
+
+* Fri Jan 17 2025 Ben Grande <ben.grande.b@gmail.com> - de5937f
+- fix: remove workaround around split-gpg2 hang
+
+* Thu Jan 09 2025 Ben Grande <ben.grande.b@gmail.com> - 855c2ab
+- doc: instruct how to use socat with a SOCKS proxy
+
+* Wed Jan 08 2025 Ben Grande <ben.grande.b@gmail.com> - b182a44
+- feat: bump external packages version
+
 * Thu Oct 24 2024 Ben Grande <ben.grande.b@gmail.com> - efe0fa6
 - fix: depend on Bitcoin Gateway configuration
 
