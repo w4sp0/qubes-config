@@ -4,7 +4,7 @@ title: 'discord: build discordo from a pinned commit in the builder disposable'
 status: In Progress
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-23 21:58'
+updated_date: '2026-09-23 22:35'
 labels:
   - discord
   - security
@@ -47,7 +47,7 @@ Candidate pin (upstream main on 2026-09-23): `de2f2c94f0fc128730a90d88f3c3a7fb3b
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 salt/discord/files/repo/discordo_Linux_X64.zip is removed
-- [ ] #2 The commit hash and the SHA-256 of the build output are pinned in one location in salt/discord
+- [x] #2 The commit hash and the SHA-256 of the build output are pinned in one location in salt/discord
 - [ ] #3 tpl-discord refuses a binary whose SHA-256 does not match, and installs nothing
 - [ ] #4 discordo --help runs in qube discord
 - [ ] #5 A second apply reports no changes
@@ -58,6 +58,8 @@ Candidate pin (upstream main on 2026-09-23): `de2f2c94f0fc128730a90d88f3c3a7fb3b
 
 <!-- SECTION:NOTES:BEGIN -->
 Zip removed. salt/discord/binaries.jinja pins commit de2f2c94f0fc128730a90d88f3c3a7fb3b67dc92 with toolchain go1.27.0; sha256 is empty until the build output is hashed in two dvm-builder disposables (see salt/builder/README.md). Until then discord.install and discord.install-binary fail with 'No SHA-256 pin for discordo'. Added discord.install-binary (dom0) and the policy file.
+
+Pin set in salt/discord/binaries.jinja: sha256 93e5d93a42890778c566bf826946e6b7d5ff1016ee760e8d18be5fae5c865c35, equal in two dvm-builder builds.
 <!-- SECTION:NOTES:END -->
 
 ## Comments

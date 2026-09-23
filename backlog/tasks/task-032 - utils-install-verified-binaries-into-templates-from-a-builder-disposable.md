@@ -4,7 +4,7 @@ title: 'utils: install verified binaries into templates from a builder disposabl
 status: In Progress
 assignee: []
 created_date: '2026-09-23 21:47'
-updated_date: '2026-09-23 22:06'
+updated_date: '2026-09-23 22:35'
 labels:
   - utils
   - qrexec
@@ -66,4 +66,6 @@ Tested in this qube with shims for curl and qrexec-client-vm (no Qubes calls): r
 Not tested: the go method (this qube has 525 MB RAM and no Go), qvm-run --dispvm and the policy on a real system, salt-lint (not installed). Still to do: rpm spec for builder (scripts/spec-gen.sh builder).
 
 Generated rpm_spec/qusal-builder.spec at a3e8d1c; spec-gen.sh test passes. spec-build.sh not run (no rpmbuild in the dev qube).
+
+2026-09-24: the go method works in dvm-builder. Two builds of discordo de2f2c94 with go1.27.0 in separate disposables gave the same SHA-256 (93e5d93a42890778c566bf826946e6b7d5ff1016ee760e8d18be5fae5c865c35), so the Go build is reproducible with the script flags. Fixed: cleanup failed on read-only Go toolchain files (chmod -R u+w before rm).
 <!-- SECTION:NOTES:END -->
