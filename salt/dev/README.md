@@ -53,6 +53,16 @@ If you want some Python goodies, you can install them:
 sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-python-tools
 ```
 
+If you want the latest stable Rust toolchain from upstream (not the
+distribution packages), install it with `rustup`:
+
+```sh
+sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-rust-tools
+```
+
+The toolchain is installed in the template under `/opt/rust` and its binaries
+are linked to `/usr/bin`. Apply the state again to update it.
+
 If you want to lint this repository, install the tooling the `pre-commit`
 hooks call:
 
