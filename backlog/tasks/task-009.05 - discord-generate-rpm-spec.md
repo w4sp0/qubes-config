@@ -1,9 +1,10 @@
 ---
 id: TASK-009.05
 title: 'discord: generate rpm spec'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-23 22:06'
 labels:
   - discord
   - rpm
@@ -40,7 +41,13 @@ Generate the spec with `scripts/spec-gen.sh discord` after the other TASK-009 su
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 rpm_spec/qusal-discord.spec exists
+- [x] #1 rpm_spec/qusal-discord.spec exists
 - [ ] #2 scripts/spec-build.sh discord exits 0
-- [ ] #3 The spec post-install section matches the pkg:begin:post-install block in README.md
+- [x] #3 The spec post-install section matches the pkg:begin:post-install block in README.md
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Generated rpm_spec/qusal-discord.spec with scripts/spec-gen.sh at a3e8d1c (Requires include qusal-builder); spec-gen.sh test passes. AC #2 not run: rpmbuild, rpmlint, rpmsign and dnf are missing in the dev qube. Note: %post runs discord.install, which fails until the discordo sha256 pin is set (TASK-009.02).
+<!-- SECTION:NOTES:END -->

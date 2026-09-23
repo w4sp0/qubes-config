@@ -4,7 +4,7 @@ title: 'utils: install verified binaries into templates from a builder disposabl
 status: In Progress
 assignee: []
 created_date: '2026-09-23 21:47'
-updated_date: '2026-09-23 21:58'
+updated_date: '2026-09-23 22:06'
 labels:
   - utils
   - qrexec
@@ -64,4 +64,6 @@ Implemented: formula salt/builder (tpl-builder, dvm-builder, builder.install, bu
 Tested in this qube with shims for curl and qrexec-client-vm (no Qubes calls): release download with archive extraction, hash action, install with correct pin, refusal of a wrong download SHA-256, a wrong builder pin, a path in the archive member, an invalid name; the service refuses a tampered payload (installed file unchanged), input over the size limit, names with a path or leading dot, and a malformed pin; no temporary files are left. shell-lint passes on both scripts. The macro renders to the expected states with jinja2; an empty pin gives test.fail_without_changes, and a quote in a pin raises.
 
 Not tested: the go method (this qube has 525 MB RAM and no Go), qvm-run --dispvm and the policy on a real system, salt-lint (not installed). Still to do: rpm spec for builder (scripts/spec-gen.sh builder).
+
+Generated rpm_spec/qusal-builder.spec at a3e8d1c; spec-gen.sh test passes. spec-build.sh not run (no rpmbuild in the dev qube).
 <!-- SECTION:NOTES:END -->
