@@ -1,6 +1,6 @@
 # cloud
 
-Development environment in Qubes OS.
+Cloud operations environment in Qubes OS.
 
 ## Table of Contents
 
@@ -11,7 +11,9 @@ Development environment in Qubes OS.
 
 ## Description
 
-Setup a devops qube named "cloud", dedicated to AWS and kubernetes operations. As there is a very broad set of repositories, only common packages will be installed.
+Setup a devops qube named "cloud", dedicated to AWS and Kubernetes
+operations. As there is a very broad set of repositories, only common packages
+will be installed.
 
 ## Installation
 
@@ -39,7 +41,6 @@ fi
 ```
 
 <!-- pkg:end:post-install -->
-
 
 The installation will make the Qusal TCP Proxy available in the `updatevm`
 (after it is restarted in case it is template based). If you want to have the
