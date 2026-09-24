@@ -4,6 +4,7 @@ title: 'slack: confirm workspace policy and app approval'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:50'
+updated_date: '2026-09-24 16:44'
 labels:
   - slack
   - work
@@ -40,3 +41,9 @@ Before any build work, check the work workspace settings and company policy: is 
 - [ ] #2 The task notes record if a user token is allowed
 - [ ] #3 If the answer is no, TASK-033 and its subtasks are archived
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-24: blocked. The workspace subscription has no room for another app, so the slack-tui app cannot be created. No approval or token policy answer yet.
+<!-- SECTION:NOTES:END -->

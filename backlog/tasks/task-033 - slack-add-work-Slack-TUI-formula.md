@@ -4,6 +4,7 @@ title: 'slack: add work Slack TUI formula'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:50'
+updated_date: '2026-09-24 16:44'
 labels:
   - slack
   - work
@@ -43,3 +44,9 @@ Risks to keep in view: the project started in June 2026 and has one maintainer, 
 - [ ] #2 The README.md installation commands apply without error
 - [ ] #3 rpm_spec/qusal-slack.spec exists and scripts/spec-build.sh slack exits 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-24: parked. The formula, pinned binary, README (with sign-in steps) and spec are committed. Sign-in is untested: the work Slack subscription has no room for a new app, so the slack-tui app cannot be created in the workspace. Resume with TASK-033.01 when an app slot is available.
+<!-- SECTION:NOTES:END -->
