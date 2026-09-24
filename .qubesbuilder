@@ -8,6 +8,7 @@ host:
     build:
       - rpm_spec/qusal-ansible.spec
       - rpm_spec/qusal-browser.spec
+      - rpm_spec/qusal-builder.spec
       - rpm_spec/qusal-cloud.spec
       - rpm_spec/qusal-debian.spec
       - rpm_spec/qusal-debian-minimal.spec

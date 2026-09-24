@@ -53,6 +53,8 @@ repos:
         language: script
         pass_filenames: true
         files: \.md$
+        ## Backlog.md writes these files, and their names contain spaces.
+        exclude: ^backlog/
         description: Lint Markdown files
         stages: [commit]
 
