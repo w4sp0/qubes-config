@@ -8,6 +8,7 @@ Slack terminal client in Qubes OS.
 *   [Installation](#installation)
 *   [Access Control](#access-control)
 *   [Usage](#usage)
+    *   [Sign in](#sign-in)
     *   [Get the pin of slack-tui](#get-the-pin-of-slack-tui)
     *   [Update slack-tui](#update-slack-tui)
 
@@ -71,7 +72,53 @@ qusal.InstallBinary +slack-tui @anyvm              @anyvm    deny
 
 ## Usage
 
-Open a terminal in the qube `slack` and run `slack-tui`.
+Open a terminal in the qube `slack` and run `slack-tui`. Run
+`slack-tui doctor` to check the setup and the tokens.
+
+Keys: `j`/`k` move, `Tab` or `h`/`l` change the pane, `i` writes, `Enter`
+opens a thread, `r` replies, `/` finds, `s` searches the workspace, `Ctrl-K`
+opens the command palette and `?` shows the help.
+
+### Sign in
+
+slack-tui signs in with its own Slack app, created from a manifest in the
+work workspace. The built-in app of slack-tui cannot be used, because an app
+that Slack does not distribute can only be installed in the workspace that
+owns it. If the workspace requires admin approval of apps, get it first.
+
+The redirect after sign-in goes to `http://localhost:9899/callback`, but the
+browser runs in a disposable, so the redirect fails there and you send the
+URL to the qube `slack`. Do all browser steps in one disposable, so that you
+sign in to Slack only once.
+
+1.  In the qube `slack`, run `slack-tui setup`. It copies the app manifest
+    to the clipboard of the qube.
+2.  Open the menu item `dvm-browser (dvm): Browser`, and keep this
+    disposable open until the end.
+3.  In the disposable, sign in to the work Slack at
+    `https://slack.com/signin` (workspace URL, then SSO or email, and 2FA).
+4.  In the same disposable, open `https://api.slack.com/apps`, select
+    `Create New App`, `From a manifest` and the work workspace, and paste
+    the manifest with the Qubes clipboard (`Ctrl+Shift+C` in `slack`,
+    `Ctrl+Shift+V` then `Ctrl+V` in the disposable).
+5.  Copy the Client ID of the new app to the prompt of `slack-tui setup` in
+    the same way.
+6.  When `slack-tui setup` shows the sign-in URL, paste it in the address
+    bar of the disposable and allow the app. The browser then fails to open
+    `http://localhost:PORT/callback?code=...`. This is expected.
+7.  Copy that URL from the address bar, and in a second terminal in the
+    qube `slack`, while `slack-tui setup` waits, run:
+
+    ```sh
+    curl 'http://localhost:PORT/callback?code=...&state=...'
+    ```
+
+    Keep the single quotes. The code is valid only once and for a short
+    time. If it fails, run `slack-tui setup` again.
+
+The tokens are stored in `~/.config/slack-tui/tokens.json` in the qube
+`slack`. They expire after about 12 hours and slack-tui renews them. To add
+another workspace, use `slack-tui login` with the same steps.
 
 ### Get the pin of slack-tui
 
