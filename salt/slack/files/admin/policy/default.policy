@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Do not modify this file, create a new policy with a lower number in the
+## file name instead. For example `30-user.policy`.
+qusal.InstallBinary +slack-tui @tag:qusal-builder  tpl-{{ sls_path }} allow user=root
+qusal.InstallBinary +slack-tui @anyvm              @anyvm              deny
+## vim:ft=qrexecpolicy

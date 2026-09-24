@@ -13,7 +13,7 @@ Copyright: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
            2026 Radek Janik <cyberwassp@gmail.com>
 License: CC-BY-SA-4.0
 
-Files: salt/builder/README.md
+Files: salt/builder/README.md salt/slack/README.md
 Copyright: 2026 Radek Janik <cyberwassp@gmail.com>
 License: CC-BY-SA-4.0
 
