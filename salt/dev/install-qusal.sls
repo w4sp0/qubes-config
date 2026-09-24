@@ -33,12 +33,14 @@ include:
       - reuse
 
 ## Fedora packages salt-lint, Debian does not, install it with pipx there.
+## RPM tools are for 'scripts/spec-build.sh' and 'scripts/yumrepo-gen.sh'.
 {% set pkg = {
     'Debian': {
-      'pkg': ['pipx'],
+      'pkg': ['pipx', 'rpm', 'rpmlint', 'dnf', 'createrepo-c'],
     },
     'RedHat': {
-      'pkg': ['salt-lint'],
+      'pkg': ['salt-lint', 'rpm-build', 'rpm-sign', 'rpmlint', 'dnf',
+              'createrepo_c'],
     },
 }.get(grains.os_family) -%}
 
