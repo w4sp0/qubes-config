@@ -64,8 +64,8 @@ to take effect.
 
 _Default policy_: `denies` `all` qubes from calling `qusal.ConnectTCP`
 
-Allow qube `dev-tofu` to `connect` to `github.com:22` via `disp-sys-net` but not to
-any other host or via any other qube:
+Allow qube `dev-tofu` to `connect` to `github.com:22` via `disp-sys-net` but
+not to any other host or via any other qube:
 
 ```qrexecpolicy
 qusal.ConnectTCP +github.com+22 dev-tofu @default allow target=disp-sys-net
