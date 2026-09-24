@@ -118,6 +118,9 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 26975d7
+- docs(slack): document signin-through a disposable
+
 * Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - be9c109
 - chore(slack): pin slack-tui binary
 
