@@ -1,9 +1,10 @@
 ---
 id: TASK-033.03
 title: 'slack: install pinned slack-tui release through the builder'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-23 21:50'
+updated_date: '2026-09-24 10:02'
 labels:
   - slack
   - supply-chain
@@ -47,9 +48,15 @@ Check that this value matches the line in the release `checksums.txt`. The dispo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The release version, the archive SHA-256 and the binary SHA-256 are pinned in one location in salt/slack
+- [x] #1 The release version, the archive SHA-256 and the binary SHA-256 are pinned in one location in salt/slack
 - [ ] #2 The archive SHA-256 matches the line in the release checksums.txt
 - [ ] #3 slack-tui --version runs in qube slack
 - [ ] #4 A wrong pin makes the install fail and installs nothing
 - [ ] #5 A second apply reports no changes
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-24: pins in salt/slack/binaries.jinja. url_sha256 is the GitHub asset digest of v0.6.1; it was not compared with checksums.txt yet (AC #2). Binary sha256 6f1fed8e5f0a6c5dbe4babfb0540a012582f024460897252181e7cb50003e998 from the 'hash' action in a dvm-builder disposable, which also checked the download against url_sha256.
+<!-- SECTION:NOTES:END -->
