@@ -118,5 +118,8 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - be9c109
+- chore(slack): pin slack-tui binary
+
 * Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 16a6c7c
 - feat(slack): add slack-tui formula
