@@ -18,7 +18,7 @@
 Name:           qusal-cloud
 Version:        0.0.1
 Release:        1%{?dist}
-Summary:        Development environment in Qubes OS
+Summary:        Cloud operations environment in Qubes OS
 Group:          qusal
 Packager:       %{?_packager}%{!?_packager:Radek Janik <cyberwassp@gmail.com>}
 Vendor:         Radek Janik
@@ -39,7 +39,9 @@ Requires:       qusal-utils
 
 
 %description
-Setup a devops qube named "cloud", dedicated to AWS and kubernetes operations. As there is a very broad set of repositories, only common packages will be installed.
+Setup a devops qube named "cloud", dedicated to AWS and Kubernetes
+operations. As there is a very broad set of repositories, only common packages
+will be installed.
 
 %prep
 %setup -q
@@ -116,6 +118,21 @@ fi
 %dnl TODO: missing '%ghost', files generated during %post, such as Qrexec policies.
 
 %changelog
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 364e8cc
+- docs(cloud): describe cloud operations in README
+
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 98808c5
+- refactor(cloud): drop mise
+
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 6ecfa16
+- fix(cloud): open URLs with qvm-open-in-dvm
+
+* Thu Sep 24 2026 Radek Janik <cyberwassp@gmail.com> - 177606f
+- fix: correct state references in top files
+
+* Wed Sep 23 2026 Radek Janik <cyberwassp@gmail.com> - 5d95735
+- chore(backlog): Plan next steps for the project
+
 * Mon May 18 2026 Radek Janik <cyberwassp@gmail.com> - 7241c93
 - fix: switch cloud formulas to debian
 
