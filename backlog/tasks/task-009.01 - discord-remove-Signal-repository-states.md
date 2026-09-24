@@ -1,10 +1,10 @@
 ---
 id: TASK-009.01
 title: 'discord: remove Signal repository states'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-23 21:58'
+updated_date: '2026-09-24 17:49'
 labels:
   - discord
   - top
@@ -59,3 +59,9 @@ install-repo.sls and install-repo.top removed; install.sls no longer includes or
 
 grep -rni signal salt/discord has no match after the README rewrite.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+salt/discord has no install-repo states, discord.install does not include one, and grep -ri signal salt/discord has no match. Also fixed on the way: install.top targeted tpl-signal and configure.top applied discord.configure to dom0. Checked against the repository on 2026-09-24.
+<!-- SECTION:FINAL_SUMMARY:END -->
