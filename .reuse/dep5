@@ -72,7 +72,7 @@ Copyright: The Qubes OS Project <https://www.qubes-os.org>
 License: CC0-1.0
 
 Files: salt/qubes-builder/files/client/qusal/keys/*
-Copyright: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+Copyright: 2026 Radek Janik <cyberwassp@gmail.com>
 License: CC0-1.0
 
 Files: salt/kicksecure-minimal/files/template/ld.so.preload

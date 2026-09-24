@@ -1,4 +1,5 @@
 ## SPDX-FileCopyrightText: 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+## SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 ##
 ## SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -12,7 +13,7 @@ git:
   prefix: ben-grande/
   branch: main
   maintainers:
-    - DF3834875B65758713D92E91A475969DE4E371E3
+    - A3A03DD3ED22D21E653E842B47B7A28B999E0D56
 
 key-dirs:
   - ../qusal-builder/keys/
@@ -36,9 +37,10 @@ components:
       maintainers:
         - 0064428F455451B3EBE78A7F063938BA42CFA724
   - qusal:
+      url: https://github.com/w4sp0/qubes-config
       verification-mode: less-secure-signed-commits-sufficient
       maintainers:
-        - DF3834875B65758713D92E91A475969DE4E371E3
+        - A3A03DD3ED22D21E653E842B47B7A28B999E0D56
 
 executor:
   type: qubes
@@ -69,7 +71,7 @@ stages:
 gpg-client: gpg
 
 sign-key:
-  rpm: DF3834875B65758713D92E91A475969DE4E371E3
+  rpm: A3A03DD3ED22D21E653E842B47B7A28B999E0D56
 
 repository-publish:
   components: current-testing
