@@ -13,7 +13,7 @@ Qusal troubleshooting guidelines.
 ## Detect if your issue was already opened
 
 If you encounter any problems, search the project's
-[issue tracking system](https://github.com/ben-grande/qusal/issues?q=is%3Aissue+sort%3Aupdated-desc)
+[issue tracking system](https://github.com/w4sp0/qubes-config/issues?q=is%3Aissue+sort%3Aupdated-desc)
 for `Open` and `Closed` issues, sorted by `Recently updated`. For finer
 grained search, consult the
 [tracking system filter syntax](https://docs.github.com/en/issues/tracking-your-work-with-issues/filtering-and-searching-issues-and-pull-requests#using-search-to-filter-issues-and-pull-requests).

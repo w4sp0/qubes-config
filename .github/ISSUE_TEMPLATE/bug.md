@@ -10,7 +10,7 @@ assignees: ''
 
 I confirm that I have read the following resources:
 
-*   [How to troubleshoot Qusal](https://github.com/ben-grande/qusal/blob/main/docs/TROUBLESHOOT.md)
+*   [How to troubleshoot Qusal](https://github.com/w4sp0/qubes-config/blob/main/docs/TROUBLESHOOT.md)
 *   [How to ask questions The Smart Way](http://catb.org/esr/faqs/smart-questions.html)
 *   [Writing the perfect question](https://codeblog.jonskeet.uk/2010/08/29/writing-the-perfect-question/)
 *   [Question checklist](https://codeblog.jonskeet.uk/2012/11/24/stack-overflow-question-checklist/)
@@ -34,7 +34,7 @@ commands shown below are the minimum.
 Share the base commit of the project:
   $ git rev-parse HEAD
 Share information about the Salt management qube structure:
-  https://github.com/ben-grande/qusal/blob/main/docs/TROUBLESHOOT.md#get-salt-management-information
+  https://github.com/w4sp0/qubes-config/blob/main/docs/TROUBLESHOOT.md#get-salt-management-information
 -->
 
 

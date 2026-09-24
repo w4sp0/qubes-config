@@ -41,11 +41,20 @@ or StandaloneVM will also work.
     from your fork).
 
     ```sh
-    git clone --recurse-submodules https://github.com/ben-grande/qusal.git ~/qusal
+    git clone --recurse-submodules https://github.com/w4sp0/qubes-config.git ~/qusal
     ```
 
-3.  Copy the [maintainer's signing key](https://github.com/ben-grande/ben-grande/raw/main/DF3834875B65758713D92E91A475969DE4E371E3.asc)
-    to your text editor and save to the file `/home/user/ben-code.asc`.
+3.  In the qube for the signing keys, save the
+    [maintainer's signing key](https://github.com/w4sp0/qubes-config/raw/main/salt/qubes-builder/files/client/qusal/keys/A3A03DD3ED22D21E653E842B47B7A28B999E0D56.asc)
+    to the file `/home/user/wassp.asc`. The key is also published on the
+    maintainer's GitHub account at <https://github.com/w4sp0.gpg>, compare the
+    fingerprint from both sources. If you are the maintainer, export the key
+    from the qube that holds the private key instead:
+
+    ```sh
+    gpg --export --armor A3A03DD3ED22D21E653E842B47B7A28B999E0D56 \
+      > /home/user/wassp.asc
+    ```
 
 ### Dom0 Installation
 
@@ -71,28 +80,36 @@ qvm-run --no-gui --pass-io --localcmd="UPDATES_MAX_FILES=50000
       tar -xf - -C ~/QubesIncoming/"${qube}"
     ```
 
-2.  Pass the maintainer's key from the qube to Dom0:
+2.  Pass the maintainer's key from the qube that has it (`key_qube`) to
+    Dom0. Use the full path, `~` is not the home directory of the qube:
 
     ```sh
-    qvm-run --no-gui --pass-io -- "${qube}" "cat -- /home/user/ben-code.asc" |
-      tee -- /tmp/ben-code.asc >/dev/null
+    key_qube="CHANGEME" # qube where you saved the signing key
+    qvm-run --no-gui --pass-io -- "${key_qube}" "cat -- /home/user/wassp.asc" |
+      tee -- /tmp/wassp.asc >/dev/null
     ```
 
 3.  Verify that the key fingerprint matches
-    `DF38 3487 5B65 7587 13D9  2E91 A475 969D E4E3 71E3`. You can use
-    Sequoia-PGP or GnuPG for the fingerprint verification:
+    `A3A0 3DD3 ED22 D21E 653E  842B 47B7 A28B 999E 0D56` and the user IDs are
+    `wassp` and `<cyberwassp@gmail.com>`. You can use Sequoia-PGP or GnuPG
+    for the fingerprint verification:
 
     ```sh
-    gpg --show-keys /tmp/ben-code.asc
+    gpg --show-keys /tmp/wassp.asc
     # or
-    #sq inspect ben-code.asc
+    #sq inspect /tmp/wassp.asc
     ```
 
 4.  Import the verified key to your keyring:
 
     ```sh
-    gpg --import /tmp/ben-code.asc
+    gpg --import /tmp/wassp.asc
     ```
+
+    The commits are signed with a subkey, so `git verify-commit` names the
+    subkey `E465 C11C 5CFF BF62 BD66  DC8D 7881 0E06 8636 9D7A`. GnuPG warns
+    that the key is not certified with a trusted signature until you set the
+    owner trust of the key. The signature is verified regardless.
 
 5.  Enter the repository:
 
@@ -160,7 +177,7 @@ with the sys-git formula.
     ```sh
     mkdir -p ~/src
     sudo qubesctl state.apply sys-git.install-client
-    git clone qrexec://@default/qusal.git ~/src/qusal
+    git clone qrexec://@default/qubes-config.git ~/src/qusal
     git -C ~/src/qusal config submodule.salt/dotfiles.url \
       qrexec://@default/dotfiles
     git -C ~/src/qusal submodule update --init
