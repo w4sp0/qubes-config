@@ -34,5 +34,5 @@ SPDX-License-Identifier: GPL-3.0-or-later
   cmd.run:
     - name: grub2-mkconfig -o {{ grub_cfg }}
     - onchanges:
-      - file: unhide-usb-from-dom0-grub
+      - file: "{{ slsdotpath }}-unhide-usb-from-dom0-grub"
     - onlyif: test -f {{ grub_cfg }}
