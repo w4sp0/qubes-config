@@ -4,7 +4,7 @@ title: 'docs: point install and verification steps to this fork'
 status: In Progress
 assignee: []
 created_date: '2026-09-23 23:16'
-updated_date: '2026-09-24 17:50'
+updated_date: '2026-09-25 21:17'
 labels:
   - docs
   - signing
@@ -47,4 +47,6 @@ Change the clone URL, the key URL, the key file name and the fingerprint in `doc
 
 <!-- SECTION:NOTES:BEGIN -->
 2026-09-24: docs/INSTALL.md now clones github.com/w4sp0/qubes-config, takes the key from the repository key directory with https://github.com/w4sp0.gpg as a second source (or an export from the vault qube for the maintainer), checks fingerprint A3A0 3DD3 ED22 D21E 653E 842B 47B7 A28B 999E 0D56 and explains the subkey E465 C11C...6D7A and the trust warning. The sys-git clone uses qubes-config.git. TROUBLESHOOT.md and the issue templates link to the fork. Upstream credits (README e-mail, dotfiles history, vim plugins in CONTRIBUTE.md) are kept. The key import and git verify-commit HEAD were run in dom0 on 2026-09-24, but not on a fresh clone (AC #2). qusal.yml still has git.prefix: ben-grande/; both components that it builds have their own url, so the prefix looks unused; not changed. AC #3 not tested.
+
+2026-09-25: the user confirmed that owner trust is set on the key in dom0 and is correct.
 <!-- SECTION:NOTES:END -->

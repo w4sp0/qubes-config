@@ -1,10 +1,10 @@
 ---
 id: TASK-006
 title: 'usb: init.top references usb.configur-dvm'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:39'
-updated_date: '2026-09-25 21:10'
+updated_date: '2026-09-25 21:17'
 labels:
   - usb
   - top
@@ -47,7 +47,7 @@ Salt reports that SLS `usb.configur-dvm` is not found.
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 salt/usb/init.top references usb.configure-dvm
-- [ ] #2 Highstate with the usb top enabled reports no missing SLS
+- [x] #2 Highstate with the usb top enabled reports no missing SLS
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -56,4 +56,6 @@ Salt reports that SLS `usb.configur-dvm` is not found.
 Fixed in salt/usb/init.top. AC #2 needs a highstate on dvm-usb.
 
 2026-09-25: static check in the dev qube: every SLS named in salt/usb/*.top and in the usb includes exists (usb.create, usb.clone, usb.install, usb.configure-dvm, sys-usb.install-client, dev.home-cleanup). AC #2 still needs the highstate in dom0.
+
+2026-09-25: the user tested the fix in dom0 and confirmed it works.
 <!-- SECTION:NOTES:END -->
