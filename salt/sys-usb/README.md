@@ -47,11 +47,30 @@ sudo qubesctl state.apply sys-usb.appmenus
 
 ### Keyboard installation
 
-If you use an USB keyboard, also run:
+By default, keyboard input from the USB qubes is denied. To allow an USB
+keyboard, set the pillar `qvm:sys-usb:keyboard-action` to `allow` and name the
+USB qube that should start before the login screen:
+
+```yaml
+qvm:
+  sys-usb:
+    keyboard-action: allow
+    name: disp-sys-usb
+```
+
+Then apply the create state again:
 
 ```sh
-sudo qubesctl state.apply sys-usb.keyboard
+sudo qubesctl saltutil.refresh_pillar
+sudo qubesctl state.apply sys-usb.create
 ```
+
+The `qvm.hide-usb-from-dom0` state, included by `sys-usb.create`, sets
+`usbcore.authorized_default=0`, so the USB keyboard can still be used at the
+disk passphrase prompt.
+
+The same pillar accepts `mouse-action` and `tablet-action`, with the values
+`allow`, `ask` or `deny`.
 
 ### AudioVM installation
 

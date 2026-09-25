@@ -13,7 +13,7 @@ labels:
 milestone: m-4
 dependencies: []
 references:
-  - salt/sys-usb/keyboard.sls
+  - salt/sys-usb/files/admin/policy/default.policy
   - salt/sys-usb/create.sls
   - 'https://docs.qmk.fm/platformdev_rp2040'
   - 'https://docs.qmk.fm/features/split_keyboard#handedness-by-eeprom'
