@@ -36,6 +36,7 @@ host:
       - rpm_spec/qusal-reader.spec
       - rpm_spec/qusal-remmina.spec
       - rpm_spec/qusal-signal.spec
+      - rpm_spec/qusal-slack.spec
       - rpm_spec/qusal-ssh.spec
       - rpm_spec/qusal-sys-audio.spec
       - rpm_spec/qusal-sys-bitcoin.spec
