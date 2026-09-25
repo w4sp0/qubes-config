@@ -1,10 +1,10 @@
 ---
 id: TASK-032
 title: 'utils: install verified binaries into templates from a builder disposable'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 21:47'
-updated_date: '2026-09-23 22:58'
+updated_date: '2026-09-25 21:33'
 labels:
   - utils
   - qrexec
@@ -49,11 +49,11 @@ Generalize the `sys-bitcoin` builder pattern (`disp-bitcoin-builder` and `qusal.
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 A backlog decision records the builder template, the qrexec service, the policy format and the pin format
-- [ ] #2 The macro installs a release binary with a pinned SHA-256 into a template
+- [x] #2 The macro installs a release binary with a pinned SHA-256 into a template
 - [x] #3 The macro builds a pinned git commit in the disposable and installs the result into a template
-- [ ] #4 The template refuses a file whose SHA-256 does not match the pin, and installs nothing
-- [ ] #5 A second apply with an unchanged pin reports 0 changes and starts no disposable
-- [ ] #6 No template gets golang-go or new sys-cacher passthrough hosts because of this mechanism
+- [x] #4 The template refuses a file whose SHA-256 does not match the pin, and installs nothing
+- [x] #5 A second apply with an unchanged pin reports 0 changes and starts no disposable
+- [x] #6 No template gets golang-go or new sys-cacher passthrough hosts because of this mechanism
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -72,4 +72,8 @@ Generated rpm_spec/qusal-builder.spec at a3e8d1c; spec-gen.sh test passes. spec-
 2026-09-24 dom0 test: the build passed and the builder-side pin check passed, but qrexec refused qusal.InstallBinary+discordo (policy 45-discord line 8, the deny). '@dispvm:dvm-builder' does not match a running disposable as a source. Fix: tag dvm-builder with qusal-builder (disposables copy template tags) and use @tag:qusal-builder as the policy source.
 
 2026-09-24 dom0 test: with @tag:qusal-builder, discord.install-binary built discordo in a dvm-builder disposable and tpl-discord installed it; after a restart, /usr/bin/discordo in qube discord has the pinned SHA-256. From the dev qube (no tag), qrexec-client-vm tpl-discord qusal.InstallBinary+discordo returns 'Request refused' (exit 126). Open: AC #2 (release method on a real system), AC #4 (mismatch refusal on a real system), AC #5 (second apply), AC #6.
+
+2026-09-25: AC #2 and #5 are shown by TASK-033.03. The release method installed slack-tui v0.6.1 into tpl-slack, and slack-tui --version runs in qube slack. A second apply reported no changes. In the macro, the 'unless' check runs sha256sum in the target template with qvm-run and never starts a dvm-builder disposable. AC #6: golang-go is only in salt/builder/install.sls (tpl-builder, the builder's own template). No target template installs it. dvm-builder downloads Go directly, not through sys-cacher. The only recent PassThroughPattern change (3f52d2b, static.rustlang.org) is for the dev Rust state and is not part of this mechanism. AC #4 remains: TASK-033.03 tested a wrong pin, but the builder's own check stops that before anything reaches the template. The template's own refusal is tested only with shims, not on a real system.
+
+2026-09-25: a tampered payload sent to tpl-slack by hand from a dvm-builder disposable was refused by qrexec (rc=126) and never reached the template. The user accepts AC #4 on this result, together with the successful discordo and slack-tui installs. The template-side SHA-256 refusal is covered by the shim tests only.
 <!-- SECTION:NOTES:END -->
