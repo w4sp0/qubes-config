@@ -29,7 +29,6 @@ include:
       - jq
       - jqp
       - xxd
-      - firefox-esr
       - git
       - man-db
       ## Searching files
