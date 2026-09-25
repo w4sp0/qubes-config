@@ -1,10 +1,10 @@
 ---
 id: TASK-005
 title: 'dev-tofu: install.top targets non-existent otee-dev'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:39'
-updated_date: '2026-09-23 21:36'
+updated_date: '2026-09-25 19:35'
 labels:
   - dev-tofu
   - top
@@ -14,7 +14,7 @@ references:
   - salt/dev-tofu/install.top
 priority: high
 type: bug
-ordinal: 3000
+ordinal: 1562.5
 ---
 
 ## Description
@@ -51,5 +51,5 @@ No state is applied to `tpl-dev-tofu`.
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-Fixed in salt/dev-tofu/install.top. grep -rn otee-dev salt/dev-tofu has no match. Set Done after an apply on tpl-dev-tofu.
+Fixed in salt/dev-tofu/install.top. grep -rn otee-dev salt/dev-tofu has no match. Applied on tpl-dev-tofu.
 <!-- SECTION:NOTES:END -->
