@@ -10,11 +10,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 # Last known update of 'qvm.usb-keyboard': 2023-08-31
 
 {% set uefi_xen_cfg = '/boot/efi/EFI/qubes/xen.cfg' %}
-{% if grains['boot_mode'] == 'efi' %}
-{% set grub_cfg = '/boot/efi/EFI/qubes/grub.cfg' %}
-{% else %}
+{# On EFI, '/boot/efi/EFI/qubes/grub.cfg' is a stub that loads this file. #}
 {% set grub_cfg = '/boot/grub2/grub.cfg' %}
-{% endif %}
 
 "{{ slsdotpath }}-unhide-usb-from-dom0-uefi":
   file.replace:
