@@ -107,9 +107,19 @@ qvm-run --no-gui --pass-io --localcmd="UPDATES_MAX_FILES=50000
     ```
 
     The commits are signed with a subkey, so `git verify-commit` names the
-    subkey `E465 C11C 5CFF BF62 BD66  DC8D 7881 0E06 8636 9D7A`. GnuPG warns
-    that the key is not certified with a trusted signature until you set the
-    owner trust of the key. The signature is verified regardless.
+    subkey `E465 C11C 5CFF BF62 BD66  DC8D 7881 0E06 8636 9D7A`.
+
+    Set the owner trust of the verified key to ultimate:
+
+    ```sh
+    printf '%s:6:\n' A3A03DD3ED22D21E653E842B47B7A28B999E0D56 |
+      gpg --import-ownertrust
+    ```
+
+    Without it, GnuPG warns that the key is not certified with a trusted
+    signature. Git also refuses the signature when `gpg.minTrustLevel` is set
+    (the git configuration from the dotfiles sets it to `fully`), and
+    `git pull` fails when `merge.verifySignatures` is enabled.
 
 5.  Enter the repository:
 
