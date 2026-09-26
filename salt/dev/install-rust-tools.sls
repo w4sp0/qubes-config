@@ -16,10 +16,11 @@ proxies. Not to '/usr/local/bin', as qubes based on the template have their
 own '/usr/local' on the private volume. 'CARGO_HOME' keeps pointing to the
 home directory, so the registry cache and 'cargo install' stay per user.
 
-'rustup doc' can't find the system wide toolchain for the same reason, thus
-the offline documentation of the toolchain (the standard library, the book,
-the reference and the Cargo book) is linked to '/usr/share/doc/rust'. Browse
-it in a terminal with 'w3m /usr/share/doc/rust/html/index.html'.
+'rustup' is linked to '/usr/bin' too. With the user's 'RUSTUP_HOME', it only
+sees the system wide toolchain after 'dev.configure-rust-tools' links it
+there. The offline documentation of the toolchain (the standard library, the
+book, the reference and the Cargo book) is linked to '/usr/share/doc/rust'.
+Read it in a terminal with 'devdoc rust'.
 
 The download goes through the Qubes update proxy, which is only reachable
 from templates, so apply the state to a template. With 'sys-cacher' as the
@@ -30,11 +31,8 @@ Apply the state again to update the toolchain.
 
 {% if grains['nodename'] != 'dom0' -%}
 
-{% set rustup_home = '/opt/rust/rustup' -%}
-{% set cargo_home = '/opt/rust/cargo' -%}
-{% set triple = grains['cpuarch'] ~ '-unknown-linux-gnu' -%}
-{% set toolchain = rustup_home ~ '/toolchains/stable-' ~ triple -%}
-{% set toolchain_bin = toolchain ~ '/bin' -%}
+{%- from 'dev/rust.jinja' import rustup_home, cargo_home, triple,
+    toolchain, toolchain_bin with context -%}
 {% set rustup_url = 'https://static.rust-lang.org/rustup/dist/' ~ triple ~ '/rustup-init' -%}
 {% set rust_env = [
     {'RUSTUP_HOME': rustup_home},
@@ -124,6 +122,14 @@ include:
     - force: True
 
 {% endfor -%}
+
+"{{ slsdotpath }}-linked-rustup":
+  file.symlink:
+    - require:
+      - cmd: "{{ slsdotpath }}-updated-rust"
+    - name: /usr/bin/rustup
+    - target: {{ cargo_home }}/bin/rustup
+    - force: True
 
 "{{ slsdotpath }}-linked-rust-docs":
   file.symlink:

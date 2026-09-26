@@ -1,0 +1,18 @@
+{#
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+Paths of the system wide Rust toolchain, shared by the install state in the
+template and the configure state in the qube. Import it with context, as it
+reads grains.
+#}
+
+{% set rustup_home = '/opt/rust/rustup' -%}
+{% set cargo_home = '/opt/rust/cargo' -%}
+{% set triple = grains['cpuarch'] ~ '-unknown-linux-gnu' -%}
+{% set toolchain = rustup_home ~ '/toolchains/stable-' ~ triple -%}
+{% set toolchain_bin = toolchain ~ '/bin' -%}
+{#- Name of the system wide toolchain in the user's rustup. 'system' is
+reserved by rustup for a toolchain outside of it. -#}
+{% set toolchain_link = 'template' -%}
