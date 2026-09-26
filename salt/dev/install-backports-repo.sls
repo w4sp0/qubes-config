@@ -24,6 +24,14 @@ a package is installed from them explicitly.
     - group: root
     - makedirs: True
 
+{% if salt['cmd.has_exec']('apt-cacher-ng-repo') -%}
+"{{ slsdotpath }}-backports-run-apt-cacher-ng-repo":
+  cmd.run:
+    - require:
+      - file: "{{ slsdotpath }}-install-backports-repository"
+    - name: apt-cacher-ng-repo
+{% endif -%}
+
 {% endif -%}
 
 {% endif -%}
