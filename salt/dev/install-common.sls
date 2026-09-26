@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -34,6 +35,7 @@ include:
       - man-db
       - info
       - texinfo
+      - w3m
       - cloc
       - universal-ctags
       ## Searching files
@@ -67,5 +69,23 @@ include:
     - skip_suggestions: True
     - setopt: "install_weak_deps=False"
     - pkgs: {{ pkg.pkg|sequence|yaml }}
+
+## The documentation it reads is installed by 'install-*-tools'.
+"{{ slsdotpath }}-devdoc":
+  file.managed:
+    - name: /usr/bin/devdoc
+    - source: salt://{{ slsdotpath }}/files/bin/devdoc
+    - mode: '0755'
+    - user: root
+    - group: root
+
+"{{ slsdotpath }}-devdoc-vim-plugin":
+  file.managed:
+    - name: /usr/share/vim/vimfiles/plugin/devdoc.vim
+    - source: salt://{{ slsdotpath }}/files/vim/devdoc.vim
+    - mode: '0644'
+    - user: root
+    - group: root
+    - makedirs: True
 
 {% endif -%}

@@ -63,6 +63,46 @@ sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-rust-tools
 The toolchain is installed in the template under `/opt/rust` and its binaries
 are linked to `/usr/bin`. Apply the state again to update it.
 
+If you want a recent Go toolchain, install it from the Debian backports of
+the template release, which are signed by the Debian archive key. On Fedora,
+the distribution packages are installed:
+
+```sh
+sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-go-tools
+```
+
+If you want Elixir, with the Erlang/OTP documentation:
+
+```sh
+sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-elixir-tools
+```
+
+If you want C tools, with the C library manual pages and the C reference:
+
+```sh
+sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-c-tools
+```
+
+### Offline documentation
+
+The language states also install the offline documentation of the language.
+Read it in the terminal with `devdoc`. Without a topic, it lets you pick one
+with `fzf`. With `-b`, it browses the HTML manual with `w3m`:
+
+```sh
+devdoc go fmt.Println
+devdoc rust Vec::push
+devdoc python json.loads
+devdoc c printf
+devdoc elixir Enum.map/2
+devdoc go
+devdoc -b rust
+```
+
+In Vim, in Go, Rust, Python, C and Elixir buffers, `K` shows the
+documentation of the name under the cursor, with its qualifier, such as
+`fmt.Println`. `:Doc TOPIC` shows a topic and `:DocBrowse` browses the manual.
+
 If you want to lint this repository and build its RPM packages, install the
 tooling the `pre-commit` hooks and the `scripts/` call:
 

@@ -1,0 +1,233 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Read the offline documentation of a language in the terminal. The
+# documentation is installed by the 'dev.install-*-tools' states.
+
+set -eu
+
+usage(){
+  printf '%s\n' "Usage: ${0##*/} [-b] LANG [TOPIC]
+
+Show the documentation of TOPIC. Without TOPIC, pick one with fzf. With
+'-b', browse the HTML manual of LANG with w3m.
+
+Languages and topics:
+  go      package or symbol          fmt, fmt.Println, net/http.Client
+  rust    item or path               Vec, Vec::push, std::fs, println
+  python  module, name or keyword    json, json.loads, with
+  c       man page or header         printf, pthread_create, stdio
+  elixir  module or function         Enum, Enum.map, Enum.map/2
+
+Documentation roots:"
+  for lang in go rust python c elixir; do
+    path="$(manual "${lang}")"
+    printf '  %-7s %s\n' "${lang}" "${path:-not installed}"
+  done
+  exit 1
+}
+
+die(){
+  printf '%s\n' "${0##*/}: ${*}" >&2
+  exit 1
+}
+
+## PAGER may have options, such as 'less -R'.
+pager(){
+  # shellcheck disable=SC2086
+  ${PAGER:-less}
+}
+
+## Print the first existing path of the HTML manual of a language, or
+## nothing.
+manual(){
+  case "${1}" in
+    go) set -- /usr/share/doc/golang-*-doc/html/go_spec.html \
+          /usr/lib/golang/doc/go_spec.html;;
+    rust) set -- /usr/share/doc/rust/html/index.html;;
+    python) set -- /usr/share/doc/python3/html/index.html \
+          /usr/share/doc/python3-docs/html/index.html;;
+    c) set -- /usr/share/cppreference/doc/html/en/c.html;;
+    elixir) set -- /usr/share/doc/erlang-doc/html/doc/index.html \
+          /usr/share/doc/erlang-doc/doc/index.html;;
+    *) return 0;;
+  esac
+  for path in "${@}"; do
+    if test -f "${path}"; then
+      printf '%s\n' "${path}"
+      return 0
+    fi
+  done
+}
+
+requires(){
+  command -v "${1}" >/dev/null || die "'${1}' not found, install ${2}"
+}
+
+pick(){
+  requires fzf dev.install-common
+  fzf --no-multi --prompt="${1}> "
+}
+
+## Only names, operators and paths, as the topic may be evaluated.
+check_topic(){
+  case "${1}" in
+    ""|*[!A-Za-z0-9_.:/?!=\<\>\|\&\*+-]*) die "invalid topic: '${1}'";;
+    *) ;;
+  esac
+}
+
+doc_go(){
+  requires go dev.install-go-tools
+  ## Do not try to download a newer toolchain that a go.mod asks for.
+  GOTOOLCHAIN=local
+  export GOTOOLCHAIN
+  topic="${1-}"
+  if test -z "${topic}"; then
+    topic="$(go list std | pick go)"
+    out="$(go doc -all -- "${topic}")"
+  else
+    out="$(go doc -- "${topic}")"
+  fi
+  printf '%s\n' "${out}" | pager
+}
+
+## A path such as 'std::vec::Vec::push': find the page of the last item, or
+## of the one before it and jump to the method.
+doc_rust(){
+  root="/usr/share/doc/rust/html"
+  test -d "${root}" ||
+    die "Rust documentation not found, install dev.install-rust-tools"
+  requires w3m dev.install-common
+  topic="${1-}"
+  if test -z "${topic}"; then
+    page="$(cd -- "${root}" &&
+      find std core alloc proc_macro -name '*.html' ! -name 'sidebar-items*' |
+      sort | pick rust)"
+    exec w3m -- "${root}/${page}"
+  fi
+  item="${topic##*::}"
+  parent="${topic%::*}"
+  parent="${parent##*::}"
+  anchor=""
+  pages="$(find "${root}/std" "${root}/core" "${root}/alloc" \
+    "${root}/proc_macro" \( -name "*.${item}.html" \
+    -o -path "*/${item}/index.html" \) | sort)"
+  if test -z "${pages}" && test "${parent}" != "${topic}"; then
+    pages="$(find "${root}/std" "${root}/core" "${root}/alloc" \
+      -name "*.${parent}.html" | sort)"
+    anchor="#method.${item}"
+  fi
+  test -n "${pages}" || die "no Rust documentation for '${topic}'"
+  ## Prefer std, which re-exports core and alloc.
+  std="$(printf '%s\n' "${pages}" | grep -e "^${root}/std/" || true)"
+  test -z "${std}" || pages="${std}"
+  case "${pages}" in
+    *"
+"*)
+      page="$(printf '%s\n' "${pages}" | sed "s|^${root}/||" | pick rust)"
+      page="${root}/${page}";;
+    *) page="${pages}";;
+  esac
+  exec w3m -- "file://${page}${anchor}"
+}
+
+doc_python(){
+  requires python3 dev.install-python-tools
+  topic="${1-}"
+  if test -z "${topic}"; then
+    topic="$(python3 -c '
+import pkgutil, sys
+names = set(sys.builtin_module_names)
+names.update(m.name for m in pkgutil.iter_modules())
+print(*sorted(names), sep="\n")' | pick python)"
+  fi
+  out="$(env PAGER=cat python3 -m pydoc "${topic}")" ||
+    die "no Python documentation for '${topic}'"
+  printf '%s\n' "${out}" | pager
+}
+
+doc_c(){
+  requires man dev.install-common
+  topic="${1-}"
+  if test -z "${topic}"; then
+    entry="$(apropos -s 2:3 . | sort | pick c)"
+    topic="${entry%% *}"
+    section="${entry#*(}"
+    exec man -- "${section%%)*}" "${topic}"
+  fi
+  for section in 3 2 0 7; do
+    if man -w -- "${section}" "${topic}" >/dev/null 2>&1; then
+      exec man -- "${section}" "${topic}"
+    fi
+  done
+  if man -w -- "${topic}" >/dev/null 2>&1; then
+    exec man -- "${topic}"
+  fi
+  ## Headers and language pages from cppreference, such as 'stdio' or 'for'.
+  root="/usr/share/cppreference/doc/html/en/c"
+  if test -d "${root}"; then
+    page="$(find "${root}" -name "${topic%.h}.html" | sort | head -n 1)"
+    if test -n "${page}"; then
+      requires w3m dev.install-common
+      exec w3m -- "${page}"
+    fi
+  fi
+  die "no C documentation for '${topic}'"
+}
+
+doc_elixir(){
+  requires elixir dev.install-elixir-tools
+  topic="${1-}"
+  if test -z "${topic}"; then
+    topic="$(elixir -e '
+for app <- [:elixir, :eex, :ex_unit, :iex, :logger, :mix] do
+  Application.load(app)
+  {:ok, mods} = :application.get_key(app, :modules)
+  mods
+end
+|> List.flatten()
+|> Enum.map(&inspect/1)
+|> Enum.sort()
+|> Enum.each(&IO.puts/1)' | pick elixir)"
+  fi
+  check_topic "${topic}"
+  elixir -e '
+[topic] = System.argv()
+Code.eval_string("require IEx.Helpers; IEx.Helpers.h(" <> topic <> ")")
+' -- "${topic}" | pager
+}
+
+browse=0
+if test "${1-}" = "-b"; then
+  browse=1
+  shift
+fi
+case "${1-}" in
+  -h|--help|"") usage;;
+  go|golang) lang=go;;
+  rust|rs) lang=rust;;
+  python|python3|py) lang=python;;
+  c|cpp) lang=c;;
+  elixir|eelixir|ex|exs|heex) lang=elixir;;
+  *) die "unknown language: '${1}'";;
+esac
+shift
+test "${#}" -le 1 || usage
+
+if test "${browse}" = "1"; then
+  requires w3m dev.install-common
+  path="$(manual "${lang}")"
+  if test -n "${path}"; then
+    exec w3m -- "${path}"
+  fi
+  if test "${lang}" = "c" && command -v info >/dev/null; then
+    exec info libc
+  fi
+  die "no HTML manual for ${lang}, install dev.install-${lang}-tools"
+fi
+
+"doc_${lang}" "${@}"
