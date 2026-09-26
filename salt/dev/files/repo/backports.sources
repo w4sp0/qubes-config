@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+Types: deb
+URIs: https://deb.debian.org/debian
+Suites: {{ grains['oscodename'] }}-backports
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+# vim: ft=debsources
