@@ -46,9 +46,13 @@ include:
 
 ## Fedora doesn't have: ruby-mdl (markdownlint, mdl)
 ## Debian doesn't have: salt-lint
+## Fedora doesn't have: wbritish (British /usr/share/dict/words)
+## Fedora doesn't have: dict-gcide, dict-wn, dict-foldoc (offline dictionaries
+## for dict)
 {% set pkg = {
     'Debian': {
-      'pkg': ['shellcheck', 'vim-nox', 'fd-find', 'ruby-mdl'],
+      'pkg': ['shellcheck', 'vim-nox', 'fd-find', 'ruby-mdl', 'wbritish',
+              'dict', 'dictd', 'dict-gcide', 'dict-wn', 'dict-foldoc'],
     },
     'RedHat': {
       'pkg': ['ShellCheck', 'vim-enhanced', 'fd-find', 'shadow-utils'],
