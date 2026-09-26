@@ -107,8 +107,12 @@ doc_rust(){
     page="$(cd -- "${root}" &&
       find std core alloc proc_macro -name '*.html' ! -name 'sidebar-items*' |
       sort | pick rust)"
-    exec w3m -- "${root}/${page}"
+    exec w3m "${root}/${page}"
   fi
+  ## Macros are named without '!', and a method call such as 'v.push' has no
+  ## type, so look for the method alone.
+  topic="${topic%!}"
+  topic="${topic##*.}"
   item="${topic##*::}"
   parent="${topic%::*}"
   parent="${parent##*::}"
@@ -119,6 +123,13 @@ doc_rust(){
   if test -z "${pages}" && test "${parent}" != "${topic}"; then
     pages="$(find "${root}/std" "${root}/core" "${root}/alloc" \
       -name "*.${parent}.html" | sort)"
+    anchor="#method.${item}"
+  fi
+  ## Types that have a method with that name.
+  if test -z "${pages}"; then
+    pages="$(grep -rl --include='*.html' \
+      -e "id=\"method.${item}\"" -e "id=\"tymethod.${item}\"" \
+      -- "${root}/std" | sort || true)"
     anchor="#method.${item}"
   fi
   test -n "${pages}" || die "no Rust documentation for '${topic}'"
@@ -132,7 +143,13 @@ doc_rust(){
       page="${root}/${page}";;
     *) page="${pages}";;
   esac
-  exec w3m -- "file://${page}${anchor}"
+  ## Required methods of a trait have their own anchor.
+  if test -n "${anchor}" &&
+    grep -q -e "id=\"tymethod.${item}\"" -- "${page}"
+  then
+    anchor="#tymethod.${item}"
+  fi
+  exec w3m "file://${page}${anchor}"
 }
 
 doc_python(){
@@ -173,7 +190,7 @@ doc_c(){
     page="$(find "${root}" -name "${topic%.h}.html" | sort | head -n 1)"
     if test -n "${page}"; then
       requires w3m dev.install-common
-      exec w3m -- "${page}"
+      exec w3m "${page}"
     fi
   fi
   die "no C documentation for '${topic}'"
@@ -195,10 +212,10 @@ end
 |> Enum.each(&IO.puts/1)' | pick elixir)"
   fi
   check_topic "${topic}"
-  elixir -e '
-[topic] = System.argv()
+  DEVDOC_TOPIC="${topic}" elixir -e '
+topic = System.fetch_env!("DEVDOC_TOPIC")
 Code.eval_string("require IEx.Helpers; IEx.Helpers.h(" <> topic <> ")")
-' -- "${topic}" | pager
+' | pager
 }
 
 browse=0
@@ -222,7 +239,7 @@ if test "${browse}" = "1"; then
   requires w3m dev.install-common
   path="$(manual "${lang}")"
   if test -n "${path}"; then
-    exec w3m -- "${path}"
+    exec w3m "${path}"
   fi
   if test "${lang}" = "c" && command -v info >/dev/null; then
     exec info libc
