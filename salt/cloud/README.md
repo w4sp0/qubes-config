@@ -61,3 +61,12 @@ The operations qube `cloud` can be used for:
 *   cloud (in particular, kubernetes) operations and monitoring;
 *   helm chart validation and deployments;
 *   fetching and pushing to and from local qube repository with split-git;
+
+The following clients are installed from the Debian repositories:
+
+*   `aws`, from package `awscli`;
+*   `kubectl`, `kubectx` and `kubens`;
+*   `valkey-cli`, from package `valkey-tools`, which also works with Redis
+    servers.
+
+The qube has no `netvm`, so these clients cannot reach remote APIs yet.

@@ -1,5 +1,5 @@
 {#
-SPDX-FileCopyrightText: 2023 - 2025 wassp <cyberwassp@gmail.com>
+SPDX-FileCopyrightText: 2023 - 2026 wassp <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -25,7 +25,11 @@ include:
       - qubes-core-agent-networking # adds internet connectivity
       - qubes-core-agent-passwordless-root
       - ca-certificates
+      ## Cloud and cluster clients
+      - awscli
+      - kubectl
       - kubectx
+      - valkey-tools
       - jq
       - jqp
       - xxd
