@@ -16,6 +16,11 @@ proxies. Not to '/usr/local/bin', as qubes based on the template have their
 own '/usr/local' on the private volume. 'CARGO_HOME' keeps pointing to the
 home directory, so the registry cache and 'cargo install' stay per user.
 
+'rustup doc' can't find the system wide toolchain for the same reason, thus
+the offline documentation of the toolchain (the standard library, the book,
+the reference and the Cargo book) is linked to '/usr/share/doc/rust'. Browse
+it in a terminal with 'w3m /usr/share/doc/rust/html/index.html'.
+
 The download goes through the Qubes update proxy, which is only reachable
 from templates, so apply the state to a template. With 'sys-cacher' as the
 update proxy, 'static.rust-lang.org' must be in its 'PassThroughPattern'.
@@ -28,7 +33,8 @@ Apply the state again to update the toolchain.
 {% set rustup_home = '/opt/rust/rustup' -%}
 {% set cargo_home = '/opt/rust/cargo' -%}
 {% set triple = grains['cpuarch'] ~ '-unknown-linux-gnu' -%}
-{% set toolchain_bin = rustup_home ~ '/toolchains/stable-' ~ triple ~ '/bin' -%}
+{% set toolchain = rustup_home ~ '/toolchains/stable-' ~ triple -%}
+{% set toolchain_bin = toolchain ~ '/bin' -%}
 {% set rustup_url = 'https://static.rust-lang.org/rustup/dist/' ~ triple ~ '/rustup-init' -%}
 {% set rust_env = [
     {'RUSTUP_HOME': rustup_home},
@@ -104,6 +110,7 @@ include:
         {{ cargo_home }}/bin/rustup self update
         {{ cargo_home }}/bin/rustup update stable
         {{ cargo_home }}/bin/rustup default stable
+        {{ cargo_home }}/bin/rustup component add --toolchain stable rust-docs
 
 {% for bin in ['cargo', 'cargo-clippy', 'cargo-fmt', 'clippy-driver',
                'rust-analyzer', 'rust-gdb', 'rust-gdbgui', 'rust-lldb',
@@ -117,5 +124,13 @@ include:
     - force: True
 
 {% endfor -%}
+
+"{{ slsdotpath }}-linked-rust-docs":
+  file.symlink:
+    - require:
+      - cmd: "{{ slsdotpath }}-updated-rust"
+    - name: /usr/share/doc/rust
+    - target: {{ toolchain }}/share/doc/rust
+    - force: True
 
 {% endif -%}
