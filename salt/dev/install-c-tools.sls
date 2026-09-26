@@ -23,12 +23,14 @@ include:
       - cppcheck
 
 ## Fedora ships clangd and clang-tidy in clang-tools-extra.
+## Fedora doesn't have: cppreference-doc-en-html (C and C++ reference in HTML)
 {% set pkg = {
     'Debian': {
-      'pkg': ['clangd', 'clang-tidy', 'manpages-dev'],
+      'pkg': ['clangd', 'clang-tidy', 'manpages-dev', 'glibc-doc',
+              'cppreference-doc-en-html'],
     },
     'RedHat': {
-      'pkg': ['clang-tools-extra', 'man-pages'],
+      'pkg': ['clang-tools-extra', 'man-pages', 'glibc-doc'],
     },
 }.get(grains.os_family) -%}
 
