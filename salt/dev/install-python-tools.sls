@@ -1,5 +1,6 @@
 {#
 SPDX-FileCopyrightText: 2023 - 2025 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
@@ -26,10 +27,10 @@ include:
 
 {% set pkg = {
     'Debian': {
-        'pkg': ['python3-dev', 'python3-venv'],
+        'pkg': ['python3-dev', 'python3-venv', 'python3-doc'],
       },
     'RedHat': {
-        'pkg': ['python3-devel'],
+        'pkg': ['python3-devel', 'python3-docs'],
       },
   }.get(grains.os_family) -%}
 
