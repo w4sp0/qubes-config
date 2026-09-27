@@ -1,9 +1,10 @@
 ---
 id: TASK-009
 title: 'discord: implement formula'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-23 20:39'
+updated_date: '2026-09-27 11:02'
 labels:
   - discord
 milestone: m-0
@@ -34,6 +35,15 @@ Make the formula install `discordo` (TUI Discord client) in `tpl-discord`. Do ea
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 All subtasks are Done
-- [ ] #2 The README.md installation commands apply without error
+- [x] #1 All subtasks are Done
+- [x] #2 The README.md installation commands apply without error
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 11:02
+---
+2026-09-27: all subtasks are Done; the user ran the README installation commands and they applied without error.
+---
+<!-- COMMENTS:END -->

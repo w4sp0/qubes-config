@@ -1,10 +1,10 @@
 ---
 id: TASK-009.03
 title: 'discord: remove Signal packages from install.sls'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-23 21:40'
+updated_date: '2026-09-27 10:57'
 labels:
   - discord
 milestone: m-0
@@ -14,7 +14,7 @@ references:
 parent_task_id: TASK-009
 priority: medium
 type: bug
-ordinal: 7300
+ordinal: 156.25
 ---
 
 ## Description
@@ -41,7 +41,7 @@ Base commit: 3f52d2b
 <!-- AC:BEGIN -->
 - [x] #1 install.sls does not install signal-desktop, libayatana-appindicator3-1, thunar or qubes-core-agent-thunar
 - [x] #2 install.sls does not include utils.tools.xfce or sys-audio.install-client
-- [ ] #3 discordo starts in qube discord with the remaining packages
+- [x] #3 discordo starts in qube discord with the remaining packages
 <!-- AC:END -->
 
 ## Implementation Notes

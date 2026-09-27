@@ -1,10 +1,10 @@
 ---
 id: TASK-009.02
 title: 'discord: build discordo from a pinned commit in the builder disposable'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-23 22:58'
+updated_date: '2026-09-27 10:57'
 labels:
   - discord
   - security
@@ -22,7 +22,7 @@ references:
 parent_task_id: TASK-009
 priority: high
 type: feature
-ordinal: 7200
+ordinal: 312.5
 ---
 
 ## Description
@@ -48,10 +48,10 @@ Candidate pin (upstream main on 2026-09-23): `de2f2c94f0fc128730a90d88f3c3a7fb3b
 <!-- AC:BEGIN -->
 - [x] #1 salt/discord/files/repo/discordo_Linux_X64.zip is removed
 - [x] #2 The commit hash and the SHA-256 of the build output are pinned in one location in salt/discord
-- [ ] #3 tpl-discord refuses a binary whose SHA-256 does not match, and installs nothing
-- [ ] #4 discordo --help runs in qube discord
-- [ ] #5 A second apply reports no changes
-- [ ] #6 tpl-discord has no golang-go package
+- [x] #3 tpl-discord refuses a binary whose SHA-256 does not match, and installs nothing
+- [x] #4 discordo --help runs in qube discord
+- [x] #5 A second apply reports no changes
+- [x] #6 tpl-discord has no golang-go package
 <!-- AC:END -->
 
 ## Implementation Notes

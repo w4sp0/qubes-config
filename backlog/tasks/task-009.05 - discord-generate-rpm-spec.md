@@ -1,10 +1,10 @@
 ---
 id: TASK-009.05
 title: 'discord: generate rpm spec'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:41'
-updated_date: '2026-09-23 22:06'
+updated_date: '2026-09-27 10:58'
 labels:
   - discord
   - rpm
@@ -20,7 +20,7 @@ references:
 parent_task_id: TASK-009
 priority: low
 type: chore
-ordinal: 7500
+ordinal: 78.125
 ---
 
 ## Description
@@ -42,7 +42,7 @@ Generate the spec with `scripts/spec-gen.sh discord` after the other TASK-009 su
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 rpm_spec/qusal-discord.spec exists
-- [ ] #2 scripts/spec-build.sh discord exits 0
+- [x] #2 scripts/spec-build.sh discord exits 0
 - [x] #3 The spec post-install section matches the pkg:begin:post-install block in README.md
 <!-- AC:END -->
 
