@@ -1,10 +1,10 @@
 ---
 id: TASK-001.01
 title: 'cloud: README describes a development environment'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-09-23 20:39'
-updated_date: '2026-09-24 07:58'
+updated_date: '2026-09-27 11:02'
 labels:
   - cloud
   - docs
@@ -42,7 +42,7 @@ The README has the dev summary. `mdl` reports MD013 on lines 14 and 37.
 <!-- AC:BEGIN -->
 - [x] #1 The README summary line describes the cloud operations qube
 - [x] #2 scripts/markdown-lint.sh salt/cloud/README.md exits 0
-- [ ] #3 Usage lists the installed tools
+- [x] #3 Usage lists the installed tools
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -50,3 +50,12 @@ The README has the dev summary. `mdl` reports MD013 on lines 14 and 37.
 <!-- SECTION:NOTES:BEGIN -->
 Summary line is now 'Cloud operations environment in Qubes OS.'; long description line wrapped and the double blank line removed. markdown-lint passes. AC #3 (Usage lists the tools) is open; rpm_spec/qusal-cloud.spec Summary changes at the next spec regeneration.
 <!-- SECTION:NOTES:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 11:02
+---
+AC #3: Usage lists aws, kubectl, kubectx/kubens and valkey-cli, which are the packages in salt/cloud/install.sls. Non-Debian tools are documented under TASK-001.06 AC #5.
+---
+<!-- COMMENTS:END -->

@@ -1,11 +1,11 @@
 ---
 id: task-001
 title: define-cloud-qubes-scope
-status: In Progress
+status: To Do
 assignee:
   - '@wassp'
 created_date: '2025-12-20 19:57'
-updated_date: '2026-09-23 21:47'
+updated_date: '2026-09-27 11:02'
 labels:
   - cloud
   - gitops

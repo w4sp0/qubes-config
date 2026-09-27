@@ -1,10 +1,10 @@
 ---
 id: TASK-001.06
 title: 'cloud: install the cloud CLIs'
-status: In Progress
+status: To Do
 assignee: []
 created_date: '2026-09-23 20:40'
-updated_date: '2026-09-25 21:56'
+updated_date: '2026-09-27 11:02'
 labels:
   - cloud
   - aws

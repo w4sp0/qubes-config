@@ -1,10 +1,10 @@
 ---
 id: TASK-035
 title: 'docs: point install and verification steps to this fork'
-status: In Progress
+status: To Do
 assignee: []
 created_date: '2026-09-23 23:16'
-updated_date: '2026-09-25 21:22'
+updated_date: '2026-09-27 11:02'
 labels:
   - docs
   - signing
