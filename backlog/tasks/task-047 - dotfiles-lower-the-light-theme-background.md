@@ -1,10 +1,10 @@
 ---
 id: TASK-047
 title: 'dotfiles: lower the light theme background'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 13:44'
-updated_date: '2026-09-27 17:42'
+updated_date: '2026-09-27 18:29'
 labels:
   - dotfiles
   - theme
@@ -58,8 +58,14 @@ dircolors-light moves the grey ladder one step down the 256-colour ramp (241-247
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 theme light sets the background to #c2c2c2, the foreground to #1c1c1c and the cursor to #5f5f5f
-- [ ] #2 The light palette sets slots 7, 8 and 15 to #3b3b3b, #5f5f5f and #000000, and every other slot keeps its contrast ratio against the ground within 0.1
-- [ ] #3 theme-light.conf and dircolors-light use the shifted greys, with DIR on 232
-- [ ] #4 The comments that name the ground colour or contrast figures match the new values
+- [x] #1 theme light sets the background to #c2c2c2, the foreground to #1c1c1c and the cursor to #5f5f5f
+- [x] #2 The light palette sets slots 7, 8 and 15 to #3b3b3b, #5f5f5f and #000000, and every other slot keeps its contrast ratio against the ground within 0.1
+- [x] #3 theme-light.conf and dircolors-light use the shifted greys, with DIR on 232
+- [x] #4 The comments that name the ground colour or contrast figures match the new values
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Light ground #c2c2c2 with #1c1c1c text; slots 7, 8, 15 set by eye for the prompt, the rest of the palette, tmux greys and dircolors ladder shifted to hold contrast; directories on 232. Values previewed live, then verified on otee-dev.
+<!-- SECTION:FINAL_SUMMARY:END -->

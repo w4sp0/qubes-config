@@ -1,9 +1,10 @@
 ---
 id: TASK-050
 title: 'dotfiles: the first terminal of a qube starts in the default colours'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 18:02'
+updated_date: '2026-09-27 18:28'
 labels:
   - dotfiles
   - theme
@@ -49,8 +50,14 @@ Add `theme tty`, which paints only the current terminal in the saved mode, and c
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 theme tty paints only the current terminal with the colours of the saved mode and changes no state
-- [ ] #2 theme tty exits 0 silently without a controlling terminal
-- [ ] #3 shrc runs theme tty in interactive shells in xterm or rxvt, not inside tmux or over ssh
-- [ ] #4 After theme light and a qube restart, the first terminal opened from the menu is in the light theme
+- [x] #1 theme tty paints only the current terminal with the colours of the saved mode and changes no state
+- [x] #2 theme tty exits 0 silently without a controlling terminal
+- [x] #3 shrc runs theme tty in interactive shells in xterm or rxvt, not inside tmux or over ssh
+- [x] #4 After theme light and a qube restart, the first terminal opened from the menu is in the light theme
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Added `theme tty`, which paints only the current terminal in the saved mode, and shrc calls it in interactive xterm/rxvt shells outside tmux and ssh. Verified: shellcheck; light palette emitted under a pty; silent exit 0 without a controlling terminal; on otee-dev the first terminal after a restart opens in the light theme.
+<!-- SECTION:FINAL_SUMMARY:END -->
