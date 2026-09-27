@@ -1,9 +1,10 @@
 ---
 id: TASK-038
 title: 'otee-dev: replace otee-platform and otee-embedded'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 11:49'
 labels:
   - otee-dev
   - work

@@ -70,6 +70,20 @@ include:
     - setopt: "install_weak_deps=False"
     - pkgs: {{ pkg.pkg|sequence|yaml }}
 
+{% if grains['os_family'] == 'Debian' -%}
+## Default falls back to public servers when the local dictd is unreachable.
+"{{ slsdotpath }}-dict-conf":
+  file.managed:
+    - require:
+      - pkg: "{{ slsdotpath }}-installed-os-specific"
+    - name: /etc/dictd/dict.conf
+    - contents: |
+        server localhost
+    - mode: "0644"
+    - user: root
+    - group: root
+{% endif -%}
+
 ## The documentation it reads is installed by 'install-*-tools'.
 "{{ slsdotpath }}-devdoc":
   file.managed:

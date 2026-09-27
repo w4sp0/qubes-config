@@ -1,9 +1,10 @@
 ---
 id: TASK-038.13
 title: 'dom0: remove the otee-platform qube'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 12:52'
 labels:
   - dom0
 milestone: m-2
@@ -36,5 +37,11 @@ Remove the qube with `qvm-remove otee-platform`.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 qvm-ls does not list otee-platform
+- [x] #1 qvm-ls does not list otee-platform
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-27: the user removed otee-platform with Qubes Manager. qvm-ls --raw-list | grep otee-platform has no output.
+<!-- SECTION:NOTES:END -->

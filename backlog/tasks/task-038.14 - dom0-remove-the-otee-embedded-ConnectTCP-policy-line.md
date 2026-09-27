@@ -1,9 +1,10 @@
 ---
 id: TASK-038.14
 title: 'dom0: remove the otee-embedded ConnectTCP policy line'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 12:52'
 labels:
   - dom0
   - policy
@@ -35,5 +36,11 @@ Remove the `otee-embedded` line from `30-user.policy`.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 grep otee-embedded /etc/qubes/policy.d/30-user.policy has no match
+- [x] #1 grep otee-embedded /etc/qubes/policy.d/30-user.policy has no match
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-27: removed the otee-embedded line from /etc/qubes/policy.d/30-user.policy with sed; the user confirmed that grep has no match.
+<!-- SECTION:NOTES:END -->

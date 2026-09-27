@@ -63,6 +63,14 @@ sudo qubesctl --skip-dom0 --targets=tpl-dev state.apply dev.install-rust-tools
 The toolchain is installed in the template under `/opt/rust` and its binaries
 are linked to `/usr/bin`. Apply the state again to update it.
 
+Your shell profile keeps `RUSTUP_HOME` and `CARGO_HOME` in your home
+directory, so `rustup` sees no toolchain there. Link the toolchain of the
+template as your default toolchain, in the qube:
+
+```sh
+sudo qubesctl --skip-dom0 --targets=dev state.apply dev.configure-rust-tools
+```
+
 If you want a recent Go toolchain, install it from the Debian backports of
 the template release, which are signed by the Debian archive key. On Fedora,
 the distribution packages are installed:

@@ -13,8 +13,8 @@ Development environment in Qubes OS.
 
 Set up a development qube named "otee-dev", dedicated to contributing to OTee
 AS repositories. As there is a very broad set of repositoris, only common
-packages will be installed. The qube has no netvm but can reach remote servers if the
-policy allows.
+packages will be installed. The qube has no netvm but can reach remote servers
+if the policy allows.
 
 ## Installation
 

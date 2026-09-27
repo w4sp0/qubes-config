@@ -1,9 +1,10 @@
 ---
 id: TASK-038.15
 title: 'dom0: remove the otee-embedded qubes'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 10:44'
+updated_date: '2026-09-27 12:52'
 labels:
   - dom0
 milestone: m-2
@@ -36,5 +37,11 @@ Remove the four qubes with `qvm-remove`, in the order disposable, dvm, AppVM, te
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 qvm-ls lists no qube whose name contains otee-embedded
+- [x] #1 qvm-ls lists no qube whose name contains otee-embedded
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-27: the user removed the otee-embedded qubes with Qubes Manager. qvm-ls --raw-list | grep otee-embedded has no output.
+<!-- SECTION:NOTES:END -->

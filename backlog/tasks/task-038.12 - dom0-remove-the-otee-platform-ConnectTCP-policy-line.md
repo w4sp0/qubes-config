@@ -1,9 +1,10 @@
 ---
 id: TASK-038.12
 title: 'dom0: remove the otee-platform ConnectTCP policy line'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 12:52'
 labels:
   - dom0
   - policy
@@ -37,5 +38,11 @@ Remove the `otee-platform` line from `30-user.policy`.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 grep otee-platform /etc/qubes/policy.d/30-user.policy has no match
+- [x] #1 grep otee-platform /etc/qubes/policy.d/30-user.policy has no match
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-27: removed the otee-platform line from /etc/qubes/policy.d/30-user.policy with sed; the user confirmed that grep has no match.
+<!-- SECTION:NOTES:END -->

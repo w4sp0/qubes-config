@@ -4,6 +4,7 @@ title: 'copyright: files changed in 2026 fail copyright-lint'
 status: To Do
 assignee: []
 created_date: '2026-09-25 21:24'
+updated_date: '2026-09-27 12:48'
 labels:
   - ci
   - reuse
@@ -55,3 +56,12 @@ The script exits 0 for files changed in 2026.
 - [ ] #3 The task notes record why the CI copyright-lint step passed with GIT_EMAIL set to ben.grande.b@gmail.com, and CI checks the fork maintainer's e-mail
 - [ ] #4 docs/CONTRIBUTE.md states how to install the pre-commit hooks locally, or the task notes record why hooks stay manual
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 12:48
+---
+2026-09-27: root cause for READMEs in the joint dep5 block (salt/dev, salt/discord, salt/otee-dev): reuse spdx writes the two copyright lines as one multi-line <text> value. The awk in copyright-lint.sh reads only the line that starts with FileCopyrightText:, so the second line (2026 Radek Janik) is never matched, and the lint fails although the dep5 entry is correct. Found in TASK-038.01.
+---
+<!-- COMMENTS:END -->

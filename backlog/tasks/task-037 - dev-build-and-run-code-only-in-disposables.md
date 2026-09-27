@@ -4,6 +4,7 @@ title: 'dev: build and run code only in disposables'
 status: To Do
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 12:16'
 labels:
   - dev
   - qrexec
@@ -37,3 +38,12 @@ Keep `dev` for editing and documentation, without a netvm. Send the work tree to
 <!-- AC:BEGIN -->
 - [ ] #1 All subtasks are Done
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 12:16
+---
+2026-09-27: dev.configure-rust-tools targets only the qube dev. The shell profile sets RUSTUP_HOME in the home directory, so disposables of dvm-dev have no default toolchain and cargo fails there. Apply dev.configure-rust-tools to dvm-dev before devrun can build Rust (found in TASK-038.02).
+---
+<!-- COMMENTS:END -->

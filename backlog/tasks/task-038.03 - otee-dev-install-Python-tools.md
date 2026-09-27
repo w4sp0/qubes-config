@@ -1,9 +1,10 @@
 ---
 id: TASK-038.03
 title: 'otee-dev: install Python tools'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 13:08'
 labels:
   - otee-dev
   - python
@@ -34,10 +35,16 @@ Include `dev.install-python-tools` in `otee-dev.install`.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The tools of dev.install-python-tools run in otee-dev
+- [x] #1 The tools of dev.install-python-tools run in otee-dev
 <!-- AC:END -->
 
 ## Definition of Done
 <!-- DOD:BEGIN -->
-- [ ] #1 README.md documents the change
+- [x] #1 README.md documents the change
 <!-- DOD:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+2026-09-27: included in salt/otee-dev/install.sls together with TASK-038.01 (the user chose to install all toolchains in the skeleton commit b51e9d3). Applied with the otee-dev highstate; the user confirmed that gcc, cargo, go and python3 run in otee-dev, and cargo runs in a disposable of dvm-otee-dev (dev.configure-rust-tools in configure and configure-dvm). README.md lists the tools.
+<!-- SECTION:NOTES:END -->
