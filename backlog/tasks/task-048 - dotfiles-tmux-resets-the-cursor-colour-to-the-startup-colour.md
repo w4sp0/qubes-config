@@ -4,6 +4,7 @@ title: 'dotfiles: tmux resets the cursor colour to the startup colour'
 status: To Do
 assignee: []
 created_date: '2026-09-27 15:10'
+updated_date: '2026-09-27 17:42'
 labels:
   - dotfiles
   - theme
@@ -37,7 +38,7 @@ theme(1) sets the cursor colour with OSC 12. tmux has `cursor-colour none` and t
 
 ### Expected behavior
 
-The cursor is #585858 (TASK-047) in light mode.
+The cursor is #5f5f5f (TASK-047) in light mode.
 
 ### Actual behavior
 
