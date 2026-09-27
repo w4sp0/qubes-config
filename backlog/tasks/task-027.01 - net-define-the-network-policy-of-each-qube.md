@@ -4,6 +4,7 @@ title: 'net: define the network policy of each qube'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:12'
+updated_date: '2026-09-27 10:44'
 labels:
   - network
   - firewall
@@ -49,3 +50,12 @@ Include the qubes of TASK-001.04 (`cloud`) and TASK-025 (homelab).
 - [ ] #2 The decision states the value of the global default_netvm
 - [ ] #3 Follow-up tasks exist for each formula that must change
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Include dvm-dev and dvm-otee-dev (TASK-037, TASK-038): their disposables need package registries (crates.io, proxy.golang.org, PyPI) and, for otee platform runs, the k8s API, NATS and database endpoints (not behind Tailscale). dev and otee-dev keep no netvm and use qusal.ConnectTCP for github.com:22 only.
+---
+<!-- COMMENTS:END -->

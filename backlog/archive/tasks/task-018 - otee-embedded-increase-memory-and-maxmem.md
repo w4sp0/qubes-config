@@ -4,6 +4,7 @@ title: 'otee-embedded: increase memory and maxmem'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-27 10:44'
 labels:
   - otee-embedded
   - performance
@@ -37,3 +38,12 @@ Measure peak memory during a firmware build with `rust-analyzer` active. Set `me
 - [ ] #1 The values in create.sls are based on a recorded measurement
 - [ ] #2 A release build with rust-analyzer active causes no OOM kill in journalctl -k
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Replaced by TASK-038.01: otee-dev sets the sizing; builds move to disposables.
+---
+<!-- COMMENTS:END -->

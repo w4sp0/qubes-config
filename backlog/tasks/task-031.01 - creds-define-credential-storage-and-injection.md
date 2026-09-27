@@ -4,6 +4,7 @@ title: 'creds: define credential storage and injection'
 status: To Do
 assignee: []
 created_date: '2026-09-23 21:24'
+updated_date: '2026-09-27 10:44'
 labels:
   - credentials
   - secrets
@@ -59,3 +60,12 @@ Rules to decide:
 - [ ] #3 The decision states the qrexec service name and policy for secret injection
 - [ ] #4 Follow-up tasks exist for the implementation, including TASK-001.07
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Option for otee platform credentials (kubeconfig, NATS, databases): holder vault, KeePassXC Secret Service integration limited to one group, read by a qrexec service with secret-tool lookup; policy ask, source @dispvm:dvm-otee-dev only. No credential is stored in otee-dev, dvm-otee-dev or the template.
+---
+<!-- COMMENTS:END -->

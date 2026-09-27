@@ -1,13 +1,14 @@
 ---
 id: TASK-019
-title: 'dev: increase memory and maxmem'
+title: 'dev: size the dev qube for editing only'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-27 10:44'
 labels:
   - dev
   - performance
-milestone: m-2
+milestone: m-3
 dependencies: []
 references:
   - salt/dev/create.sls
@@ -21,19 +22,19 @@ ordinal: 9000
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ### Current problem (if any)
 
-`salt/dev/create.sls` sets `memory: 400`, `maxmem: 600` and `vcpus: 1`. Since df2c659, `tpl-dev` can include the rustup toolchain with `rust-analyzer`.
+`salt/dev/create.sls` sets `vcpus: 1`, `memory: 400` and `maxmem: 600` for `dev`. After TASK-037, `dev` does not build; it runs an editor, git and documentation tools.
 
 ### Proposed solution
 
-Measure peak memory during a Rust build with `rust-analyzer` active. Set `memory`, `maxmem` and `vcpus` from the measurement.
+Set `dev` to `vcpus: 2`, `memory: 600` and `maxmem: 2000`.
 
 ### The value to a user, and who that user might be
 
-- Developer: builds without OOM kills.
+- Developer: editing and reading documentation in dev is not limited by memory.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The values in create.sls are based on a recorded measurement
-- [ ] #2 A Rust build with rust-analyzer active causes no OOM kill in journalctl -k
+- [ ] #1 salt/dev/create.sls sets vcpus 2 and memory 600 and maxmem 2000 for dev
+- [ ] #2 qvm-prefs dev shows these values after dev.create is applied
 <!-- AC:END -->

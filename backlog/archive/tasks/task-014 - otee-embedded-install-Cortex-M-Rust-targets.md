@@ -4,6 +4,7 @@ title: 'otee-embedded: install Cortex-M Rust targets'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-27 10:44'
 labels:
   - otee-embedded
   - rust
@@ -40,3 +41,12 @@ Set the pillar keys from TASK-011 for `tpl-otee-embedded` to the targets of the 
 - [ ] #2 cargo build --target thumbv7em-none-eabihf of a no_std example completes in qube otee-embedded
 - [ ] #3 README.md lists the installed targets
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Replaced by TASK-038.09 (otee-embedded is merged into otee-dev).
+---
+<!-- COMMENTS:END -->

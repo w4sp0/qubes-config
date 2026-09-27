@@ -4,6 +4,7 @@ title: 'otee-embedded: allow non-root access to attached debug probes'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-27 10:44'
 labels:
   - otee-embedded
   - usb
@@ -40,3 +41,12 @@ Install udev rules for the supported probes in the template. Document the `qvm-u
 - [ ] #2 The udev rules are installed in /etc/udev/rules.d in the template
 - [ ] #3 README.md documents the qvm-usb attach command and the supported probes
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Deferred: no USB debug probe is used now. When resumed, the probe is attached to a disposable of dvm-otee-dev (TASK-038), not to otee-embedded.
+---
+<!-- COMMENTS:END -->

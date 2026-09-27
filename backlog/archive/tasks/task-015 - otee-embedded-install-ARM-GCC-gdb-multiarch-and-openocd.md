@@ -4,6 +4,7 @@ title: 'otee-embedded: install ARM GCC, gdb-multiarch and openocd'
 status: To Do
 assignee: []
 created_date: '2026-09-23 20:41'
+updated_date: '2026-09-27 10:44'
 labels:
   - otee-embedded
   - c
@@ -38,3 +39,12 @@ Install Debian packages `gcc-arm-none-eabi`, `libnewlib-arm-none-eabi`, `gdb-mul
 - [ ] #2 The packages are installed with install_recommends False
 - [ ] #3 README.md lists the packages
 <!-- AC:END -->
+
+## Comments
+
+<!-- COMMENTS:BEGIN -->
+created: 2026-09-27 10:44
+---
+Replaced by TASK-038.10 (otee-embedded is merged into otee-dev).
+---
+<!-- COMMENTS:END -->
