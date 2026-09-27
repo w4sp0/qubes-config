@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.co
 SPDX-License-Identifier: AGPL-3.0-or-later
 #}
 
-{% set version = salt['pillar.get']('qvm:whonix:version', '17') -%}
+{% set version = salt['pillar.get']('qvm:whonix:version', '18') -%}
 {% set repo = salt['pillar.get']('qvm:whonix:repo', 'qubes-templates-community') -%}
 {% set template = 'whonix-workstation-' ~ version -%}
 {% set clean_template = 'whonix-workstation' -%}
