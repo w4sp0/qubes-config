@@ -61,9 +61,9 @@ prefs:
 - template: tpl-{{ slsdotpath }}
 - label: red
 - audiovm: ""
-- vcpus: 1
-- memory: 400
-- maxmem: 600
+- vcpus: 6
+- memory: 1000
+- maxmem: 6000
 - autostart: False
 - template_for_dispvms: True
 - include_in_backups: False
@@ -89,9 +89,9 @@ prefs:
 - template: dvm-{{ slsdotpath }}
 - label: red
 - audiovm: ""
-- vcpus: 1
-- memory: 400
-- maxmem: 600
+- vcpus: 6
+- memory: 1000
+- maxmem: 6000
 - autostart: False
 - include_in_backups: False
 features:
