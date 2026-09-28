@@ -1,9 +1,10 @@
 ---
 id: TASK-037.02
 title: 'dev: size dvm-dev for clean builds'
-status: To Do
-assignee: []
+status: Done
+assignee: [@wassp]
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-28 05:22'
 labels:
   - dev
   - performance
@@ -15,9 +16,7 @@ parent_task_id: TASK-037
 priority: medium
 type: enhancement
 ordinal: 15500
----
-
-## Description
+---## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 ### Current problem (if any)
@@ -35,6 +34,6 @@ Set `dvm-dev` to `vcpus: 6`, `memory: 1000` and `maxmem: 6000`. The values only 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 salt/dev/create.sls sets vcpus 6 and memory 1000 and maxmem 6000 for dvm-dev
-- [ ] #2 qvm-prefs dvm-dev shows these values after dev.create is applied
+- [x] #1 salt/dev/create.sls sets vcpus 6 and memory 1000 and maxmem 6000 for dvm-dev
+- [x] #2 qvm-prefs dvm-dev shows these values after dev.create is applied
 <!-- AC:END -->
