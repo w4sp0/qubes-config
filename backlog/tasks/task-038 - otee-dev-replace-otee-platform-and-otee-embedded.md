@@ -4,7 +4,7 @@ title: 'otee-dev: replace otee-platform and otee-embedded'
 status: In Progress
 assignee: []
 created_date: '2026-09-27 10:43'
-updated_date: '2026-09-27 11:49'
+updated_date: '2026-09-27 19:23'
 labels:
   - otee-dev
   - work
@@ -15,9 +15,8 @@ references:
   - salt/dev/
 priority: high
 type: feature
-ordinal: 25500
+ordinal: 1000
 ---
-
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->

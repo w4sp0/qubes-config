@@ -19,7 +19,7 @@ references:
   - salt/fetcher/
 priority: high
 type: feature
-ordinal: 7050
+ordinal: 12100
 ---
 
 ## Description

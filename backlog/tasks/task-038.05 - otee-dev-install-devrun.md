@@ -1,9 +1,10 @@
 ---
 id: TASK-038.05
 title: 'otee-dev: install devrun'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-09-27 10:43'
+updated_date: '2026-09-27 19:24'
 labels:
   - otee-dev
   - qrexec
@@ -15,7 +16,7 @@ dependencies:
 parent_task_id: TASK-038
 priority: high
 type: feature
-ordinal: 30500
+ordinal: 2000
 ---
 
 ## Description

@@ -22,7 +22,7 @@ references:
 parent_task_id: TASK-009
 priority: high
 type: feature
-ordinal: 312.5
+ordinal: 8100
 ---
 
 ## Description
