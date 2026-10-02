@@ -22,7 +22,7 @@ references:
 parent_task_id: TASK-030
 priority: medium
 type: task
-ordinal: 4500
+ordinal: 61000
 ---
 
 ## Description

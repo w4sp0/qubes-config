@@ -18,7 +18,7 @@ references:
   - .github/workflows/main.yaml
 priority: medium
 type: bug
-ordinal: 10500
+ordinal: 67000
 ---
 
 ## Description

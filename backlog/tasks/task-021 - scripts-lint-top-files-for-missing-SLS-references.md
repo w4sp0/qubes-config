@@ -15,7 +15,7 @@ references:
   - .pre-commit-config.yaml
 priority: high
 type: feature
-ordinal: 2000
+ordinal: 44000
 ---
 
 ## Description

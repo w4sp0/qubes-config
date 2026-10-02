@@ -1,10 +1,10 @@
 ---
 id: TASK-038
 title: 'otee-dev: replace otee-platform and otee-embedded'
-status: In Progress
+status: To Do
 assignee: []
 created_date: '2026-09-27 10:43'
-updated_date: '2026-09-27 19:23'
+updated_date: '2026-10-02 23:01'
 labels:
   - otee-dev
   - work
@@ -15,8 +15,9 @@ references:
   - salt/dev/
 priority: high
 type: feature
-ordinal: 1000
+ordinal: 500
 ---
+
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->

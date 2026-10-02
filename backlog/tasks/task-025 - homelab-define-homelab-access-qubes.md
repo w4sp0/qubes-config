@@ -23,7 +23,7 @@ references:
   - backlog/tasks/task-031.01 - creds-define-credential-storage-and-injection.md
 priority: high
 type: spike
-ordinal: 1000
+ordinal: 10000
 ---
 
 ## Description

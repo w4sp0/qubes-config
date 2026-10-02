@@ -15,7 +15,7 @@ references:
   - salt/dotfiles/files/sh/.config/bash/bashrc
 priority: low
 type: enhancement
-ordinal: 51500
+ordinal: 92000
 ---
 
 ## Description

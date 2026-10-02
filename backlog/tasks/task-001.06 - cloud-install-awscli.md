@@ -23,7 +23,7 @@ modified_files:
 parent_task_id: TASK-001
 priority: medium
 type: feature
-ordinal: 4000
+ordinal: 99000
 ---
 
 ## Description

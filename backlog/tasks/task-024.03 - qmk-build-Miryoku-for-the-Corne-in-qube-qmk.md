@@ -18,7 +18,7 @@ references:
 parent_task_id: TASK-024
 priority: medium
 type: feature
-ordinal: 1300
+ordinal: 7000
 ---
 
 ## Description

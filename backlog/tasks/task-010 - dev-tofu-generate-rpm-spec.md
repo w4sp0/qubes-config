@@ -18,7 +18,7 @@ references:
   - salt/dev-tofu/README.md
 priority: low
 type: chore
-ordinal: 8000
+ordinal: 65000
 ---
 
 ## Description

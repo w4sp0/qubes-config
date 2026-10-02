@@ -16,7 +16,7 @@ references:
   - 'https://probe.rs/files/69-probe-rs.rules'
 priority: medium
 type: feature
-ordinal: 7000
+ordinal: 62000
 ---
 
 ## Description

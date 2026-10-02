@@ -16,7 +16,7 @@ references:
   - docs/TROUBLESHOOT.md
 priority: medium
 type: feature
-ordinal: 4000
+ordinal: 56000
 ---
 
 ## Description

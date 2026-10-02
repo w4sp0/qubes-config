@@ -14,7 +14,7 @@ references:
   - salt/dev/create.sls
 priority: low
 type: enhancement
-ordinal: 9000
+ordinal: 66000
 ---
 
 ## Description

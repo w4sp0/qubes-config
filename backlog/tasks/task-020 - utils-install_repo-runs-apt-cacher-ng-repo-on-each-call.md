@@ -14,7 +14,7 @@ references:
   - salt/utils/macros/install-repo.sls
 priority: low
 type: enhancement
-ordinal: 1000
+ordinal: 3000
 ---
 
 ## Description

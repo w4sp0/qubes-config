@@ -21,7 +21,7 @@ references:
 parent_task_id: TASK-025
 priority: medium
 type: feature
-ordinal: 1500
+ordinal: 15000
 ---
 
 ## Description

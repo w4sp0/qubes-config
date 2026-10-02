@@ -8,6 +8,7 @@ labels:
   - config
   - zsh
 dependencies: []
+ordinal: 105000
 ---
 
 

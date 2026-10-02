@@ -18,7 +18,7 @@ references:
 parent_task_id: TASK-027
 priority: high
 type: spike
-ordinal: 1100
+ordinal: 24000
 ---
 
 ## Description

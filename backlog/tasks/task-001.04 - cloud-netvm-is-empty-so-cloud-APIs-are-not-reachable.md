@@ -17,7 +17,7 @@ references:
 parent_task_id: TASK-001
 priority: high
 type: bug
-ordinal: 1000
+ordinal: 98000
 ---
 
 ## Description

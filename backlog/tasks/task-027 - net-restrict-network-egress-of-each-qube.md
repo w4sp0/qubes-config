@@ -15,7 +15,7 @@ references:
   - salt/sys-wireguard/files/admin/bin/qvm-wireguard
 priority: high
 type: feature
-ordinal: 1000
+ordinal: 23000
 ---
 
 ## Description

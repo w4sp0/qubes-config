@@ -17,7 +17,7 @@ references:
   - salt/mail/
 priority: medium
 type: feature
-ordinal: 1000
+ordinal: 38000
 ---
 
 ## Description

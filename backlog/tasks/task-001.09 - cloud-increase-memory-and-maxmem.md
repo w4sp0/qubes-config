@@ -14,7 +14,7 @@ references:
 parent_task_id: TASK-001
 priority: low
 type: enhancement
-ordinal: 8000
+ordinal: 102000
 ---
 
 ## Description

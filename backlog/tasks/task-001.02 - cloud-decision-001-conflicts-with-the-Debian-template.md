@@ -15,7 +15,7 @@ references:
 parent_task_id: TASK-001
 priority: low
 type: docs
-ordinal: 9500
+ordinal: 97000
 ---
 
 ## Description

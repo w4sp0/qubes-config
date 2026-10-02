@@ -13,7 +13,7 @@ references:
   - salt/utils/tools/builder/core.sls
 priority: medium
 type: bug
-ordinal: 7600
+ordinal: 63000
 ---
 
 ## Description

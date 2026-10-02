@@ -19,7 +19,7 @@ references:
   - backlog/tasks/task-001.07 - cloud-define-ORG_GITHUB_TOKEN-injection.md
 priority: high
 type: feature
-ordinal: 1000
+ordinal: 29000
 ---
 
 ## Description

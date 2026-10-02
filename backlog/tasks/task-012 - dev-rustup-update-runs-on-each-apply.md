@@ -14,7 +14,7 @@ references:
   - salt/dev/install-rust-tools.sls
 priority: medium
 type: enhancement
-ordinal: 2000
+ordinal: 43000
 ---
 
 ## Description

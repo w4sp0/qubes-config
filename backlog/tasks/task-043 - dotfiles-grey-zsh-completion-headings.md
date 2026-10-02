@@ -14,7 +14,7 @@ references:
   - salt/dotfiles/files/sh/.config/zsh/.zshrc
 priority: low
 type: enhancement
-ordinal: 49500
+ordinal: 90000
 ---
 
 ## Description

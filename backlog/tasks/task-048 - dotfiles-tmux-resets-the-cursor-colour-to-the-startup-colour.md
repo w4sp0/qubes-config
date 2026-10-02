@@ -16,7 +16,7 @@ references:
   - salt/dotfiles/files/tmux/.config/tmux/theme-dark.conf
 priority: medium
 type: bug
-ordinal: 54500
+ordinal: 94000
 ---
 
 ## Description

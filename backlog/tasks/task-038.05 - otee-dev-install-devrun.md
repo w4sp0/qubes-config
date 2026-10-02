@@ -1,10 +1,10 @@
 ---
 id: TASK-038.05
 title: 'otee-dev: install devrun'
-status: In Progress
+status: To Do
 assignee: []
 created_date: '2026-09-27 10:43'
-updated_date: '2026-09-27 19:24'
+updated_date: '2026-09-30 16:46'
 labels:
   - otee-dev
   - qrexec

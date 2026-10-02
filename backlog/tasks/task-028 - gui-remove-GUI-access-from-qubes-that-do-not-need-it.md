@@ -16,7 +16,7 @@ references:
   - 'https://www.qubes-os.org/doc/gui-domain/'
 priority: medium
 type: feature
-ordinal: 2000
+ordinal: 45000
 ---
 
 ## Description

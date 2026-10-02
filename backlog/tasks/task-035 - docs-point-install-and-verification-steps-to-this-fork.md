@@ -17,7 +17,7 @@ references:
   - salt/qubes-builder/files/client/qusal/keys/
 priority: medium
 type: docs
-ordinal: 7700
+ordinal: 64000
 ---
 
 ## Description

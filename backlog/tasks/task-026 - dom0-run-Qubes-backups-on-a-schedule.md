@@ -16,7 +16,7 @@ references:
   - salt/dom0/files/bin/qvm-backup-find-last
 priority: high
 type: feature
-ordinal: 1000
+ordinal: 18000
 ---
 
 ## Description

@@ -14,7 +14,7 @@ references:
   - salt/dotfiles/files/vim/.config/vim/vimrc
 priority: medium
 type: bug
-ordinal: 55500
+ordinal: 95000
 ---
 
 ## Description
