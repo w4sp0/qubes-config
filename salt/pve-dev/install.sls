@@ -1,0 +1,28 @@
+{#
+SPDX-FileCopyrightText: 2023 - 2024 Benjamin Grande M. S. <ben.grande.b@gmail.com>
+SPDX-FileCopyrightText: 2026 Radek Janik <cyberwassp@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+#}
+
+{% if grains['nodename'] != 'dom0' -%}
+
+include:
+  - dev.install-common
+  - dev.install-python-tools
+  - opentofu.install-repo
+
+"{{ slsdotpath }}-installed":
+  pkg.installed:
+    - require:
+      - sls: opentofu.install-repo
+      - sls: utils.tools.common.update
+    - install_recommends: False
+    - skip_suggestions: True
+    - setopt: "install_weak_deps=False"
+    - pkgs:
+      - qubes-core-agent-networking
+      - ansible
+      - ansible-lint
+      - tofu
+{% endif -%}
