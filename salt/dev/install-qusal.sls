@@ -36,11 +36,11 @@ include:
 ## RPM tools are for 'scripts/spec-build.sh' and 'scripts/yumrepo-gen.sh'.
 {% set pkg = {
     'Debian': {
-      'pkg': ['pipx', 'rpm', 'rpmlint', 'dnf', 'createrepo-c'],
+      'pkg': ['pipx', 'rpm', 'rpmlint', 'createrepo-c'],
     },
     'RedHat': {
-      'pkg': ['salt-lint', 'rpm-build', 'rpm-sign', 'rpmlint', 'dnf',
-              'createrepo_c'],
+      'pkg': ['salt-lint', 'rpm-build', 'rpm-sign', 'rpmlint',
+      'createrepo_c'],
     },
 }.get(grains.os_family) -%}
 
