@@ -20,5 +20,6 @@ include:
     - pkgs:
       - qubes-ctap
       - fido2-tools
+      - yubikey-personalization
 
 {% endif -%}
