@@ -9,6 +9,5 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 include:
   - dev.configure
-  - dev.configure-rust-tools
 
 {% endif -%}

@@ -22,7 +22,8 @@ include:
     - skip_suggestions: True
     - setopt: "install_weak_deps=False"
     - pkgs:
-      - qubes-core-agent-networking # adds internet connectivity
+      ## Essential
+      - qubes-core-agent-networking
       - qubes-core-agent-passwordless-root
       - ca-certificates
       ## Cloud and cluster clients
@@ -46,5 +47,6 @@ include:
       - bash-completion
       - tig
       - urlview
+      - zip
 
 {% endif -%}

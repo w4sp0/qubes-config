@@ -22,5 +22,6 @@ include:
       - qubes-usb-proxy
       - qubes-ctap
       - fido2-tools
+      - yubikey-personalization
 
 {% endif -%}
