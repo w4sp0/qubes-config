@@ -10,12 +10,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 include:
   - dev.install-common
   - dev.install-python-tools
-  - opentofu.install-repo
 
 "{{ slsdotpath }}-installed":
   pkg.installed:
     - require:
-      - sls: opentofu.install-repo
       - sls: utils.tools.common.update
     - install_recommends: False
     - skip_suggestions: True
