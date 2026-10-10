@@ -37,7 +37,7 @@ include:
       - texinfo
       - w3m
       - cloc
-      - universal-ctags
+      # - universal-ctags
       ## Searching files
       - file
       - tree
@@ -54,10 +54,11 @@ include:
 {% set pkg = {
     'Debian': {
       'pkg': ['shellcheck', 'vim-nox', 'fd-find', 'ruby-mdl', 'wbritish',
-              'dict', 'dictd', 'dict-gcide', 'dict-wn', 'dict-foldoc'],
+              'dict', 'dictd', 'dict-gcide', 'dict-wn', 'dict-foldoc',
+              'universal-ctags'],
     },
     'RedHat': {
-      'pkg': ['ShellCheck', 'vim-enhanced', 'fd-find', 'shadow-utils'],
+      'pkg': ['ShellCheck', 'vim-enhanced', 'fd-find', 'shadow-utils', 'global-ctags'],
     },
 }.get(grains.os_family) -%}
 
