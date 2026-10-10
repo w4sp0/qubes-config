@@ -23,6 +23,5 @@ include:
     - pkgs:
       - qubes-core-agent-networking
       - ansible
-      - ansible-lint
       - tofu
 {% endif -%}
