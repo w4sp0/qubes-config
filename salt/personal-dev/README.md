@@ -1,4 +1,4 @@
-# otee-dev
+# personal-dev
 
 Development environment in Qubes OS.
 
@@ -11,7 +11,7 @@ Development environment in Qubes OS.
 
 ## Description
 
-Set up a development qube named "otee-dev", dedicated to contributing to OTee
+Set up a development qube named "personal-dev", dedicated to contributing to OTee
 AS repositories. As there is a very broad set of repositoris, only common
 packages will be installed. The qube has no netvm but can reach remote servers
 if the policy allows.
@@ -21,9 +21,9 @@ if the policy allows.
 *   Top:
 
 ```sh
-sudo qubesctl top.enable otee-dev
-sudo qubesctl --targets=tpl-otee-dev,dvm-otee-dev,otee-dev state.apply
-sudo qubesctl top.disable otee-dev
+sudo qubesctl top.enable personal-dev
+sudo qubesctl --targets=tpl-personal-dev,dvm-personal-dev,personal-dev state.apply
+sudo qubesctl top.disable personal-dev
 proxy_target="$(qusal-report-updatevm-origin)"
 if test -n "${proxy_target}"; then
   sudo qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
@@ -35,10 +35,10 @@ fi
 <!-- pkg:begin:post-install -->
 
 ```sh
-sudo qubesctl state.apply otee-dev.create
-sudo qubesctl --skip-dom0 --targets=tpl-otee-dev state.apply otee-dev.install
-sudo qubesctl --skip-dom0 --targets=dvm-otee-dev state.apply otee-dev.configure-dvm
-sudo qubesctl --skip-dom0 --targets=otee-dev state.apply otee-dev.configure
+sudo qubesctl state.apply personal-dev.create
+sudo qubesctl --skip-dom0 --targets=tpl-personal-dev state.apply personal-dev.install
+sudo qubesctl --skip-dom0 --targets=dvm-personal-dev state.apply personal-dev.configure-dvm
+sudo qubesctl --skip-dom0 --targets=personal-dev state.apply personal-dev.configure
 proxy_target="$(qusal-report-updatevm-origin)"
 if test -n "${proxy_target}"; then
   sudo qubesctl --skip-dom0 --targets="${proxy_target}" state.apply sys-net.install-proxy
@@ -71,21 +71,21 @@ default toolchain to the user. The drawback now is that we have to apply the
 
 _Default policy_: `denies` `all` qubes from calling `qusal.ConnectTCP`
 
-Allow qube `otee-dev` to `connect` to `github.com:22` via `disp-sys-net`
+Allow qube `personal-dev` to `connect` to `github.com:22` via `disp-sys-net`
 but not to any other host or via any other qube:
 
 ```qrexecpolicy
-qusal.ConnectTCP +github.com+22 otee-dev  @default allow target=disp-sys-net
-qusal.ConnectTCP *              otee-dev  @anyvm   deny
+qusal.ConnectTCP +github.com+22 personal-dev  @default allow target=disp-sys-net
+qusal.ConnectTCP *              personal-dev  @anyvm   deny
 ```
 
 ## Usage
 
-The development qube `otee-dev` can be used for:
+The development qube `personal-dev` can be used for:
 
 *   everything the `dev` qube can do; and
-*   contributing to OTee
+*   contributing to personal projects
 
-As the `otee-dev` qube has no netvm, configure the Qrexec policy to allow
+As the `personal-dev` qube has no netvm, configure the Qrexec policy to allow
 or ask calls to the `qusal.ConnectTCP` RPC service, so the qube can communicate
 with a remote repository for example.
