@@ -14,4 +14,19 @@ include:
   - dev.install-go-tools
   - dev.install-python-tools
 
+"{{ slsdotpath }}-installed":
+  pkg.installed:
+    - install_recommends: False
+    - skip_suggestions: True
+    - setopt: "install_weak_deps=False"
+    - pkgs:
+      - check
+      - libsubunit-dev
+      - valgrind
+      - libmbedtls-dev
+      - libssl-dev
+      - libwebsockets-dev
+      - zlib1g-dev
+      - gdb
+
 {% endif -%}
